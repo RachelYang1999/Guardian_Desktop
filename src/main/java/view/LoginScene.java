@@ -2,7 +2,6 @@ package view;
 
 import engine.GameEngine;
 import factory.backgroundfactory.BackgroundFactory;
-import factory.backgroundfactory.DeepBackgroundFactory;
 import factory.backgroundfactory.LightBackgroundFactory;
 import factory.buttonfactory.BrownButtonFactory;
 import factory.buttonfactory.ButtonFactory;
@@ -56,16 +55,16 @@ public class LoginScene {
         r.setFraction(0.7f);
         t.setEffect(r);
 
-        Label userNameLabel = new Label("Username");
-        TextField userNameTextField = new TextField("rachel");
-        userNameLabel.setFont(Font.font("Arial", FontWeight.BOLD, 20));
-//        userNameLabel.setStyle("-fx-text-fill:#ffffff");
-
-        userNameTextField.setFont(Font.font("Arial", FontWeight.BOLD, 15));
-        userNameTextField.setMaxWidth(250);
-        HBox userNameHBox = new HBox();
-        userNameHBox.getChildren().addAll(userNameLabel, userNameTextField);
-        userNameHBox.setAlignment(Pos.CENTER);
+//        Label userNameLabel = new Label("Username");
+//        TextField userNameTextField = new TextField("rachel");
+//        userNameLabel.setFont(Font.font("Arial", FontWeight.BOLD, 20));
+////        userNameLabel.setStyle("-fx-text-fill:#ffffff");
+//
+//        userNameTextField.setFont(Font.font("Arial", FontWeight.BOLD, 15));
+//        userNameTextField.setMaxWidth(250);
+//        HBox userNameHBox = new HBox();
+//        userNameHBox.getChildren().addAll(userNameLabel, userNameTextField);
+//        userNameHBox.setAlignment(Pos.CENTER);
 
 
         Label tokenLabel = new Label("Token");
@@ -83,32 +82,31 @@ public class LoginScene {
         loginButton.setFont(Font.font("Arial", FontWeight.BOLD, 20));
         loginButton.setText("Login");
         loginButton.setOnAction(event -> {
-            String inputUserName = userNameTextField.getText();
+//            String inputUserName = userNameTextField.getText();
             String inputToken = tokenTextField.getText();
-            Entity returnedEntity = gameEngine.login(inputUserName, inputToken);
+            Entity returnedEntity = gameEngine.login(inputToken);
 
             if (returnedEntity.getEntityType().equals("User")) {
                 User returnedUser = (User) returnedEntity;
-                this.alertBox = new LoginSuccessfullyBox();
-                alertBox.createAlertBox(returnedUser);
-                try {
-                    window.setScene(new MainMenuScene(window, gameEngine).getScene());
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                window.setTitle("Loan");
+//                this.alertBox = new LoginSuccessfullyBox();
+//                alertBox.createAlertBox(returnedUser);
+//                try {
+//                    window.setScene(new MainMenuScene(window, gameEngine).getScene());
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
                 System.out.println("Login successfully in LoginScene!");
-                System.out.println("[LoginScene] Username: " + inputUserName);
                 System.out.println("[LoginScene] Token: " + inputToken);
             } else if (returnedEntity.getEntityType().equals("ErrorInfo")){
                 this.alertBox = new ErrorBox();
                 alertBox.createAlertBox(returnedEntity);
-                System.out.println("[LoginScene] The username or token is incorrect");
+                System.out.println("[LoginScene] The token is incorrect");
             } else {
                 this.alertBox = new UnknownErrorBox();
                 alertBox.createAlertBox(returnedEntity);
             }
         });
+
         Button backButton = buttonFactory.createButton();
         backButton.setFont(Font.font("Arial", FontWeight.BOLD, 20));
         backButton.setText("Back");
@@ -122,11 +120,11 @@ public class LoginScene {
         });
 
         VBox labelBox = new VBox(20);
-        labelBox.getChildren().addAll(userNameLabel, tokenLabel);
+        labelBox.getChildren().addAll(tokenLabel);
         labelBox.setAlignment(Pos.CENTER_RIGHT);
 
         VBox textFieldBox = new VBox(15);
-        textFieldBox.getChildren().addAll(userNameTextField, tokenTextField);
+        textFieldBox.getChildren().addAll(tokenTextField);
         textFieldBox.setAlignment(Pos.CENTER_LEFT);
 
         HBox hBox = new HBox(3);

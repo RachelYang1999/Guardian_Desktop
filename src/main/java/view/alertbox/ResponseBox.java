@@ -65,50 +65,50 @@ public class ResponseBox extends AlertBox {
 
     @Override
     public void createAlertBox(List<Entity> entity) {
-        String shipInfo = "";
+//        String shipInfo = "";
 
-        for (Entity e : entity) {
-            shipInfo += e.getEntityInformation();
-        }
-        window.setTitle("Market Location Information");
-        Button gotButton = new Button("Got It!");
-        gotButton.setOnAction(e -> window.close());
-        gotButton.setFont(Font.font("Arial", FontWeight.BOLD, 15));
+//        for (Entity e : entity) {
+//            shipInfo += e.getEntityInformation();
+//        }
+//        window.setTitle("Market Location Information");
+//        Button gotButton = new Button("Got It!");
+//        gotButton.setOnAction(e -> window.close());
+//        gotButton.setFont(Font.font("Arial", FontWeight.BOLD, 15));
+//
+//        Button copyButton = new Button("Copy Information");
+//
+//        String finalShipInfo = shipInfo;
+//        copyButton.setOnAction(e -> {
+//            ClipboardUtil clipboardUtil = new ClipboardUtil();
+//            clipboardUtil.setClipboardString(finalShipInfo);
+//            String copiedText = clipboardUtil.getClipboardString();
+//            System.out.println("Copied text to clipboard: " + copiedText);
+//        });
+//
+//        copyButton.setFont(Font.font("Arial", FontWeight.BOLD, 15));
+//
+//        Text info = new Text(finalShipInfo);
+//        ScrollPane scrollPane = new ScrollPane();
+//        scrollPane.setContent(info);
+//        scrollPane.setMaxHeight(800);
+//        scrollPane.setMaxWidth(800);
+//
+//        HBox buttonHBox = new HBox(10);
+//        buttonHBox.getChildren().addAll(copyButton, gotButton);
+//        buttonHBox.setAlignment(Pos.CENTER);
+//
+//        Text text = new Text(finalShipInfo);
+//        text.setFont(Font.font("Arial", FontWeight.NORMAL, 20));
+//
+//        Scene scene = new Scene(new Group());
+//
+//        VBox root = new VBox();
+//        root.getChildren().addAll(scrollPane, buttonHBox);
+//        scene.setRoot(root);
 
-        Button copyButton = new Button("Copy Information");
-
-        String finalShipInfo = shipInfo;
-        copyButton.setOnAction(e -> {
-            ClipboardUtil clipboardUtil = new ClipboardUtil();
-            clipboardUtil.setClipboardString(finalShipInfo);
-            String copiedText = clipboardUtil.getClipboardString();
-            System.out.println("Copied text to clipboard: " + copiedText);
-        });
-
-        copyButton.setFont(Font.font("Arial", FontWeight.BOLD, 15));
-
-        Text info = new Text(finalShipInfo);
-        ScrollPane scrollPane = new ScrollPane();
-        scrollPane.setContent(info);
-        scrollPane.setMaxHeight(800);
-        scrollPane.setMaxWidth(800);
-
-        HBox buttonHBox = new HBox(10);
-        buttonHBox.getChildren().addAll(copyButton, gotButton);
-        buttonHBox.setAlignment(Pos.CENTER);
-
-        Text text = new Text(finalShipInfo);
-        text.setFont(Font.font("Arial", FontWeight.NORMAL, 20));
-
-        Scene scene = new Scene(new Group());
-
-        VBox root = new VBox();
-        root.getChildren().addAll(scrollPane, buttonHBox);
-        scene.setRoot(root);
-
-        window.setScene(scene);
+//        window.setScene(scene);
 
         // The user cannot do anything till he or she close the alert window
-        window.showAndWait();
+//        window.showAndWait();
     }
 }

@@ -1,5 +1,5 @@
 import engine.GameEngine;
-import engine.OfflineGameEngineImpl;
+import engine.OffGameEngineImpl;
 import engine.OnlineGameEngineImpl;
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -21,7 +21,7 @@ public class App extends Application {
         }
 
         if (args.get(0).equals("offline")) {
-            gameEngine = new OfflineGameEngineImpl();
+            gameEngine = new OffGameEngineImpl();
         }
 
         window = primaryStage;

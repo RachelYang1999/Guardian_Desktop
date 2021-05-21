@@ -39,9 +39,7 @@ public class SignupSuccessfullyBox extends AlertBox {
         buttonHBox.getChildren().addAll(copyButton, gotButton);
         buttonHBox.setAlignment(Pos.CENTER);
 
-        String userInfo =
-                "Username: " + user.getUsername() + "\n" +
-                        "Token: " + user.getToken() + "\n";
+        String userInfo = user.getEntityInformation();
         Label label = new Label(userInfo);
         label.setFont(Font.font("Arial", FontWeight.NORMAL, 20));
 

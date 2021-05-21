@@ -20,8 +20,6 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import model.Entity;
-import model.User;
 import view.alertbox.AlertBox;
 import view.alertbox.SignupSuccessfullyBox;
 import view.alertbox.SignupUnsuccessfullyBox;
@@ -71,27 +69,9 @@ public class SignupScene {
         signupButton.setFont(Font.font("Arial", FontWeight.BOLD, 20));
         signupButton.setText("Sign Up");
         signupButton.setOnAction(event -> {
-            String inputUserName = userNameTextField.getText();
-            /*
-            Create user here
-             */
-            Entity returnedUser = null;
-            try {
-                returnedUser = (User) gameEngine.signUp(inputUserName);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            if (returnedUser == null) {
-                this.alertBox = new SignupUnsuccessfullyBox();
-                alertBox.createAlertBox(returnedUser);
-                System.out.println("[SignupScene] Signup failed!");
-            } else {
-                this.alertBox = new SignupSuccessfullyBox();
-                alertBox.createAlertBox(returnedUser);
-                System.out.println("[SignupScene] Signup successful!");
-            }
+            
         });
+
         Button backButton = buttonFactory.createButton();
         backButton.setFont(Font.font("Arial", FontWeight.BOLD, 20));
         backButton.setText("Back");

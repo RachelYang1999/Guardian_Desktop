@@ -1,14 +1,11 @@
 package factory.entityfactory;
 
 import model.Entity;
-
-import java.util.List;
+import org.json.JSONObject;
 
 public interface EntityFactory {
 
-    Entity createEntity(String response);
-
-    List<Entity> createEntities(String response);
+    Entity createEntity(JSONObject response);
 
 
 }

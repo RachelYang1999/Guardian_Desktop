@@ -4,13 +4,13 @@ import model.Entity;
 import model.ErrorInfo;
 import org.json.JSONObject;
 
-public class ErrorInfoFactory implements EntityFactory {
+public class DefaultErrorInfoFactory implements EntityFactory {
 
     @Override
     public Entity createEntity(JSONObject response) {
 
         ErrorInfo errorInfo = new ErrorInfo();
-        errorInfo.setMessage(response.getString("message"));
+        errorInfo.setMessage("Unknown Error!");
 
         return errorInfo;
     }

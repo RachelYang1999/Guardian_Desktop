@@ -51,24 +51,24 @@ public class MainMenuScene {
         Button button11 = buttonFactory.createButton();
         button11.setText("Loan");
         button11.setOnAction(event -> {
-            try {
-                window.setScene(new LoanMainScene(window, gameEngine).getScene());
-                window.setTitle("Loan Page");
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+//            try {
+//                window.setScene(new LoanMainScene(window, gameEngine).getScene());
+//                window.setTitle("Loan Page");
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
         });
         button11.setAlignment(Pos.CENTER);
 
         Button button12 = buttonFactory.createButton();
         button12.setText("Ships");
         button12.setOnAction(event -> {
-            try {
-                window.setScene(new ShipMainScene(window, gameEngine).getScene());
-                window.setTitle("Ship Page");
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+//            try {
+//                window.setScene(new ShipMainScene(window, gameEngine).getScene());
+//                window.setTitle("Ship Page");
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
         });
         button12.setAlignment(Pos.CENTER);
 
@@ -77,67 +77,26 @@ public class MainMenuScene {
         button13.setTextAlignment(TextAlignment.CENTER);
 
         button13.setOnAction(event -> {
-            try {
-                window.setScene(new FlightPlanMainScene(window, gameEngine).getScene());
-                window.setTitle("Flight Plan Page");
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+//            try {
+//                window.setScene(new FlightPlanMainScene(window, gameEngine).getScene());
+//                window.setTitle("Flight Plan Page");
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
         });
         button13.setAlignment(Pos.CENTER);
 
-//        Button button21 = buttonFactory.createButton();
-//        button21.setText("21");
-//        button21.setOnAction(event -> {
-//        });
-//        button21.setAlignment(Pos.CENTER);
-//
-//        Button button22 = buttonFactory.createButton();
-//        button22.setText("22");
-//        button22.setOnAction(event -> {
-//        });
-//        button22.setAlignment(Pos.CENTER);
-//
-//        Button button23 = buttonFactory.createButton();
-//        button23.setText("23");
-//        button23.setOnAction(event -> {
-//        });
-//        button23.setAlignment(Pos.CENTER);
-//
-//        Button button31 = buttonFactory.createButton();
-//        button31.setText("31");
-//        button31.setOnAction(event -> {
-//        });
-//        button31.setAlignment(Pos.CENTER);
-//
-//        Button button32 = buttonFactory.createButton();
-//        button32.setText("32");
-//        button32.setOnAction(event -> {
-//        });
-//        button32.setAlignment(Pos.CENTER);
-//
-//        Button button33 = buttonFactory.createButton();
-//        button33.setText("33");
-//        button33.setOnAction(event -> {
-//        });
-//        button33.setAlignment(Pos.CENTER);
 
         VBox buttonCol1 = new VBox(20);
         buttonCol1.getChildren().addAll(button11);
-
-//        buttonCol1.getChildren().addAll(button11, button21, button31);
         buttonCol1.setAlignment(Pos.CENTER);
 
         VBox buttonCol2 = new VBox(20);
         buttonCol2.getChildren().addAll(button12);
-//        buttonCol2.getChildren().addAll(button12, button22, button32);
-
         buttonCol2.setAlignment(Pos.CENTER);
 
         VBox buttonCol3 = new VBox(20);
         buttonCol3.getChildren().addAll(button13);
-//        buttonCol3.getChildren().addAll(button13, button23, button33);
-
         buttonCol3.setAlignment(Pos.CENTER);
 
         HBox mainHBox = new HBox(20);
@@ -148,19 +107,18 @@ public class MainMenuScene {
         Button buttonLogOut = buttonFactory.createButton();
         buttonLogOut.setText("Log Out");
         buttonLogOut.setOnAction(event -> {
-            this.alertBox = new LogoutSuccessfullyBox();
-            alertBox.createAlertBox(gameEngine.getUser());
-            try {
-                gameEngine.userLogOut();
-                window.setScene(new WelcomeScene(window, gameEngine).getScene());
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+//            this.alertBox = new LogoutSuccessfullyBox();
+//            alertBox.createAlertBox(gameEngine.getUser());
+//            try {
+////                gameEngine.userLogOut();
+//                window.setScene(new WelcomeScene(window, gameEngine).getScene());
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
         });
 
 
         BorderPane pane = new BorderPane();
-
         pane.getChildren().add(this.backgroundFactory.getBackground());
 
         pane.setTop(t);
@@ -174,7 +132,6 @@ public class MainMenuScene {
         pane.setAlignment(buttonLogOut, Pos.BOTTOM_RIGHT);
 
         this.scene = new Scene(pane, 1280, 800);
-
     }
 
     public Scene getScene() {
