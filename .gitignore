@@ -6,3 +6,4 @@ gradlew.bat
 settings.gradle
 build/*
 .DS_Store
+src/main/java/model

@@ -1,0 +1,42 @@
+package view.alertbox;
+
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import model.Entity;
+
+import java.util.List;
+
+public class LoginUnsuccessfullyBox extends AlertBox {
+
+    @Override
+    public void createAlertBox(Entity entity) {
+        window.setTitle("Auth Warning");
+
+        Button button = new Button("Try Again");
+        button.setOnAction(e -> window.close());
+        button.setFont(Font.font("Arial", FontWeight.BOLD, 15));
+
+        String warningMessage = "The username or token is incorrect";
+        Label label = new Label(warningMessage);
+        label.setFont(Font.font("Arial", FontWeight.NORMAL, 20));
+
+        VBox layout = new VBox(10);
+        layout.getChildren().addAll(label , button);
+        layout.setAlignment(Pos.CENTER);
+
+        Scene scene = new Scene(layout);
+        window.setScene(scene);
+        // The user cannot do anything till he or she close the alert window
+        window.showAndWait();
+    }
+
+    @Override
+    public void createAlertBox(List<Entity> entity) {
+
+    }
+}
