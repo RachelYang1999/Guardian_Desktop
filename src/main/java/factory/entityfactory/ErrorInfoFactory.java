@@ -1,7 +1,7 @@
 package factory.entityfactory;
 
-import model.Entity;
-import model.ErrorInfo;
+import model.domain.Entity;
+import model.domain.ErrorInfo;
 import org.json.JSONObject;
 
 public class ErrorInfoFactory implements EntityFactory {

@@ -1,6 +1,6 @@
-import engine.GameEngine;
-import engine.OffGameEngineImpl;
-import engine.OnlineGameEngineImpl;
+import facade.EngineFacade;
+import facade.OfflineGameEngineImpl;
+import facade.OnlineGameEngineImpl;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import view.WelcomeScene;
@@ -9,7 +9,7 @@ import java.util.List;
 
 public class App extends Application {
     private Stage window;
-    private GameEngine gameEngine;
+    private EngineFacade gameEngine;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -21,7 +21,7 @@ public class App extends Application {
         }
 
         if (args.get(0).equals("offline")) {
-            gameEngine = new OffGameEngineImpl();
+            gameEngine = new OfflineGameEngineImpl();
         }
 
         window = primaryStage;

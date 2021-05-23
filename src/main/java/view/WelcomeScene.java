@@ -1,6 +1,6 @@
 package view;
 
-import engine.GameEngine;
+import facade.EngineFacade;
 import factory.backgroundfactory.BackgroundFactory;
 import factory.backgroundfactory.DeepBackgroundFactory;
 import factory.buttonfactory.BrownButtonFactory;
@@ -25,7 +25,7 @@ public class WelcomeScene {
     private BackgroundFactory backgroundFactory;
     private AlertBox alertBox;
 
-    public WelcomeScene(Stage window, GameEngine gameEngine) throws Exception {
+    public WelcomeScene(Stage window, EngineFacade gameEngine) throws Exception {
         this.window = window;
         this.backgroundFactory = new DeepBackgroundFactory();
         this.buttonFactory = new BrownButtonFactory();

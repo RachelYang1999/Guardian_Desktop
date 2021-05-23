@@ -1,10 +1,11 @@
 package view;
 
-import engine.GameEngine;
+import facade.EngineFacade;
 import factory.backgroundfactory.BackgroundFactory;
 import factory.backgroundfactory.LightBackgroundFactory;
 import factory.buttonfactory.BrownButtonFactory;
 import factory.buttonfactory.ButtonFactory;
+import factory.buttonfactory.GrayButtonFactory;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -19,11 +20,11 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import model.Entity;
-import model.User;
+import model.domain.Entity;
+import model.domain.User;
 import view.alertbox.AlertBox;
 import view.alertbox.ErrorBox;
-import view.alertbox.LoginSuccessfullyBox;
+import view.alertbox.ResponseBox;
 import view.alertbox.UnknownErrorBox;
 
 public class LoginScene {
@@ -33,7 +34,7 @@ public class LoginScene {
     private ButtonFactory buttonFactory;
     private AlertBox alertBox;
 
-    public LoginScene(Stage window, GameEngine gameEngine) throws Exception {
+    public LoginScene(Stage window, EngineFacade gameEngine) throws Exception {
         this.window = window;
         this.backgroundFactory = new LightBackgroundFactory();
         this.buttonFactory = new BrownButtonFactory();
@@ -55,20 +56,8 @@ public class LoginScene {
         r.setFraction(0.7f);
         t.setEffect(r);
 
-//        Label userNameLabel = new Label("Username");
-//        TextField userNameTextField = new TextField("rachel");
-//        userNameLabel.setFont(Font.font("Arial", FontWeight.BOLD, 20));
-////        userNameLabel.setStyle("-fx-text-fill:#ffffff");
-//
-//        userNameTextField.setFont(Font.font("Arial", FontWeight.BOLD, 15));
-//        userNameTextField.setMaxWidth(250);
-//        HBox userNameHBox = new HBox();
-//        userNameHBox.getChildren().addAll(userNameLabel, userNameTextField);
-//        userNameHBox.setAlignment(Pos.CENTER);
-
-
         Label tokenLabel = new Label("Token");
-        TextField tokenTextField = new TextField("768b2b8b-b6e3-4960-8dc8-1a96200be3b2");
+        TextField tokenTextField = new TextField("1b0f84fb-9674-4fe2-b596-5836b2772fcb");
         tokenLabel.setFont(Font.font("Arial", FontWeight.BOLD, 20));
 //        tokenLabel.setStyle("-fx-text-fill:#ffffff");
 
@@ -88,13 +77,13 @@ public class LoginScene {
 
             if (returnedEntity.getEntityType().equals("User")) {
                 User returnedUser = (User) returnedEntity;
-//                this.alertBox = new LoginSuccessfullyBox();
-//                alertBox.createAlertBox(returnedUser);
-//                try {
-//                    window.setScene(new MainMenuScene(window, gameEngine).getScene());
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                }
+                this.alertBox = new ResponseBox();
+                alertBox.createAlertBox("Log In Successfully", "Here is your account information", returnedEntity.getEntityInformation());
+                try {
+                    window.setScene(new MainMenuScene(window, gameEngine).getScene());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 System.out.println("Login successfully in LoginScene!");
                 System.out.println("[LoginScene] Token: " + inputToken);
             } else if (returnedEntity.getEntityType().equals("ErrorInfo")){
@@ -107,6 +96,7 @@ public class LoginScene {
             }
         });
 
+        this.buttonFactory = new GrayButtonFactory();
         Button backButton = buttonFactory.createButton();
         backButton.setFont(Font.font("Arial", FontWeight.BOLD, 20));
         backButton.setText("Back");

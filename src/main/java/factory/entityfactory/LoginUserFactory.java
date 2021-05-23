@@ -1,7 +1,7 @@
 package factory.entityfactory;
 
-import model.Entity;
-import model.User;
+import model.domain.Entity;
+import model.domain.User;
 import org.json.JSONObject;
 
 public class LoginUserFactory implements EntityFactory {

@@ -1,26 +1,29 @@
-package engine;
+package facade;
 
 import factory.entityfactory.DefaultErrorInfoFactory;
 import factory.entityfactory.EntityFactory;
-import factory.entityfactory.LoginUserFactory;
-import model.Entity;
-import model.User;
-import org.json.JSONObject;
+import model.domain.Entity;
+import model.domain.User;
 import utility.GuardianOnlineUtil;
 
-public class OffGameEngineImpl implements GameEngine {
+public class OfflineGameEngineImpl implements EngineFacade {
     private EntityFactory entityFactory;
     private EntityFactory defaultErrorFactory;
     private User user;
     private GuardianOnlineUtil guardianOnlineUtil;
 
-    public OffGameEngineImpl() {
+    public OfflineGameEngineImpl() {
         this.defaultErrorFactory = new DefaultErrorInfoFactory();
     }
 
     @Override
     public Entity login(String token) {
         return null;
+    }
+
+    @Override
+    public void userLogOut() {
+
     }
 
 }

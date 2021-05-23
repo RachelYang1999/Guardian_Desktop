@@ -1,6 +1,6 @@
 package view;
 
-import engine.GameEngine;
+import facade.EngineFacade;
 import factory.backgroundfactory.BackgroundFactory;
 import factory.backgroundfactory.LightBackgroundFactory;
 import factory.buttonfactory.BrownButtonFactory;
@@ -21,7 +21,7 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import view.alertbox.AlertBox;
-import view.alertbox.LogoutSuccessfullyBox;
+import view.alertbox.ResponseBox;
 
 public class MainMenuScene {
     private Stage window;
@@ -30,7 +30,7 @@ public class MainMenuScene {
     private ButtonFactory buttonFactory;
     private AlertBox alertBox;
 
-    public MainMenuScene(Stage window, GameEngine gameEngine) throws Exception {
+    public MainMenuScene(Stage window, EngineFacade gameEngine) throws Exception {
         this.window = window;
         this.backgroundFactory = new LightBackgroundFactory();
         this.buttonFactory = new BrownButtonFactory();
@@ -39,7 +39,8 @@ public class MainMenuScene {
         Text t = new Text();
         t.setCache(true);
         t.setText("Main Menu");
-        t.setFill(Color.web("#FFFFFF"));
+//        t.setStyle("-fx-text-fill:#704728");
+        t.setFill(Color.web("#704728"));
         t.setFont(Font.font("Arial", FontWeight.BOLD, 60));
         t.setLayoutX(250);
         t.setLayoutY(230);
@@ -49,7 +50,8 @@ public class MainMenuScene {
 
         this.buttonFactory = new MenuButtonFactory();
         Button button11 = buttonFactory.createButton();
-        button11.setText("Loan");
+        button11.setText("Search\nBy\nTag");
+        button11.setTextAlignment(TextAlignment.CENTER);
         button11.setOnAction(event -> {
 //            try {
 //                window.setScene(new LoanMainScene(window, gameEngine).getScene());
@@ -61,7 +63,8 @@ public class MainMenuScene {
         button11.setAlignment(Pos.CENTER);
 
         Button button12 = buttonFactory.createButton();
-        button12.setText("Ships");
+        button12.setText("Search\nBy\n*");
+        button12.setTextAlignment(TextAlignment.CENTER);
         button12.setOnAction(event -> {
 //            try {
 //                window.setScene(new ShipMainScene(window, gameEngine).getScene());
@@ -107,14 +110,14 @@ public class MainMenuScene {
         Button buttonLogOut = buttonFactory.createButton();
         buttonLogOut.setText("Log Out");
         buttonLogOut.setOnAction(event -> {
-//            this.alertBox = new LogoutSuccessfullyBox();
-//            alertBox.createAlertBox(gameEngine.getUser());
-//            try {
-////                gameEngine.userLogOut();
-//                window.setScene(new WelcomeScene(window, gameEngine).getScene());
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
+            this.alertBox = new ResponseBox();
+            alertBox.createAlertBox("Log Out", "You have been logged out successfully!", "See you next time~");
+            try {
+                gameEngine.userLogOut();
+                window.setScene(new WelcomeScene(window, gameEngine).getScene());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         });
 
 

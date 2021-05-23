@@ -1,5 +1,4 @@
-import model.User;
-import org.junit.Before;
+import model.domain.User;
 import org.junit.Test;
 
 import static org.junit.Assert.assertNotNull;

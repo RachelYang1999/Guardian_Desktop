@@ -1,6 +1,6 @@
 package factory.entityfactory;
 
-import model.Entity;
+import model.domain.Entity;
 
 import java.util.List;
 

@@ -1,8 +1,9 @@
 package view.alertbox;
 
+import javafx.scene.control.Alert;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import model.Entity;
+import model.domain.Entity;
 
 import java.util.List;
 
@@ -17,6 +18,15 @@ public abstract class AlertBox {
     }
 
     public abstract void createAlertBox(Entity entity);
+
+    public abstract void createAlertBox(String title, String headerText, String contentText);
+
+    public abstract Stage getWindow(String title, String headerText, String contentText);
+
+    public abstract Stage getWindow(Entity entity);
+
+    public abstract Alert getAlertBox(Entity entity);
+
 
     public abstract void createAlertBox(List<Entity> entity);
 

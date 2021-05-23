@@ -1,15 +1,15 @@
-package engine;
+package facade;
 
 import factory.entityfactory.DefaultErrorInfoFactory;
 import factory.entityfactory.EntityFactory;
 import factory.entityfactory.ErrorInfoFactory;
 import factory.entityfactory.LoginUserFactory;
-import model.Entity;
-import model.User;
+import model.domain.Entity;
+import model.domain.User;
 import org.json.JSONObject;
 import utility.GuardianOnlineUtil;
 
-public class OnlineGameEngineImpl implements GameEngine {
+public class OnlineGameEngineImpl implements EngineFacade {
     private EntityFactory entityFactory;
     private EntityFactory defaultErrorFactory;
     private User user;
@@ -30,15 +30,29 @@ public class OnlineGameEngineImpl implements GameEngine {
         Entity returnEntity = defaultErrorFactory.createEntity(responseJSON);
         System.out.println("[OnlineGameEngineImpl] login response: " + responseJSON.toString());
 
-        if (responseJSON.getJSONObject("response").has("status")) {
-            entityFactory = new LoginUserFactory();
-            returnEntity = entityFactory.createEntity(responseJSON);
-            this.user = (User) returnEntity;
+        if (responseJSON.has("response")) {
+            if (responseJSON.getJSONObject("response").has("status")) {
+                if (responseJSON.getJSONObject("response").getString("status").equals("ok")) {
+                    entityFactory = new LoginUserFactory();
+                    returnEntity = entityFactory.createEntity(responseJSON);
+                    this.user = (User) returnEntity;
+                    this.user.setToken(token);
+                }
+            }
         } else if (responseJSON.has("message")) {
             entityFactory = new ErrorInfoFactory();
             returnEntity = entityFactory.createEntity(responseJSON);
         }
+
+        // Default ErrorInfo entity
         return returnEntity;
+    }
+
+    @Override
+    public void userLogOut() {
+        if (this.user != null) {
+            this.user.setLoginStatus(false);
+        }
     }
 
 }
