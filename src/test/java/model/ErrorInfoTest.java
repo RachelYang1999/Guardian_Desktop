@@ -1,72 +1,77 @@
 package model;
 
 import model.domain.Entity;
+import model.domain.ErrorInfo;
 import model.domain.User;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class UserTest {
+public class ErrorInfoTest {
 
     @Test
     public void testConstructorValid() {
-        User user = new User();
-        assertNotNull(user);
+        ErrorInfo errorInfo = new ErrorInfo();
+        assertNotNull(errorInfo);
     }
 
     @Test
-    public void testGetSetTokenValid() {
-        User user = new User();
-        user.setToken("token");
-        assertEquals("token", user.getToken());
+    public void testGetSetErrorCodeValid() {
+        ErrorInfo errorInfo = new ErrorInfo();
+        errorInfo.setErrorCode(404);
+        assertEquals(404, errorInfo.getErrorCode());
     }
 
     @Test
-    public void testGetSetLoginStatusValid() {
-        User user = new User();
-        user.setLoginStatus(true);
-        assertTrue(user.isLoginStatus());
+    public void testGetSetMessageValid() {
+        ErrorInfo errorInfo = new ErrorInfo();
+        errorInfo.setMessage("File Not Found");
+        assertEquals("File Not Found", errorInfo.getMessage());
     }
 
     @Test
-    public void testGetSetUserTierValid() {
-        User user = new User();
-        user.setUserTier("user tier");
-        assertEquals("user tier", user.getUserTier());
+    public void testGetSetRelatedModuleValid() {
+        ErrorInfo errorInfo = new ErrorInfo();
+        errorInfo.setRelatedModule("User");
+        assertEquals("User", errorInfo.getRelatedModule());
     }
 
     @Test
     public void testGetEntityTypeValid() {
-        User user = new User();
-        assertEquals("User", user.getEntityType());
+        Entity errorInfo = new ErrorInfo();
+        assertEquals("ErrorInfo", errorInfo.getEntityType());
     }
 
     @Test
     public void testGetEntityInfoValid() {
-        User user = new User();
-        user.setUserTier("developer");
-        user.setLoginStatus(true);
+        ErrorInfo errorInfo = new ErrorInfo();
+        errorInfo.setMessage("File Not Found");
+        errorInfo.setErrorCode(404);
+        errorInfo.setRelatedModule("User");
 
-        String expected = "User Tier: developer" + "\n" +
-                          "Login Status: Logged In" + "\n";
-        assertEquals(expected, user.getEntityInformation());
+        String expected = "Error Message: File Not Found"+ "\n"
+                        + "Error Code: 404" + "\n"
+                        + "Related Module: User" + "\n";
+        assertEquals(expected, errorInfo.getEntityInformation());
     }
 
     @Test
     public void testGetEntityTypeViaInterfaceValid() {
-        Entity user = new User();
-        assertEquals("User", user.getEntityType());
+        Entity errorInfo = new ErrorInfo();
+        assertEquals("ErrorInfo", errorInfo.getEntityType());
     }
 
     @Test
     public void testGetEntityInfoViaInterfaceValid() {
-        User user = new User();
-        user.setUserTier("developer");
-        user.setLoginStatus(true);
+        ErrorInfo errorInfo = new ErrorInfo();
+        errorInfo.setMessage("File Not Found");
+        errorInfo.setErrorCode(404);
+        errorInfo.setRelatedModule("User");
 
-        String expected = "User Tier: developer" + "\n" +
-                "Login Status: Logged In" + "\n";
-        Entity userEntityType = user;
-        assertEquals("User", userEntityType.getEntityType());
+        String expected = "Error Message: File Not Found"+ "\n"
+                + "Error Code: 404" + "\n"
+                + "Related Module: User" + "\n";
+        Entity userEntityType = errorInfo;
+        assertEquals(expected, userEntityType.getEntityInformation());
     }
 }

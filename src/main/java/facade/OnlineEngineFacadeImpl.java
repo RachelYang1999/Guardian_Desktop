@@ -9,13 +9,13 @@ import model.domain.User;
 import org.json.JSONObject;
 import strategy.GuardianOnlineAPIStrategy;
 
-public class OnlineGameEngineImpl implements EngineFacade {
+public class OnlineEngineFacadeImpl implements EngineFacade {
     private EntityFactory entityFactory;
     private EntityFactory defaultErrorFactory;
     private User user;
     private GuardianOnlineAPIStrategy guardianOnlineUtil;
 
-    public OnlineGameEngineImpl() {
+    public OnlineEngineFacadeImpl() {
         this.guardianOnlineUtil = new GuardianOnlineAPIStrategy();
         this.defaultErrorFactory = new DefaultErrorInfoFactory();
     }

@@ -6,13 +6,13 @@ import model.domain.Entity;
 import model.domain.User;
 import strategy.GuardianOnlineAPIStrategy;
 
-public class OfflineGameEngineImpl implements EngineFacade {
+public class OfflineEngineFacadeImpl implements EngineFacade {
     private EntityFactory entityFactory;
     private EntityFactory defaultErrorFactory;
     private User user;
     private GuardianOnlineAPIStrategy guardianOnlineUtil;
 
-    public OfflineGameEngineImpl() {
+    public OfflineEngineFacadeImpl() {
         this.defaultErrorFactory = new DefaultErrorInfoFactory();
     }
 

@@ -1,6 +1,6 @@
 import facade.EngineFacade;
-import facade.OfflineGameEngineImpl;
-import facade.OnlineGameEngineImpl;
+import facade.OfflineEngineFacadeImpl;
+import facade.OnlineEngineFacadeImpl;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import view.WelcomeScene;
@@ -17,11 +17,11 @@ public class App extends Application {
         List<String> args = getParameters().getRaw();
 
         if (args.get(0).equals("online")) {
-            gameEngine = new OnlineGameEngineImpl();
+            gameEngine = new OnlineEngineFacadeImpl();
         }
 
         if (args.get(0).equals("offline")) {
-            gameEngine = new OfflineGameEngineImpl();
+            gameEngine = new OfflineEngineFacadeImpl();
         }
 
         window = primaryStage;

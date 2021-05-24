@@ -2,76 +2,54 @@ package model;
 
 import model.domain.Entity;
 import model.domain.ErrorInfo;
-import model.domain.User;
+import model.domain.Response;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
-public class ErrorInfoTest {
+public class ResponseTest {
 
     @Test
     public void testConstructorValid() {
-        ErrorInfo errorInfo = new ErrorInfo();
-        assertNotNull(errorInfo);
+        Response response = new Response();
+        assertNotNull(response);
     }
 
     @Test
     public void testGetSetErrorCodeValid() {
-        ErrorInfo errorInfo = new ErrorInfo();
-        errorInfo.setErrorCode(404);
-        assertEquals(404, errorInfo.getErrorCode());
-    }
-
-    @Test
-    public void testGetSetMessageValid() {
-        ErrorInfo errorInfo = new ErrorInfo();
-        errorInfo.setMessage("File Not Found");
-        assertEquals("File Not Found", errorInfo.getMessage());
-    }
-
-    @Test
-    public void testGetSetRelatedModuleValid() {
-        ErrorInfo errorInfo = new ErrorInfo();
-        errorInfo.setRelatedModule("User");
-        assertEquals("User", errorInfo.getRelatedModule());
+        Response response = new Response();
+        response.setInfo("This is a response");
+        assertEquals("This is a response", response.getInfo());
     }
 
     @Test
     public void testGetEntityTypeValid() {
-        Entity errorInfo = new ErrorInfo();
-        assertEquals("ErrorInfo", errorInfo.getEntityType());
+        Response response = new Response();
+        assertEquals("Response", response.getEntityType());
     }
 
     @Test
     public void testGetEntityInfoValid() {
-        ErrorInfo errorInfo = new ErrorInfo();
-        errorInfo.setMessage("File Not Found");
-        errorInfo.setErrorCode(404);
-        errorInfo.setRelatedModule("User");
-
-        String expected = "Error Message: File Not Found"+ "\n"
-                        + "Error Code: 404" + "\n"
-                        + "Related Module: User" + "\n";
-        assertEquals(expected, errorInfo.getEntityInformation());
+        Response response = new Response();
+        response.setInfo("This is a response");
+        String expected = "Response Information: This is a response";
+        assertEquals(expected, response.getEntityInformation());
     }
 
     @Test
     public void testGetEntityTypeViaInterfaceValid() {
-        Entity errorInfo = new ErrorInfo();
-        assertEquals("ErrorInfo", errorInfo.getEntityType());
+        Entity response = new Response();
+        assertEquals("Response", response.getEntityType());
     }
 
     @Test
     public void testGetEntityInfoViaInterfaceValid() {
-        ErrorInfo errorInfo = new ErrorInfo();
-        errorInfo.setMessage("File Not Found");
-        errorInfo.setErrorCode(404);
-        errorInfo.setRelatedModule("User");
+        Response response = new Response();
+        response.setInfo("This is a response");
+        String expected = "Response Information: This is a response";
 
-        String expected = "Error Message: File Not Found"+ "\n"
-                + "Error Code: 404" + "\n"
-                + "Related Module: User" + "\n";
-        Entity userEntityType = errorInfo;
-        assertEquals(expected, userEntityType.getEntityInformation());
+        Entity responseEntity = response;
+        assertEquals(expected, responseEntity.getEntityInformation());
     }
 }
