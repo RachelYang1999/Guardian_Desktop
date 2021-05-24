@@ -11,12 +11,6 @@ import static org.junit.Assert.assertNotNull;
 public class ResponseTest {
 
     @Test
-    public void testConstructorValid() {
-        Response response = new Response();
-        assertNotNull(response);
-    }
-
-    @Test
     public void testGetSetErrorCodeValid() {
         Response response = new Response();
         response.setInfo("This is a response");

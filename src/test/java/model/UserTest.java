@@ -9,12 +9,6 @@ import static org.junit.Assert.*;
 public class UserTest {
 
     @Test
-    public void testConstructorValid() {
-        User user = new User();
-        assertNotNull(user);
-    }
-
-    @Test
     public void testGetSetTokenValid() {
         User user = new User();
         user.setToken("token");

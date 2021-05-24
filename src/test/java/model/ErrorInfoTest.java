@@ -9,11 +9,6 @@ import static org.junit.Assert.*;
 
 public class ErrorInfoTest {
 
-    @Test
-    public void testConstructorValid() {
-        ErrorInfo errorInfo = new ErrorInfo();
-        assertNotNull(errorInfo);
-    }
 
     @Test
     public void testGetSetErrorCodeValid() {
