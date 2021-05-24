@@ -1,4 +1,4 @@
-package facade;
+package controller;
 
 import org.junit.Before;
 
@@ -10,6 +10,4 @@ public class OnlineTest {
     public void init() {
 
     }
-
-
 }

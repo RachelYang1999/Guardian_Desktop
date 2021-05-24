@@ -1,6 +1,6 @@
 package view;
 
-import facade.EngineFacade;
+import util.RequestMapping;
 import factory.backgroundfactory.BackgroundFactory;
 import factory.backgroundfactory.LightBackgroundFactory;
 import factory.buttonfactory.BrownButtonFactory;
@@ -34,7 +34,7 @@ public class LoginScene {
     private ButtonFactory buttonFactory;
     private AlertBox alertBox;
 
-    public LoginScene(Stage window, EngineFacade gameEngine) throws Exception {
+    public LoginScene(Stage window, RequestMapping requestMapping) throws Exception {
         this.window = window;
         this.backgroundFactory = new LightBackgroundFactory();
         this.buttonFactory = new BrownButtonFactory();
@@ -73,14 +73,14 @@ public class LoginScene {
         loginButton.setOnAction(event -> {
 //            String inputUserName = userNameTextField.getText();
             String inputToken = tokenTextField.getText();
-            Entity returnedEntity = gameEngine.login(inputToken);
+            Entity returnedEntity = requestMapping.login(inputToken);
 
             if (returnedEntity.getEntityType().equals("User")) {
                 User returnedUser = (User) returnedEntity;
                 this.alertBox = new ResponseBox();
                 alertBox.createAlertBox("Log In Successfully", "Here is your account information", returnedEntity.getEntityInformation());
                 try {
-                    window.setScene(new MainMenuScene(window, gameEngine).getScene());
+                    window.setScene(new MainMenuScene(window, requestMapping).getScene());
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -102,7 +102,7 @@ public class LoginScene {
         backButton.setText("Back");
         backButton.setOnAction(event -> {
             try {
-                window.setScene(new WelcomeScene(window, gameEngine).getScene());
+                window.setScene(new WelcomeScene(window, requestMapping).getScene());
                 window.setTitle("Welcome");
             } catch (Exception e) {
                 e.printStackTrace();

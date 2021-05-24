@@ -1,6 +1,6 @@
 package view;
 
-import facade.EngineFacade;
+import util.RequestMapping;
 import factory.backgroundfactory.BackgroundFactory;
 import factory.backgroundfactory.LightBackgroundFactory;
 import factory.buttonfactory.BrownButtonFactory;
@@ -30,7 +30,7 @@ public class MainMenuScene {
     private ButtonFactory buttonFactory;
     private AlertBox alertBox;
 
-    public MainMenuScene(Stage window, EngineFacade gameEngine) throws Exception {
+    public MainMenuScene(Stage window, RequestMapping requestMapping) throws Exception {
         this.window = window;
         this.backgroundFactory = new LightBackgroundFactory();
         this.buttonFactory = new BrownButtonFactory();
@@ -54,7 +54,7 @@ public class MainMenuScene {
         button11.setTextAlignment(TextAlignment.CENTER);
         button11.setOnAction(event -> {
             try {
-                window.setScene(new SearchByTagScene(window, gameEngine).getScene());
+                window.setScene(new SearchByTagScene(window, requestMapping).getScene());
                 window.setTitle("Search By Tag");
             } catch (Exception e) {
                 e.printStackTrace();
@@ -103,8 +103,8 @@ public class MainMenuScene {
             this.alertBox = new ResponseBox();
             alertBox.createAlertBox("Log Out", "You have been logged out successfully!", "See you next time~");
             try {
-                gameEngine.userLogOut();
-                window.setScene(new WelcomeScene(window, gameEngine).getScene());
+                requestMapping.userLogOut();
+                window.setScene(new WelcomeScene(window, requestMapping).getScene());
             } catch (Exception e) {
                 e.printStackTrace();
             }

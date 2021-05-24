@@ -1,6 +1,6 @@
 package view;
 
-import facade.EngineFacade;
+import util.RequestMapping;
 import factory.backgroundfactory.BackgroundFactory;
 import factory.backgroundfactory.DeepBackgroundFactory;
 import factory.buttonfactory.BrownButtonFactory;
@@ -17,7 +17,7 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
-import strategy.ClipboardUtil;
+import util.ClipboardUtil;
 import view.alertbox.AlertBox;
 import view.alertbox.ResponseBox;
 
@@ -28,7 +28,7 @@ public class SignupScene {
     private BackgroundFactory backgroundFactory;
     private AlertBox alertBox;
 
-    public SignupScene(Stage window, EngineFacade gameEngine) throws Exception {
+    public SignupScene(Stage window, RequestMapping requestMapping) throws Exception {
         this.window = window;
         this.backgroundFactory = new DeepBackgroundFactory();
         this.buttonFactory = new BrownButtonFactory();
@@ -55,7 +55,7 @@ public class SignupScene {
                     "Please access this sign up website by pasting the link to a browser~";
             alertBox.createAlertBox("Copy Link", "Congratulations", info);
             try {
-                window.setScene(new LoginScene(window, gameEngine).getScene());
+                window.setScene(new LoginScene(window, requestMapping).getScene());
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -73,7 +73,7 @@ public class SignupScene {
         backButton.setText("Back");
         backButton.setOnAction(event -> {
             try {
-                window.setScene(new WelcomeScene(window, gameEngine).getScene());
+                window.setScene(new WelcomeScene(window, requestMapping).getScene());
                 window.setTitle("Welcome");
             } catch (Exception e) {
                 e.printStackTrace();

@@ -1,6 +1,6 @@
 package view;
 
-import facade.EngineFacade;
+import util.RequestMapping;
 import factory.backgroundfactory.BackgroundFactory;
 import factory.backgroundfactory.LightBackgroundFactory;
 import factory.buttonfactory.BrownButtonFactory;
@@ -32,7 +32,7 @@ public class SearchResultScene {
         return 15;
     }
 
-    public SearchResultScene(Stage window, EngineFacade gameEngine) throws Exception {
+    public SearchResultScene(Stage window, RequestMapping requestMapping) throws Exception {
         this.window = window;
         this.backgroundFactory = new LightBackgroundFactory();
         this.buttonFactory = new BrownButtonFactory();
@@ -71,7 +71,7 @@ public class SearchResultScene {
         backButton.setText("Back");
         backButton.setOnAction(event -> {
             try {
-                window.setScene(new MainMenuScene(window, gameEngine).getScene());
+                window.setScene(new MainMenuScene(window, requestMapping).getScene());
                 window.setTitle("Welcome");
             } catch (Exception e) {
                 e.printStackTrace();

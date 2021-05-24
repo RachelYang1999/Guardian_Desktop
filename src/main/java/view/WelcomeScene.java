@@ -1,6 +1,6 @@
 package view;
 
-import facade.EngineFacade;
+import util.RequestMapping;
 import factory.backgroundfactory.BackgroundFactory;
 import factory.backgroundfactory.DeepBackgroundFactory;
 import factory.buttonfactory.BrownButtonFactory;
@@ -25,7 +25,7 @@ public class WelcomeScene {
     private BackgroundFactory backgroundFactory;
     private AlertBox alertBox;
 
-    public WelcomeScene(Stage window, EngineFacade gameEngine) throws Exception {
+    public WelcomeScene(Stage window, RequestMapping requestMapping) throws Exception {
         this.window = window;
         this.backgroundFactory = new DeepBackgroundFactory();
         this.buttonFactory = new BrownButtonFactory();
@@ -37,7 +37,7 @@ public class WelcomeScene {
         buttonVisitor.setLayoutY(630);
         buttonVisitor.setOnAction(event -> {
             try {
-                this.window.setScene(new SignupScene(this.window, gameEngine).getScene());
+                this.window.setScene(new SignupScene(this.window, requestMapping).getScene());
                 this.window.setTitle("Request A Token");
             } catch (Exception e) {
                 e.printStackTrace();
@@ -51,7 +51,7 @@ public class WelcomeScene {
         buttonUser.setLayoutY(630);
         buttonUser.setOnAction(event -> {
             try {
-                this.window.setScene(new LoginScene(this.window, gameEngine).getScene());
+                this.window.setScene(new LoginScene(this.window, requestMapping).getScene());
                 this.window.setTitle("Login");
             } catch (Exception e) {
                 e.printStackTrace();

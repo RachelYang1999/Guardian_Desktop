@@ -1,6 +1,4 @@
-import facade.EngineFacade;
-import facade.OfflineEngineFacadeImpl;
-import facade.OnlineEngineFacadeImpl;
+import util.RequestMapping;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import view.WelcomeScene;
@@ -9,24 +7,18 @@ import java.util.List;
 
 public class App extends Application {
     private Stage window;
-    private EngineFacade gameEngine;
+    private RequestMapping requestMapping;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
 
         List<String> args = getParameters().getRaw();
 
-        if (args.get(0).equals("online")) {
-            gameEngine = new OnlineEngineFacadeImpl();
-        }
-
-        if (args.get(0).equals("offline")) {
-            gameEngine = new OfflineEngineFacadeImpl();
-        }
+        requestMapping = new RequestMapping(args.get(0));
 
         window = primaryStage;
         window.setTitle("Welcome");
-        window.setScene(new WelcomeScene(this.window, gameEngine).getScene());
+        window.setScene(new WelcomeScene(this.window, requestMapping).getScene());
         window.show();
     }
 
