@@ -7,33 +7,38 @@ public class ErrorInfo implements Entity {
     private String relatedModule;
 
     public String getMessage() {
-        return null;
+        return message;
     }
 
     public void setMessage(String message) {
+        this.message = message;
     }
 
     public int getErrorCode() {
-        return -1;
+        return errorCode;
     }
 
     public void setErrorCode(int errorCode) {
+        this.errorCode = errorCode;
     }
 
     public String getRelatedModule() {
-        return null;
+        return relatedModule;
     }
 
     public void setRelatedModule(String relatedModule) {
+        this.relatedModule = relatedModule;
     }
 
     @Override
     public String getEntityInformation() {
-        return null;
+        return "Error Message: " + this.message + "\n"
+                + "Error Code: " + this.errorCode + "\n"
+                + "Related Module: " + this.relatedModule + "\n";
     }
 
     @Override
     public String getEntityType() {
-        return null;
+        return "ErrorInfo";
     }
 }

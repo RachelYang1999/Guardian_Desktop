@@ -6,36 +6,47 @@ public class User implements Entity {
     private String userTier;
 
     public String getToken() {
-        return null;
+        return token;
     }
 
     public void setToken(String token) {
-
+        this.token = token;
     }
 
     public boolean isLoginStatus() {
-        return false;
+        return loginStatus;
     }
 
     public void setLoginStatus(boolean loginStatus) {
-
+        this.loginStatus = loginStatus;
     }
 
     public String getUserTier() {
-        return null;
+        return userTier;
     }
 
     public void setUserTier(String userTier) {
-
+        this.userTier = userTier;
     }
 
     @Override
     public String getEntityInformation() {
-        return null;
+        String status = "";
+        if (loginStatus) {
+            status = "Logged In";
+        } else {
+            status = "Not Logged In";
+        }
+
+        String result =
+//                "Token: " + token + "\n" +
+                "User Tier: " + userTier + "\n" +
+                        "Login Status: " + status + "\n";
+        return result;
     }
 
     @Override
     public String getEntityType() {
-        return "Not User";
+        return "User";
     }
 }

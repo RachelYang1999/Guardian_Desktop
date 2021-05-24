@@ -5,26 +5,26 @@ public class Response implements Entity {
     String info;
 
     public String getInfo() {
-        return null;
+        return info;
     }
 
     public void setInfo(String info) {
-
+        this.info = info;
     }
 
     @Override
     public String toString() {
-        return null;
+        return info;
     }
 
 
     @Override
     public String getEntityInformation() {
-        return "IDK";
+        return "Response Information: " + this.info;
     }
 
     @Override
     public String getEntityType() {
-        return "Not Response";
+        return "Response";
     }
 }
