@@ -2,8 +2,6 @@ package controller;
 
 import model.domain.Entity;
 import model.service.UserService;
-import model.service.UserServiceOffline;
-import model.service.UserServiceOnline;
 
 public class LoginController {
 
@@ -12,12 +10,7 @@ public class LoginController {
 
     public LoginController(String mode) {
         this.mode = mode;
-        if (mode.equals("online")) {
-            this.userService = new UserServiceOnline();
-        } else if (mode.equals("offline")) {
-            this.userService = new UserServiceOffline();
-        }
-
+        this.userService = new UserService(mode);
     }
 
     public Entity login(String token) {

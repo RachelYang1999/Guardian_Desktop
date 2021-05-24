@@ -5,7 +5,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 
-public class GuardianOnlineAPIStrategy {
+public class GuardianOnlineAPIStrategy implements GuardianAPIStrategy{
     private OkHttpClient client;
     private Response response;
     private String token;
@@ -30,7 +30,9 @@ public class GuardianOnlineAPIStrategy {
             responseData = response.body().string();
             responseDataJson = new JSONObject(responseData);
 
-            printInfo("login", response);
+            System.out.println("[GuardianOnlineUtil] login" + " responseData " + responseData);
+            System.out.println("[GuardianOnlineUtil] login" + " response.code() " + response.code());
+            System.out.println("[GuardianOnlineUtil] login" + " ----------------------------------------------------------------");
 
             response.body().close();
             client.connectionPool().evictAll();
@@ -84,8 +86,9 @@ public class GuardianOnlineAPIStrategy {
 
 
     public static void main(String[] args) throws Exception {
-        System.out.println(new GuardianOnlineAPIStrategy().searchByTag("1b0f84fb-9674-4fe2-b596-5836b2772fcb", "sausage", 1).toString());
-    }
+        System.out.println(new GuardianOnlineAPIStrategy().login("1b0f84fb-9674-4fe2-b596-5836b2772fcb").toString());
 
+//        System.out.println(new GuardianOnlineAPIStrategy().searchByTag("1b0f84fb-9674-4fe2-b596-5836b2772fcb", "sausage", 1).toString());
+    }
 
 }

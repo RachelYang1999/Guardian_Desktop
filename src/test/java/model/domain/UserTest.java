@@ -1,4 +1,4 @@
-package model;
+package model.domain;
 
 import model.domain.Entity;
 import model.domain.User;
