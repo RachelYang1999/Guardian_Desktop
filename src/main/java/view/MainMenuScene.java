@@ -53,12 +53,12 @@ public class MainMenuScene {
         button11.setText("Search\nBy\nTag");
         button11.setTextAlignment(TextAlignment.CENTER);
         button11.setOnAction(event -> {
-//            try {
-//                window.setScene(new LoanMainScene(window, gameEngine).getScene());
-//                window.setTitle("Loan Page");
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
+            try {
+                window.setScene(new SearchByTagScene(window, gameEngine).getScene());
+                window.setTitle("Search By Tag");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         });
         button11.setAlignment(Pos.CENTER);
 
@@ -66,26 +66,16 @@ public class MainMenuScene {
         button12.setText("Search\nBy\n*");
         button12.setTextAlignment(TextAlignment.CENTER);
         button12.setOnAction(event -> {
-//            try {
-//                window.setScene(new ShipMainScene(window, gameEngine).getScene());
-//                window.setTitle("Ship Page");
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
+
         });
         button12.setAlignment(Pos.CENTER);
 
         Button button13 = buttonFactory.createButton();
-        button13.setText("Flight\nPlan");
+        button13.setText("Search\nBy\n*");
         button13.setTextAlignment(TextAlignment.CENTER);
 
         button13.setOnAction(event -> {
-//            try {
-//                window.setScene(new FlightPlanMainScene(window, gameEngine).getScene());
-//                window.setTitle("Flight Plan Page");
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
+
         });
         button13.setAlignment(Pos.CENTER);
 

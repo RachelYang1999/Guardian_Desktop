@@ -27,28 +27,22 @@ import view.alertbox.ErrorBox;
 import view.alertbox.ResponseBox;
 import view.alertbox.UnknownErrorBox;
 
-public class LoginScene {
+public class SearchByTagScene {
     private Stage window;
     private Scene scene;
     private BackgroundFactory backgroundFactory;
     private ButtonFactory buttonFactory;
     private AlertBox alertBox;
 
-    public LoginScene(Stage window, EngineFacade gameEngine) throws Exception {
+    public SearchByTagScene(Stage window, EngineFacade gameEngine) throws Exception {
         this.window = window;
         this.backgroundFactory = new LightBackgroundFactory();
         this.buttonFactory = new BrownButtonFactory();
 
-        Button buttonVisitor = buttonFactory.createButton();
-        buttonVisitor.setText("I AM A VISITOR");
-        buttonVisitor.setPrefWidth(250);
-        buttonVisitor.setLayoutX(328);
-        buttonVisitor.setLayoutY(630);
-
         Text t = new Text();
         t.setCache(true);
-        t.setText("Please log in here!");
-        t.setFill(Color.web("#FFFFFF"));
+        t.setText("Search By Tag");
+        t.setFill(Color.web("#704728"));
         t.setFont(Font.font("Arial", FontWeight.BOLD, 70));
         t.setLayoutX(250);
         t.setLayoutY(230);
@@ -56,44 +50,21 @@ public class LoginScene {
         r.setFraction(0.7f);
         t.setEffect(r);
 
-        Label tokenLabel = new Label("Token");
-        TextField tokenTextField = new TextField("1b0f84fb-9674-4fe2-b596-5836b2772fcb");
-        tokenLabel.setFont(Font.font("Arial", FontWeight.BOLD, 20));
-//        tokenLabel.setStyle("-fx-text-fill:#ffffff");
+//        Label tagLabel = new Label();
 
-        tokenTextField.setFont(Font.font("Arial", FontWeight.BOLD, 15));
-        tokenTextField.setMaxWidth(250);
-        HBox tokenHBox = new HBox();
-        tokenHBox.getChildren().addAll(tokenLabel, tokenTextField);
-        tokenHBox.setAlignment(Pos.CENTER);
+        TextField tagTextField = new TextField("Input the tag here");
+//        tagTextField.setStyle("-fx-text-fill:#777777");
+        tagTextField.setPrefHeight(40);
+        tagTextField.setPrefWidth(600);
+        tagTextField.setMaxWidth(600);
+        tagTextField.setFont(Font.font("Arial", FontWeight.BOLD, 20));
 
-        Button loginButton = buttonFactory.createButton();
-        loginButton.setFont(Font.font("Arial", FontWeight.BOLD, 20));
-        loginButton.setText("Login");
-        loginButton.setOnAction(event -> {
-//            String inputUserName = userNameTextField.getText();
-            String inputToken = tokenTextField.getText();
-            Entity returnedEntity = gameEngine.login(inputToken);
+        Button searchButton = buttonFactory.createButton();
+        searchButton.setFont(Font.font("Arial", FontWeight.BOLD, 20));
+        searchButton.setText("Search");
+        searchButton.setOnAction(event -> {
+            String inputTag = tagTextField.getText();
 
-            if (returnedEntity.getEntityType().equals("User")) {
-                User returnedUser = (User) returnedEntity;
-                this.alertBox = new ResponseBox();
-                alertBox.createAlertBox("Log In Successfully", "Here is your account information", returnedEntity.getEntityInformation());
-                try {
-                    window.setScene(new MainMenuScene(window, gameEngine).getScene());
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                System.out.println("Login successfully in LoginScene!");
-                System.out.println("[LoginScene] Token: " + inputToken);
-            } else if (returnedEntity.getEntityType().equals("ErrorInfo")){
-                this.alertBox = new ErrorBox();
-                alertBox.createAlertBox(returnedEntity);
-                System.out.println("[LoginScene] The token is incorrect");
-            } else {
-                this.alertBox = new UnknownErrorBox();
-                alertBox.createAlertBox(returnedEntity);
-            }
         });
 
         this.buttonFactory = new GrayButtonFactory();
@@ -102,31 +73,23 @@ public class LoginScene {
         backButton.setText("Back");
         backButton.setOnAction(event -> {
             try {
-                window.setScene(new WelcomeScene(window, gameEngine).getScene());
+                window.setScene(new MainMenuScene(window, gameEngine).getScene());
                 window.setTitle("Welcome");
             } catch (Exception e) {
                 e.printStackTrace();
             }
         });
 
-        VBox labelBox = new VBox(20);
-        labelBox.getChildren().addAll(tokenLabel);
-        labelBox.setAlignment(Pos.CENTER_RIGHT);
-
         VBox textFieldBox = new VBox(15);
-        textFieldBox.getChildren().addAll(tokenTextField);
-        textFieldBox.setAlignment(Pos.CENTER_LEFT);
-
-        HBox hBox = new HBox(3);
-        hBox.getChildren().addAll(labelBox, textFieldBox);
-        hBox.setAlignment(Pos.CENTER);
+        textFieldBox.getChildren().addAll(tagTextField);
+        textFieldBox.setAlignment(Pos.CENTER);
 
         HBox buttonBox = new HBox(15);
-        buttonBox.getChildren().addAll(loginButton, backButton);
+        buttonBox.getChildren().addAll(searchButton, backButton);
         buttonBox.setAlignment(Pos.CENTER);
 
         VBox totalForm = new VBox(20);
-        totalForm.getChildren().addAll(hBox, buttonBox);
+        totalForm.getChildren().addAll(textFieldBox, buttonBox);
         totalForm.setAlignment(Pos.CENTER);
 
         BorderPane pane = new BorderPane();

@@ -9,7 +9,6 @@ import factory.buttonfactory.GrayButtonFactory;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.effect.Reflection;
 import javafx.scene.layout.BorderPane;
@@ -20,21 +19,20 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import model.domain.Entity;
-import model.domain.User;
 import view.alertbox.AlertBox;
-import view.alertbox.ErrorBox;
-import view.alertbox.ResponseBox;
-import view.alertbox.UnknownErrorBox;
 
-public class SearchByTagScene {
+public class SearchResultScene {
     private Stage window;
     private Scene scene;
     private BackgroundFactory backgroundFactory;
     private ButtonFactory buttonFactory;
     private AlertBox alertBox;
 
-    public SearchByTagScene(Stage window, EngineFacade gameEngine) throws Exception {
+    public int itemsPerPage() {
+        return 15;
+    }
+
+    public SearchResultScene(Stage window, EngineFacade gameEngine) throws Exception {
         this.window = window;
         this.backgroundFactory = new LightBackgroundFactory();
         this.buttonFactory = new BrownButtonFactory();

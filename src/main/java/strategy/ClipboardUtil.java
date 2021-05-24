@@ -1,4 +1,4 @@
-package utility;
+package strategy;
 
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;

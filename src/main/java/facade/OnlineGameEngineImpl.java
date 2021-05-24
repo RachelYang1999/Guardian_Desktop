@@ -7,16 +7,16 @@ import factory.entityfactory.LoginUserFactory;
 import model.domain.Entity;
 import model.domain.User;
 import org.json.JSONObject;
-import utility.GuardianOnlineUtil;
+import strategy.GuardianOnlineAPIStrategy;
 
 public class OnlineGameEngineImpl implements EngineFacade {
     private EntityFactory entityFactory;
     private EntityFactory defaultErrorFactory;
     private User user;
-    private GuardianOnlineUtil guardianOnlineUtil;
+    private GuardianOnlineAPIStrategy guardianOnlineUtil;
 
     public OnlineGameEngineImpl() {
-        this.guardianOnlineUtil = new GuardianOnlineUtil();
+        this.guardianOnlineUtil = new GuardianOnlineAPIStrategy();
         this.defaultErrorFactory = new DefaultErrorInfoFactory();
     }
 
@@ -47,6 +47,34 @@ public class OnlineGameEngineImpl implements EngineFacade {
         // Default ErrorInfo entity
         return returnEntity;
     }
+
+//    @Override
+//    public Entity login(String token) {
+//        JSONObject responseJSON = guardianOnlineUtil.login(token);
+//        if (responseJSON == null) {
+//            System.out.println("[OnlineGameEngineImpl] responseJSON is null: " + responseJSON.toString());
+//
+//        }
+//        Entity returnEntity = defaultErrorFactory.createEntity(responseJSON);
+//        System.out.println("[OnlineGameEngineImpl] login response: " + responseJSON.toString());
+//
+//        if (responseJSON.has("response")) {
+//            if (responseJSON.getJSONObject("response").has("status")) {
+//                if (responseJSON.getJSONObject("response").getString("status").equals("ok")) {
+//                    entityFactory = new LoginUserFactory();
+//                    returnEntity = entityFactory.createEntity(responseJSON);
+//                    this.user = (User) returnEntity;
+//                    this.user.setToken(token);
+//                }
+//            }
+//        } else if (responseJSON.has("message")) {
+//            entityFactory = new ErrorInfoFactory();
+//            returnEntity = entityFactory.createEntity(responseJSON);
+//        }
+//
+//        // Default ErrorInfo entity
+//        return returnEntity;
+//    }
 
     @Override
     public void userLogOut() {

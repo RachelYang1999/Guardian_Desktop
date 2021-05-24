@@ -1,2 +1,5 @@
-package facade;public class OnlineTest {
+package facade;
+
+public class OnlineTest {
+
 }
