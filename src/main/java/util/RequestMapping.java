@@ -21,9 +21,9 @@ public class RequestMapping {
     private LoginController userController;
 
 
-    public RequestMapping(String mode) {
+    public RequestMapping(GuardianAPIStrategy guardianAPIStrategy) {
         this.mode = mode;
-        this.userController = new LoginController(mode);
+        this.userController = new LoginController(guardianAPIStrategy);
     }
 
     public Entity login(String token) {

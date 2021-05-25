@@ -44,9 +44,7 @@ public class ErrorInfoTest {
         errorInfo.setErrorCode(404);
         errorInfo.setRelatedModule("User");
 
-        String expected = "Error Message: File Not Found"+ "\n"
-                        + "Error Code: 404" + "\n"
-                        + "Related Module: User" + "\n";
+        String expected = "Error Message: File Not Found"+ "\n";
         assertEquals(expected, errorInfo.getEntityInformation());
     }
 
@@ -63,9 +61,7 @@ public class ErrorInfoTest {
         errorInfo.setErrorCode(404);
         errorInfo.setRelatedModule("User");
 
-        String expected = "Error Message: File Not Found"+ "\n"
-                + "Error Code: 404" + "\n"
-                + "Related Module: User" + "\n";
+        String expected = "Error Message: File Not Found"+ "\n";
         Entity userEntityType = errorInfo;
         assertEquals(expected, userEntityType.getEntityInformation());
     }

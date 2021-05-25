@@ -32,9 +32,7 @@ public class ErrorInfo implements Entity {
 
     @Override
     public String getEntityInformation() {
-        return "Error Message: " + this.message + "\n"
-                + "Error Code: " + this.errorCode + "\n"
-                + "Related Module: " + this.relatedModule + "\n";
+        return "Error Message: " + this.message + "\n";
     }
 
     @Override

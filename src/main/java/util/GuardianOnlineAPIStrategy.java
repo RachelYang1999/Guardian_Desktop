@@ -16,6 +16,7 @@ public class GuardianOnlineAPIStrategy implements GuardianAPIStrategy{
         System.out.println("[GuardianOnlineUtil] " + methodName + " ----------------------------------------------------------------");
     }
 
+    @Override
     public JSONObject login(String token) {
         JSONObject responseDataJson = null;
         String responseData = "";
@@ -49,6 +50,7 @@ public class GuardianOnlineAPIStrategy implements GuardianAPIStrategy{
         return responseDataJson;
     }
 
+    @Override
     public JSONObject searchByTag(String token, String tag, int pageNumber) {
         JSONObject responseDataJson = null;
         String responseData = "";
@@ -86,9 +88,9 @@ public class GuardianOnlineAPIStrategy implements GuardianAPIStrategy{
 
 
     public static void main(String[] args) throws Exception {
-        System.out.println(new GuardianOnlineAPIStrategy().login("1b0f84fb-9674-4fe2-b596-5836b2772fcb").toString());
+//        System.out.println(new GuardianOnlineAPIStrategy().login("1b0f84fb-9674-4fe2-b596-5836b2772fcb").toString());
 
-//        System.out.println(new GuardianOnlineAPIStrategy().searchByTag("1b0f84fb-9674-4fe2-b596-5836b2772fcb", "sausage", 1).toString());
+        System.out.println(new GuardianOnlineAPIStrategy().searchByTag("1b0f84fb-9674-4fe2-b596-5836b2772fcb", "sausage", 1).toString());
     }
 
 }

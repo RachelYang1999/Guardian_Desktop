@@ -2,15 +2,14 @@ package controller;
 
 import model.domain.Entity;
 import model.service.UserService;
+import util.GuardianAPIStrategy;
 
 public class LoginController {
 
     private UserService userService;
-    private String mode;
 
-    public LoginController(String mode) {
-        this.mode = mode;
-        this.userService = new UserService(mode);
+    public LoginController(GuardianAPIStrategy guardianAPIStrategy) {
+        this.userService = new UserService(guardianAPIStrategy);
     }
 
     public Entity login(String token) {

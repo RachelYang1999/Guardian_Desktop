@@ -14,7 +14,7 @@ public class GuardianOfflineAPIStrategy implements GuardianAPIStrategy {
 
     public JSONObject login(String token) {
         JSONObject responseDataJson = null;
-        String responseData = "{\"response\":{\"userTier\":\"developer\",\"total\":63957,\"startIndex\":1,\"pages\":6396,\"pageSize\":10,\"currentPage\":1}";
+        String responseData = "{\"response\":{\"status\": \"ok\",\"userTier\":\"developer\",\"total\":63957,\"startIndex\":1,\"pages\":6396,\"pageSize\":10,\"currentPage\":1}}";
         responseDataJson = new JSONObject(responseData);
         return responseDataJson;
     }
@@ -22,7 +22,7 @@ public class GuardianOfflineAPIStrategy implements GuardianAPIStrategy {
     public JSONObject searchByTag(String token, String tag, int pageNumber) {
         JSONObject responseDataJson = null;
         String responseData = "";
-        
+
         return responseDataJson;
     }
 
