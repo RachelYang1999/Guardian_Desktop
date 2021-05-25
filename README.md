@@ -35,7 +35,9 @@ classes at the discretion of the developer.
     https://github.sydney.edu.au/qyan6939/SCD2_2021_Exam/commit/495233cf7ad738c2dd73c80a9c100b20c587c841
     * [TDD RED PHASE] finish UserService testing        
     https://github.sydney.edu.au/qyan6939/SCD2_2021_Exam/commit/495233cf7ad738c2dd73c80a9c100b20c587c841
-
+    * [TDD GREEN PHASE] finish UserService implementation and passed testings
+    https://github.sydney.edu.au/qyan6939/SCD2_2021_Exam/commit/efb3db185be74d1fc940b15f8a773cb44d06be43
+  
 * Search By Tag Function
 
 
