@@ -1,6 +1,7 @@
 package factory.entityfactory;
 
 import model.domain.Article;
+import model.domain.ArticleData;
 import model.domain.Entity;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -20,19 +21,9 @@ public class ArticleFactory implements EntityCollectionFactory {
     public Entity createEntity(JSONObject response) {
         Article article = new Article();
 
-        article.setId(checkAndGetString(response, "id"));
-        article.setType(checkAndGetString(response, "type"));
-        article.setSectionID(checkAndGetString(response, "sectionId"));
-        article.setSectionName(checkAndGetString(response, "sectionName"));
-        article.setWebTitle(checkAndGetString(response, "webTitle"));
-        article.setWebUrl(checkAndGetString(response, "webUrl"));
-        article.setApiUrl(checkAndGetString(response, "apiUrl"));
-
-//        article.setSectionName(response.getString("sectionName"));
-//        article.setWebTitle(response.getString("webTitle"));
-//        article.setWebUrl(response.getString("webUrl"));
-//        article.setApiUrl(response.getString("apiUrl"));
-
+        List<Entity> articleDataListEntityType = new ArticleDataFactory().createEntities(response);
+        article.setArticleDataList(articleDataListEntityType);
+        article.setWebTitle(checkAndGetString(response,"webTitle"));
         return article;
     }
 
@@ -45,8 +36,6 @@ public class ArticleFactory implements EntityCollectionFactory {
 //        System.out.println("ArticleFactory createEntities resultArray");
 //        System.out.println(resultArray.toString());
 
-
-
         for (int i = 0; i < resultArray.length(); i ++) {
             JSONObject currentResultJsonObject = resultArray.getJSONObject(i);
 //            System.out.println("------------------------------------------------------------------------");
@@ -56,7 +45,6 @@ public class ArticleFactory implements EntityCollectionFactory {
             Entity createdEntity = new ArticleFactory().createEntity(currentResultJsonObject);
             result.add(createdEntity);
         }
-
         return result;
     }
 }

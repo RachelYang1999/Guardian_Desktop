@@ -10,18 +10,12 @@ public class GuardianOnlineAPIStrategy implements GuardianAPIStrategy{
     private Response response;
     private String token;
 
-    public void printInfo(String methodName, Response response) throws IOException {
-        System.out.println("[GuardianOnlineUtil] " + methodName + " responseData " + response.body().string());
-        System.out.println("[GuardianOnlineUtil] " + methodName + " response.code() " + response.code());
-        System.out.println("[GuardianOnlineUtil] " + methodName + " ----------------------------------------------------------------");
-    }
-
     @Override
     public JSONObject login(String token) {
         JSONObject responseDataJson = null;
         String responseData = "";
         try {
-            OkHttpClient client = new OkHttpClient().newBuilder()
+            client = new OkHttpClient().newBuilder()
                     .build();
             Request request = new Request.Builder()
                     .url("http://content.guardianapis.com/tags?api-key=" + token)
@@ -55,7 +49,7 @@ public class GuardianOnlineAPIStrategy implements GuardianAPIStrategy{
         JSONObject responseDataJson = null;
         String responseData = "";
         try {
-            OkHttpClient client = new OkHttpClient().newBuilder()
+            client = new OkHttpClient().newBuilder()
                     .build();
             Request request = new Request.Builder()
                     .url("http://content.guardianapis.com/tags?api-key=" + token + "&q=" + tag + "&page=" + Integer.toString(pageNumber))
@@ -77,11 +71,9 @@ public class GuardianOnlineAPIStrategy implements GuardianAPIStrategy{
             System.err.println("Something got wrong");
             e.printStackTrace();
         }
-        finally {
-            if (response != null && client != null) {
-                response.body().close();
-                client.connectionPool().evictAll();
-            }
+        if (response.body() != null && client != null) {
+            response.body().close();
+            client.connectionPool().evictAll();
         }
         return responseDataJson;
     }

@@ -61,20 +61,20 @@ public class ArticleServiceTest {
             result += e.getEntityInformation();
             assertEquals("Article", e.getEntityType());
         }
-        String expected = "Article ID: food/sausages\n" +
-                "Article Type: keyword\n" +
-                "Section ID: food\n" +
-                "Section Name: Food\n" +
-                "Web Title: Sausages\n" +
-                "Web Url: https://www.theguardian.com/food/sausages\n" +
-                "API Url: https://content.guardianapis.com/food/sausages\n" +
-                "Article ID: film/sausage-party\n" +
-                "Article Type: keyword\n" +
-                "Section ID: film\n" +
-                "Section Name: Film\n" +
-                "Web Title: Sausage Party\n" +
-                "Web Url: https://www.theguardian.com/film/sausage-party\n" +
-                "API Url: https://content.guardianapis.com/film/sausage-party\n";
+        String expected = "sectionName: Food\n" +
+                "apiUrl: https://content.guardianapis.com/food/sausages\n" +
+                "webUrl: https://www.theguardian.com/food/sausages\n" +
+                "webTitle: Sausages\n" +
+                "id: food/sausages\n" +
+                "sectionId: food\n" +
+                "type: keyword\n" +
+                "sectionName: Film\n" +
+                "apiUrl: https://content.guardianapis.com/film/sausage-party\n" +
+                "webUrl: https://www.theguardian.com/film/sausage-party\n" +
+                "webTitle: Sausage Party\n" +
+                "id: film/sausage-party\n" +
+                "sectionId: film\n" +
+                "type: keyword\n";
         assertEquals(expected, result);
     }
 
@@ -87,20 +87,20 @@ public class ArticleServiceTest {
             result += e.getEntityInformation();
             assertEquals("Article", e.getEntityType());
         }
-        String expected = "Article ID: food/sausages\n" +
-                "Article Type: keyword\n" +
-                "Section ID: food\n" +
-                "Section Name: Food\n" +
-                "Web Title: Sausages\n" +
-                "Web Url: https://www.theguardian.com/food/sausages\n" +
-                "API Url: https://content.guardianapis.com/food/sausages\n" +
-                "Article ID: film/sausage-party\n" +
-                "Article Type: keyword\n" +
-                "Section ID: film\n" +
-                "Section Name: Film\n" +
-                "Web Title: Sausage Party\n" +
-                "Web Url: https://www.theguardian.com/film/sausage-party\n" +
-                "API Url: https://content.guardianapis.com/film/sausage-party\n";
+        String expected = "sectionName: Food\n" +
+                "apiUrl: https://content.guardianapis.com/food/sausages\n" +
+                "webUrl: https://www.theguardian.com/food/sausages\n" +
+                "webTitle: Sausages\n" +
+                "id: food/sausages\n" +
+                "sectionId: food\n" +
+                "type: keyword\n" +
+                "sectionName: Film\n" +
+                "apiUrl: https://content.guardianapis.com/film/sausage-party\n" +
+                "webUrl: https://www.theguardian.com/film/sausage-party\n" +
+                "webTitle: Sausage Party\n" +
+                "id: film/sausage-party\n" +
+                "sectionId: film\n" +
+                "type: keyword\n";
         assertEquals(expected, result);
     }
 

@@ -90,7 +90,6 @@ public class ArticleService {
 
         System.out.println("Main Entity Information---------------------------------------------");
         for (Entity e : entities) {
-
             System.out.println(e.getEntityInformation());
         }
         System.out.println("Main Entity Information End---------------------------------------------");
