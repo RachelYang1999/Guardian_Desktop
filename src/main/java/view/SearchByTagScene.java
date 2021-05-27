@@ -1,5 +1,9 @@
 package view;
 
+import factory.entityfactory.EntityFactory;
+import factory.entityfactory.ErrorInfoFactory;
+import model.domain.Entity;
+import model.domain.ErrorInfo;
 import util.RequestMapping;
 import factory.backgroundfactory.BackgroundFactory;
 import factory.backgroundfactory.LightBackgroundFactory;
@@ -20,6 +24,7 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import view.alertbox.AlertBox;
+import view.alertbox.ErrorBox;
 
 public class SearchByTagScene {
     private Stage window;
@@ -58,7 +63,21 @@ public class SearchByTagScene {
         searchButton.setText("Search");
         searchButton.setOnAction(event -> {
             String inputTag = tagTextField.getText();
+            System.out.println("inputTag is: " + inputTag);
 
+            try {
+                if (inputTag.equals("Input the tag here")) {
+                    ErrorInfo errorInfo = new ErrorInfo();
+                    errorInfo.setMessage("Please don't input empty character");
+                    this.alertBox = new ErrorBox();
+                    alertBox.createAlertBox(errorInfo);
+                } else {
+                    window.setScene(new SearchResultScene(window, requestMapping, inputTag).getScene());
+                    window.setTitle("Search Result");
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         });
 
         this.buttonFactory = new GrayButtonFactory();

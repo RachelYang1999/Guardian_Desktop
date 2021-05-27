@@ -1,8 +1,11 @@
 package util;
 
+import controller.ArticleController;
 import controller.LoginController;
 import model.domain.Entity;
 import model.domain.User;
+
+import java.util.List;
 
 public class RequestMapping {
     /*
@@ -19,11 +22,14 @@ public class RequestMapping {
     Controllers need to be mapped
      */
     private LoginController userController;
+    private ArticleController articleController;
 
 
     public RequestMapping(GuardianAPIStrategy guardianAPIStrategy) {
         this.mode = mode;
         this.userController = new LoginController(guardianAPIStrategy);
+        this.articleController = new ArticleController(guardianAPIStrategy);
+
     }
 
     public Entity login(String token) {
@@ -32,7 +38,12 @@ public class RequestMapping {
             this.user = (User) returnedEntity;
             this.user.setToken(token);
         }
-        return userController.login(token);
+        return returnedEntity;
+    }
+
+    public List<Entity> searchByTag(String token, String tag) {
+        List<Entity> entities = articleController.searchByTag(token, tag);
+        return entities;
     }
 
     public void userLogOut() {

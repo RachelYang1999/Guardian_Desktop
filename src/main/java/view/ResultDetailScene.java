@@ -1,12 +1,5 @@
 package view;
 
-import javafx.scene.control.*;
-import javafx.scene.layout.*;
-import model.domain.Article;
-import model.domain.Entity;
-import model.service.ArticleService;
-import util.GuardianOnlineAPIStrategy;
-import util.RequestMapping;
 import factory.backgroundfactory.BackgroundFactory;
 import factory.backgroundfactory.LightBackgroundFactory;
 import factory.buttonfactory.BrownButtonFactory;
@@ -14,18 +7,24 @@ import factory.buttonfactory.ButtonFactory;
 import factory.buttonfactory.GrayButtonFactory;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.effect.Reflection;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import model.domain.Article;
+import model.domain.Entity;
+import model.service.ArticleService;
+import util.GuardianOnlineAPIStrategy;
+import util.RequestMapping;
 import view.alertbox.AlertBox;
-import view.alertbox.ResponseBox;
 
 import java.util.List;
 
-public class SearchResultScene {
+public class ResultDetailScene {
     private Stage window;
     private Scene scene;
     private BackgroundFactory backgroundFactory;
@@ -39,15 +38,14 @@ public class SearchResultScene {
         return 10;
     }
 
-    public SearchResultScene(Stage window, RequestMapping requestMapping, String tag) throws Exception {
+    public ResultDetailScene(Stage window, RequestMapping requestMapping, String tag, Entity entity) throws Exception {
         this.window = window;
         this.backgroundFactory = new LightBackgroundFactory();
         this.buttonFactory = new BrownButtonFactory();
-        this.returnedArticles = new ArticleService(new GuardianOnlineAPIStrategy()).getAllArticles("1b0f84fb-9674-4fe2-b596-5836b2772fcb", tag);
 
         Text t = new Text();
         t.setCache(true);
-        t.setText("Search By Tag Result");
+        t.setText("Detailed Information");
         t.setFill(Color.web("#704728"));
         t.setFont(Font.font("Arial", FontWeight.BOLD, 60));
 //        t.setLayoutX(250);
@@ -56,52 +54,11 @@ public class SearchResultScene {
         r.setFraction(0.7f);
         t.setEffect(r);
 
-        Label searchResultInfo = new Label();
-        searchResultInfo.setText("There are " + returnedArticles.size() + " articles found " + "\n" + "with the tag \"" + tag + "\":");
-        searchResultInfo.setFont(Font.font("Arial", FontWeight.BOLD, 20));
 
-        Pagination pagination = new Pagination((int)Math.ceil((double)returnedArticles.size()/itemsPerPage()), 0);
-        pagination.setStyle("-fx-font-family: Arial");
-        if (returnedArticles.size() == 0) {
-            pagination = new Pagination(0, 0);
-        }
-
-        pagination.setPageFactory((Integer p) -> {
-            VBox box = new VBox(5);
-            box.getChildren().add(searchResultInfo);
-            int page = p * itemsPerPage();
-            for (int i = page; i < page + itemsPerPage() && i < returnedArticles.size(); i++) {
-                Entity currentEntity = returnedArticles.get(i);
-                FlowPane flow = new FlowPane();
-                Text info = new Text(((Article) currentEntity).getWebTitle());
-                info.setFont(Font.font("Arial", FontWeight.NORMAL, 20));
-
-                Hyperlink showDetailLink = new Hyperlink("Show Detail");
-                showDetailLink.setOnAction(actionEvent -> {
-                    this.alertBox = new ResponseBox();
-                    String boxInfo = currentEntity.getEntityInformation();
-                    alertBox.createAlertBox("Result Information", "Here is the detailed article information", boxInfo);
-                });
-
-                flow.getChildren().addAll(info, showDetailLink);
-                flow.setStyle("-fx-font-family: Arial");
-                ScrollPane scrollPane = new ScrollPane();
-                scrollPane.setContent(flow);
-                box.getChildren().add(scrollPane);
-            }
-            box.setAlignment(Pos.TOP_LEFT);
-            return box;
-        });
-
-        pagination.setPrefWidth(480);
-        pagination.setMaxWidth(480);
-        pagination.setMinWidth(480);
-
-        pagination.setPrefHeight(600);
-        pagination.setMaxHeight(600);
-        pagination.setMinHeight(600);
-        pagination.setStyle("-fx-background-color: rgba(169,166,166,0.7)");
-
+        Text info = new Text(entity.getEntityInformation());
+        info.setFont(Font.font("Arial", FontWeight.NORMAL, 15));
+        ScrollPane scrollPane = new ScrollPane();
+        scrollPane.setContent(info);
 
 
         HBox hBox = new HBox(10);
@@ -116,7 +73,7 @@ public class SearchResultScene {
 //        region3.setStyle("-fx-background-color:#138c31");
 
         HBox.setHgrow(region1, Priority.ALWAYS);
-        hBox.getChildren().addAll(region1, pagination, region3);
+        hBox.getChildren().addAll(region1, scrollPane, region3);
         hBox.setAlignment(Pos.BOTTOM_CENTER);
 //        hBox.setStyle("-fx-background-color:#8b2727");
 
@@ -126,7 +83,7 @@ public class SearchResultScene {
         backButton.setText("Back");
         backButton.setOnAction(event -> {
             try {
-                window.setScene(new SearchByTagScene(window, requestMapping).getScene());
+                window.setScene(new SearchResultScene(window, requestMapping, tag).getScene());
                 window.setTitle("Search By Tag");
             } catch (Exception e) {
                 e.printStackTrace();

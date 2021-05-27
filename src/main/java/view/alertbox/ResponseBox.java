@@ -143,7 +143,7 @@ public class ResponseBox extends AlertBox {
         header.setFont(Font.font("Arial", FontWeight.BOLD, 20));
 
         Text info = new Text(finalInfo);
-        header.setFont(Font.font("Arial", FontWeight.NORMAL, 15));
+        info.setFont(Font.font("Arial", FontWeight.NORMAL, 15));
         ScrollPane scrollPane = new ScrollPane();
         scrollPane.setContent(info);
         scrollPane.setMaxHeight(800);
