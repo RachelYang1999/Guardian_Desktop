@@ -39,9 +39,9 @@ test {
 
 //mainClassName = "utility/SpaceTradersUtil"
 //mainClassName = "TestApp"
-//mainClassName = "App"
+mainClassName = "App"
 //mainClassName = "SplitPage"
 //mainClassName = "SplitArticle"
-mainClassName = "model/service/ArticleService"
+//mainClassName = "model/service/ArticleService"
 
 

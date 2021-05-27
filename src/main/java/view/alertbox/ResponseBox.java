@@ -5,6 +5,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextArea;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -143,16 +144,16 @@ public class ResponseBox extends AlertBox {
         header.setFont(Font.font("Arial", FontWeight.BOLD, 20));
 
         Text info = new Text(finalInfo);
-        info.setFont(Font.font("Arial", FontWeight.NORMAL, 15));
+
         ScrollPane scrollPane = new ScrollPane();
         scrollPane.setContent(info);
-        scrollPane.setMaxHeight(800);
-        scrollPane.setMaxWidth(800);
+//        info.setStyle("-fx-font-size: 30");
+//        scrollPane.setStyle("-fx-font-size: 30");
+//        info.setFont(Font.font("Arial", FontWeight.BOLD, 35));
 
         HBox buttonHBox = new HBox(10);
         buttonHBox.getChildren().addAll(gotButton);
         buttonHBox.setAlignment(Pos.CENTER);
-
 
         VBox content = new VBox();
         content.getChildren().addAll(scrollPane, buttonHBox);
@@ -164,13 +165,7 @@ public class ResponseBox extends AlertBox {
         pane.setCenter(content);
         pane.setAlignment(content, Pos.CENTER);
 
-        Scene scene = new Scene(pane, 450, 300);
-
-
-//        Scene scene = new Scene(new Group());
-
-
-//        scene.setRoot(content);
+        Scene scene = new Scene(pane, 1000, 1000);
 
         window.setScene(scene);
         return window;

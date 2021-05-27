@@ -13,8 +13,8 @@ public abstract class AlertBox {
     public AlertBox() {
         this.window = new Stage();
         window.initModality(Modality.APPLICATION_MODAL);
-        window.setMinWidth(450);
-        window.setMinHeight(300);
+        window.setMinWidth(650);
+        window.setMinHeight(450);
     }
 
     public abstract void createAlertBox(Entity entity);
