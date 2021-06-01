@@ -26,8 +26,20 @@ public class PastebinService {
     }
 
     public Entity getPastebinLink(String token, String copiedText) {
-        return null;
-    }
+        Entity returnEntity = defaultErrorFactory.createEntity(null);
+        String returnedMessage = pastebinAPIStrategy.getPastebinLink(token, copiedText);
+        if (returnedMessage.contains("pastebin.com")) {
+            Pastebin pastebin = new Pastebin();
+            pastebin.setLink(returnedMessage);
+            pastebin.setToken(token);
+            returnEntity = pastebin;
+        } else {
+            ErrorInfo errorInfo = new ErrorInfo();
+            errorInfo.setMessage(returnedMessage);
+            returnEntity = errorInfo;
+        }
+
+        return returnEntity;    }
 
     public static void main(String[] args) {
         Entity e = new PastebinService(new PastebinOfflineAPIStrategy()).getPastebinLink("agr_jX9Bg7kE3-XgRLIt-TWk2teKqTxN", "PastebinOnlineAPIStrategy successful!");
