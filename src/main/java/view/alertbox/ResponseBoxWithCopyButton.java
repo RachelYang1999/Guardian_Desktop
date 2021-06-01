@@ -1,76 +1,26 @@
 package view.alertbox;
 
-import factory.backgroundfactory.BackgroundFactory;
-import factory.backgroundfactory.LightBackgroundFactory;
-import factory.buttonfactory.BrownButtonFactory;
-import factory.buttonfactory.ButtonFactory;
-import factory.buttonfactory.GrayButtonFactory;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
-import javafx.scene.effect.Reflection;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.domain.Entity;
 import util.ClipboardUtil;
-import util.RequestMapping;
 
 import java.util.List;
 
-public class ResponseBox extends AlertBox{
+public class ResponseBoxWithCopyButton extends AlertBox {
 
     @Override
     public void createAlertBox(Entity entity) {
-//        String entityInformation = entity.getEntityInformation();
-//
-//        window.setTitle("Response");
-//        Button gotButton = new Button("Got It!");
-//        gotButton.setOnAction(e -> window.close());
-//        gotButton.setFont(Font.font("Arial", FontWeight.BOLD, 15));
-//
-//        Button copyButton = new Button("Copy Information");
-//
-//        String finalInfo = entityInformation;
-//        copyButton.setOnAction(e -> {
-//            ClipboardUtil clipboardUtil = new ClipboardUtil();
-//            clipboardUtil.setClipboardString(finalInfo);
-//            String copiedText = clipboardUtil.getClipboardString();
-//            System.out.println("Copied text to clipboard: " + copiedText);
-//        });
-//
-//        copyButton.setFont(Font.font("Arial", FontWeight.BOLD, 15));
-//
-//        Text info = new Text(finalInfo);
-//        ScrollPane scrollPane = new ScrollPane();
-//        scrollPane.setContent(info);
-//        scrollPane.setMaxHeight(800);
-//        scrollPane.setMaxWidth(800);
-//
-//        HBox buttonHBox = new HBox(10);
-//        buttonHBox.getChildren().addAll(copyButton, gotButton);
-//        buttonHBox.setAlignment(Pos.CENTER);
-//
-//        Text text = new Text(finalInfo);
-//        text.setFont(Font.font("Arial", FontWeight.NORMAL, 20));
-//
-//        Scene scene = new Scene(new Group());
-//
-//        VBox root = new VBox();
-//        root.getChildren().addAll(scrollPane, buttonHBox);
-//        scene.setRoot(root);
-//
-//        window.setScene(scene);
-//
-//        // The user cannot do anything till he or she close the alert window
-//        window.showAndWait();
     }
 
     @Override
@@ -82,7 +32,21 @@ public class ResponseBox extends AlertBox{
         gotButton.setOnAction(e -> window.close());
         gotButton.setFont(Font.font("Arial", FontWeight.BOLD, 15));
 
+        Button copyButton = new Button("Copy Information");
+
         String finalInfo = contentText;
+        copyButton.setOnAction(e -> {
+            ClipboardUtil clipboardUtil = new ClipboardUtil();
+            clipboardUtil.setClipboardString(finalInfo);
+            String copiedText = clipboardUtil.getClipboardString();
+            System.out.println("Copied text to clipboard: " + copiedText);
+            SimpleResponseBox simpleResponseBox = new SimpleResponseBox();
+            simpleResponseBox.createAlertBox("Pastebin", "Copied Succesfully", "Paste the copied content anywhere you want");
+
+            this.window.close();
+        });
+
+        copyButton.setFont(Font.font("Arial", FontWeight.BOLD, 15));
 
         Text header = new Text(headerText);
         header.setFont(Font.font("Arial", FontWeight.BOLD, 20));
@@ -94,7 +58,7 @@ public class ResponseBox extends AlertBox{
         scrollPane.setMaxWidth(800);
 
         HBox buttonHBox = new HBox(10);
-        buttonHBox.getChildren().addAll(gotButton);
+        buttonHBox.getChildren().addAll(copyButton, gotButton);
         buttonHBox.setAlignment(Pos.CENTER);
 
         VBox content = new VBox();
@@ -126,7 +90,17 @@ public class ResponseBox extends AlertBox{
         gotButton.setOnAction(e -> window.close());
         gotButton.setFont(Font.font("Arial", FontWeight.BOLD, 15));
 
+//        Button copyButton = new Button("Copy Information");
+
         String finalInfo = contentText;
+//        copyButton.setOnAction(e -> {
+//            ClipboardUtil clipboardUtil = new ClipboardUtil();
+//            clipboardUtil.setClipboardString(finalInfo);
+//            String copiedText = clipboardUtil.getClipboardString();
+//            System.out.println("Copied text to clipboard: " + copiedText);
+//        });
+
+//        copyButton.setFont(Font.font("Arial", FontWeight.BOLD, 15));
 
         Text header = new Text(headerText);
         header.setFont(Font.font("Arial", FontWeight.BOLD, 20));
@@ -135,7 +109,6 @@ public class ResponseBox extends AlertBox{
 
         ScrollPane scrollPane = new ScrollPane();
         scrollPane.setContent(info);
-        scrollPane.setPadding(new Insets(10));
 
         HBox buttonHBox = new HBox(10);
         buttonHBox.getChildren().addAll(gotButton);

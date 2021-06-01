@@ -1,6 +1,5 @@
 package view;
 
-import util.RequestMapping;
 import factory.backgroundfactory.BackgroundFactory;
 import factory.backgroundfactory.LightBackgroundFactory;
 import factory.buttonfactory.BrownButtonFactory;
@@ -21,35 +20,29 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import model.domain.Entity;
+import model.domain.Pastebin;
 import model.domain.User;
-import view.alertbox.AlertBox;
-import view.alertbox.ErrorBox;
-import view.alertbox.ResponseBox;
-import view.alertbox.UnknownErrorBox;
+import util.RequestMapping;
+import view.alertbox.*;
 
-public class LoginScene {
+public class PastebinLoginScene {
     private Stage window;
     private Scene scene;
     private BackgroundFactory backgroundFactory;
     private ButtonFactory buttonFactory;
     private AlertBox alertBox;
 
-    public LoginScene(Stage window, RequestMapping requestMapping) throws Exception {
-        this.window = window;
+    public PastebinLoginScene(Stage window, RequestMapping requestMapping, String copiedText) throws Exception {
+        this.window = new Stage();
+        window.setTitle("Pastebin Login");
         this.backgroundFactory = new LightBackgroundFactory();
         this.buttonFactory = new BrownButtonFactory();
 
-        Button buttonVisitor = buttonFactory.createButton();
-        buttonVisitor.setText("I AM A VISITOR");
-        buttonVisitor.setPrefWidth(250);
-        buttonVisitor.setLayoutX(328);
-        buttonVisitor.setLayoutY(630);
-
         Text t = new Text();
         t.setCache(true);
-        t.setText("Please log in here!");
+        t.setText("Please input your Pastebin token in here!");
         t.setFill(Color.web("#FFFFFF"));
-        t.setFont(Font.font("Arial", FontWeight.BOLD, 70));
+        t.setFont(Font.font("Arial", FontWeight.BOLD, 50));
         t.setLayoutX(250);
         t.setLayoutY(230);
         Reflection r = new Reflection();
@@ -57,9 +50,8 @@ public class LoginScene {
         t.setEffect(r);
 
         Label tokenLabel = new Label("Token");
-        TextField tokenTextField = new TextField("1b0f84fb-9674-4fe2-b596-5836b2772fcb");
+        TextField tokenTextField = new TextField("agr_jX9Bg7kE3-XgRLIt-TWk2teKqTxN");
         tokenLabel.setFont(Font.font("Arial", FontWeight.BOLD, 20));
-//        tokenLabel.setStyle("-fx-text-fill:#ffffff");
 
         tokenTextField.setFont(Font.font("Arial", FontWeight.BOLD, 15));
         tokenTextField.setMaxWidth(250);
@@ -73,17 +65,13 @@ public class LoginScene {
         loginButton.setOnAction(event -> {
 //            String inputUserName = userNameTextField.getText();
             String inputToken = tokenTextField.getText();
-            Entity returnedEntity = requestMapping.login(inputToken);
+            Entity returnedEntity = requestMapping.getPastebinLink(inputToken, copiedText);
 
-            if (returnedEntity.getEntityType().equals("User")) {
-                User returnedUser = (User) returnedEntity;
-                this.alertBox = new ResponseBox();
-                alertBox.createAlertBox("Log In Successfully", "Here is your account information", returnedEntity.getEntityInformation());
-                try {
-                    window.setScene(new MainMenuScene(window, requestMapping).getScene());
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+            if (returnedEntity.getEntityType().equals("Pastebin")) {
+
+                Pastebin pastebin = (Pastebin) returnedEntity;
+                this.alertBox = new ResponseBoxWithCopyButton();
+                alertBox.createAlertBox("Log In Successfully", "Here is your Pastebinlink", pastebin.getLink());
                 System.out.println("Login successfully in LoginScene!");
                 System.out.println("[LoginScene] Token: " + inputToken);
             } else if (returnedEntity.getEntityType().equals("ErrorInfo")){
@@ -101,12 +89,7 @@ public class LoginScene {
         backButton.setFont(Font.font("Arial", FontWeight.BOLD, 20));
         backButton.setText("Back");
         backButton.setOnAction(event -> {
-            try {
-                window.setScene(new WelcomeScene(window, requestMapping).getScene());
-                window.setTitle("Welcome");
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            window.close();
         });
 
         VBox labelBox = new VBox(20);

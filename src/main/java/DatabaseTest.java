@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 import java.sql.*;
 
-public class SqliteTest1 {
+public class DatabaseTest {
     public static void main( String args[] ) {
         Connection c = null;
         Statement stmt = null;

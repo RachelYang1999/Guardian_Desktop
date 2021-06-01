@@ -2,27 +2,65 @@ package factory.entityfactory;
 
 import model.domain.ArticleData;
 import model.domain.Entity;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class ArticleDataFactory implements EntityCollectionFactory {
+
     public String checkAndGetString(JSONObject response, String field) {
         if (response.has(field)) {
-            return response.getString(field);
+            try {
+                return response.getString(field);
+            } catch (Exception e) {
+                System.out.println("ArticleDataFactory Get string wrong");
+//                e.printStackTrace();
+            }
+            try {
+                JSONArray jsonArray = response.getJSONArray(field);
+                return getContentFromJsonArray(jsonArray);
+            } catch (Exception e) {
+                System.out.println("ArticleDataFactory Get string wrong");
+            }
+
+            try {
+                return response.get(field).toString();
+            } catch (Exception e) {
+                System.out.println("ArticleDataFactory Get string wrong");
+            }
+            return "N/A";
         } else {
             return "N/A";
         }
     }
 
-    public Entity createEntity(JSONObject response) {
-        return null;
+    public String getContentFromJsonArray(JSONArray jsonArray) {
+        String result = "\n";
+        for (int i = 0; i < jsonArray.length(); i ++) {
+            try {
+                JSONObject objects = jsonArray.getJSONObject(i);
+                Iterator keys = objects.keys();
+                while (keys.hasNext()) {
+                    String key = keys.next().toString();
+                    String value = checkAndGetString(objects, key);
+                    result += "\t\t" + key + ": " + value + "\n";
+                    System.out.println("\t\t" + key + ": " + value + "\n");
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                System.out.println("[ArticleDataFactory] getContentFromJsonArray exception?");
+            }
+        }
+        return result;
     }
 
     @Override
     public List<Entity> createEntities(JSONObject response) {
         List<Entity> result = new ArrayList<>();
+
 
         for (Object key : response.keySet()) {
 

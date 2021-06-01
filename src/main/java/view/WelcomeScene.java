@@ -51,7 +51,7 @@ public class WelcomeScene {
         buttonUser.setLayoutY(630);
         buttonUser.setOnAction(event -> {
             try {
-                this.window.setScene(new LoginScene(this.window, requestMapping).getScene());
+                this.window.setScene(new GuardianLoginScene(this.window, requestMapping).getScene());
                 this.window.setTitle("Login");
             } catch (Exception e) {
                 e.printStackTrace();

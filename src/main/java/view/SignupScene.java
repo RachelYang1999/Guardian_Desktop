@@ -55,7 +55,7 @@ public class SignupScene {
                     "Please access this sign up website by pasting the link to a browser~";
             alertBox.createAlertBox("Copy Link", "Congratulations", info);
             try {
-                window.setScene(new LoginScene(window, requestMapping).getScene());
+                window.setScene(new GuardianLoginScene(window, requestMapping).getScene());
             } catch (Exception e) {
                 e.printStackTrace();
             }

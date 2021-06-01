@@ -4,8 +4,6 @@ import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import model.domain.Article;
 import model.domain.Entity;
-import model.service.ArticleService;
-import util.GuardianOnlineAPIStrategy;
 import util.RequestMapping;
 import factory.backgroundfactory.BackgroundFactory;
 import factory.backgroundfactory.LightBackgroundFactory;
@@ -21,7 +19,8 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import view.alertbox.AlertBox;
-import view.alertbox.ResponseBox;
+import view.alertbox.PastebinLoginBox;
+import view.alertbox.ResponseBoxWithPastebin;
 
 import java.util.List;
 
@@ -43,15 +42,15 @@ public class SearchResultScene {
         this.window = window;
         this.backgroundFactory = new LightBackgroundFactory();
         this.buttonFactory = new BrownButtonFactory();
-        this.returnedArticles = new ArticleService(new GuardianOnlineAPIStrategy()).getAllArticles("1b0f84fb-9674-4fe2-b596-5836b2772fcb", tag);
+//        this.returnedArticles = new ArticleService(new GuardianOnlineAPIStrategy()).getAllArticles("1b0f84fb-9674-4fe2-b596-5836b2772fcb", tag);
+        this.returnedArticles = requestMapping.searchByTag(requestMapping.getUser().getToken(), tag);
 
         Text t = new Text();
         t.setCache(true);
         t.setText("Search By Tag Result");
         t.setFill(Color.web("#704728"));
         t.setFont(Font.font("Arial", FontWeight.BOLD, 60));
-//        t.setLayoutX(250);
-//        t.setLayoutY(230);
+
         Reflection r = new Reflection();
         r.setFraction(0.7f);
         t.setEffect(r);
@@ -78,9 +77,12 @@ public class SearchResultScene {
 
                 Hyperlink showDetailLink = new Hyperlink("Show Detail");
                 showDetailLink.setOnAction(actionEvent -> {
-                    this.alertBox = new ResponseBox();
+
+//                    this.alertBox = new ResponseBox();
                     String boxInfo = currentEntity.getEntityInformation();
-                    alertBox.createAlertBox("Result Information", "Here is the detailed article information", boxInfo);
+//                    alertBox.createAlertBox("Result Information", "Here is the detailed article information", boxInfo);
+                    ResponseBoxWithPastebin responseBoxWithPastebin = new ResponseBoxWithPastebin(requestMapping);
+                    responseBoxWithPastebin.createAlertBox("Result Information", "Here is the detailed article information", boxInfo);
                 });
 
                 flow.getChildren().addAll(info, showDetailLink);
