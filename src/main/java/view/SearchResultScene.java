@@ -73,9 +73,9 @@ public class SearchResultScene {
                 Entity currentEntity = returnedArticles.get(i);
                 FlowPane flow = new FlowPane();
                 Text info = new Text(((Article) currentEntity).getWebTitle());
-                info.setFont(Font.font("Arial", FontWeight.NORMAL, 20));
+                info.setFont(Font.font("Arial", FontWeight.NORMAL, 16));
                 Text id = new Text("ID: " + ((Article) currentEntity).getId());
-                id.setFont(Font.font("Arial", FontWeight.NORMAL, 15));
+                id.setFont(Font.font("Arial", FontWeight.NORMAL, 13));
                 id.setStroke(Color.web("#727272"));
 
                 Hyperlink showDetailLink = new Hyperlink("Show Detail");

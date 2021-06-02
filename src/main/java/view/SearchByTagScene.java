@@ -2,6 +2,7 @@ package view;
 
 import factory.entityfactory.EntityFactory;
 import factory.entityfactory.ErrorInfoFactory;
+import javafx.scene.text.TextAlignment;
 import model.domain.Entity;
 import model.domain.ErrorInfo;
 import util.RequestMapping;
@@ -60,7 +61,7 @@ public class SearchByTagScene {
 
         Button searchButton = buttonFactory.createButton();
         searchButton.setFont(Font.font("Arial", FontWeight.BOLD, 20));
-        searchButton.setText("Search");
+        searchButton.setText("Search\nFrom\nAPI");
         searchButton.setOnAction(event -> {
             String inputTag = tagTextField.getText();
             System.out.println("inputTag is: " + inputTag);
@@ -73,7 +74,6 @@ public class SearchByTagScene {
                     alertBox.createAlertBox(errorInfo);
                 } else {
 
-
                     window.setScene(new SearchResultScene(window, requestMapping, inputTag).getScene());
                     window.setTitle("Search Result");
                 }
@@ -81,11 +81,36 @@ public class SearchByTagScene {
                 e.printStackTrace();
             }
         });
+        searchButton.setTextAlignment(TextAlignment.CENTER);
+
+        Button searchCachedButton = buttonFactory.createButton();
+        searchCachedButton.setFont(Font.font("Arial", FontWeight.BOLD, 20));
+        searchCachedButton.setText("Search\nIn Local\nDatabase");
+        searchCachedButton.setOnAction(event -> {
+            String inputTag = tagTextField.getText();
+            System.out.println("inputTag is: " + inputTag);
+            try {
+                if (inputTag.equals("Input the tag here")) {
+                    ErrorInfo errorInfo = new ErrorInfo();
+                    errorInfo.setMessage("Please don't input empty character");
+                    this.alertBox = new ErrorBox();
+                    alertBox.createAlertBox(errorInfo);
+                } else {
+
+                    window.setScene(new SearchCachedResultScene(window, requestMapping, inputTag).getScene());
+                    window.setTitle("Search Result");
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+        searchCachedButton.setTextAlignment(TextAlignment.CENTER);
+
 
         this.buttonFactory = new GrayButtonFactory();
         Button backButton = buttonFactory.createButton();
         backButton.setFont(Font.font("Arial", FontWeight.BOLD, 20));
-        backButton.setText("Back");
+        backButton.setText(" \nBack\n ");
         backButton.setOnAction(event -> {
             try {
                 window.setScene(new MainMenuScene(window, requestMapping).getScene());
@@ -94,13 +119,14 @@ public class SearchByTagScene {
                 e.printStackTrace();
             }
         });
+        backButton.setTextAlignment(TextAlignment.CENTER);
 
         VBox textFieldBox = new VBox(15);
         textFieldBox.getChildren().addAll(tagTextField);
         textFieldBox.setAlignment(Pos.CENTER);
 
         HBox buttonBox = new HBox(15);
-        buttonBox.getChildren().addAll(searchButton, backButton);
+        buttonBox.getChildren().addAll(searchButton, searchCachedButton, backButton);
         buttonBox.setAlignment(Pos.CENTER);
 
         VBox totalForm = new VBox(20);

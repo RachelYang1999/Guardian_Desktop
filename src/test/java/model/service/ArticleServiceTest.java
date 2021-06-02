@@ -66,9 +66,7 @@ public class ArticleServiceTest {
 //        when(articleDao.getEntity(anyString(), eq("non-exist tag"))).thenReturn("");
 
         when(articleDao.addEntity(any())).thenReturn(true);
-
     }
-
 
     @Test
     public void testSearchSuccessOnline() {

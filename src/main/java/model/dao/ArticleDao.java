@@ -22,6 +22,7 @@ public class ArticleDao extends AbstractDao {
 
     @Override
     public boolean addEntity(Entity entity) {
+        String finalSQL = "";
         Article article = null;
         try {
             statement = connection.createStatement();
@@ -29,21 +30,29 @@ public class ArticleDao extends AbstractDao {
                     "CREATE TABLE IF NOT EXISTS ARTICLE" +
                     "(ID CHAR(80)   PRIMARY KEY    NOT NULL," +
                     " TAG CHAR(50)               NOT NULL," +
-                    " INFO CHAR(300));";
+                    " TITLE CHAR(100)               NOT NULL," +
+
+                    " INFO CHAR(1200));";
             statement.executeUpdate(sql);
 
             if (entity.getEntityType().equals("Article")) {
                 article = (Article) entity;
                 sql =
-                        "INSERT INTO ARTICLE (ID, TAG, INFO) " +
-                        "VALUES ('" + article.getId() + "', '" + article.getRelatedTag() + "', '" + article.getEntityInformation() + "');";
+                        "INSERT INTO ARTICLE (ID, TAG, TITLE, INFO) " +
+                        "VALUES ('" + article.getId() + "', '"
+                                + article.getRelatedTag() + "', '"
+                                + article.getWebTitle() + "', '"
+                                + article.getEntityInformation().replace("'", "") + "');";
+                finalSQL = sql;
                 System.out.println("sql: " + sql);
                 statement.executeUpdate(sql);
             }
             statement.close();
             return true;
         } catch (Exception e) {
-            System.err.println("Database add article failed!");
+            System.err.println("SQL: " + finalSQL);
+
+            System.err.println("Database add article failed when adding " + entity.getEntityInformation());
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
             e.printStackTrace();
             return false;
@@ -57,6 +66,16 @@ public class ArticleDao extends AbstractDao {
         try {
             statement = connection.createStatement();
             String sql =
+                    "CREATE TABLE IF NOT EXISTS ARTICLE" +
+                            "(ID CHAR(80)   PRIMARY KEY    NOT NULL," +
+                            " TAG CHAR(50)               NOT NULL," +
+                            " TITLE CHAR(100)               NOT NULL," +
+
+                            " INFO CHAR(300));";
+            statement.executeUpdate(sql);
+
+            statement = connection.createStatement();
+            sql =
                     "SELECT * FROM ARTICLE " +
                             "WHERE " + matchField + " = '" + matchValue + "';";
 //            System.out.println("sql: " + sql);
@@ -65,7 +84,7 @@ public class ArticleDao extends AbstractDao {
             while (resultSet.next()) {
                 String retrievedResult = resultSet.getString(retrieveFiled);
                 result.add(retrievedResult);
-                System.out.println(retrieveFiled + ": " + retrievedResult);
+//                System.out.println(retrieveFiled + ": " + retrievedResult);
             }
         } catch (Exception e) {
             System.err.println("Database get user failed!");
@@ -112,6 +131,9 @@ public class ArticleDao extends AbstractDao {
 
     public static void main(String[] args) {
         AbstractDao articleDAO = new ArticleDao(new DaoUtil());
+        Entity entity = new Article();
+        articleDAO.addEntity(entity);
+
 
 //        String info = articleDAO.getEntity("TAG", "gay couple");
 //        System.out.println("info " + info);

@@ -27,6 +27,17 @@ public class PastebinService {
 
     public Entity getPastebinLink(String token, String copiedText) {
         Entity returnEntity = defaultErrorFactory.createEntity(null);
+        String returnedMessage = pastebinAPIStrategy.getPastebinLink(token, copiedText);
+        if (returnedMessage.contains("pastebin.com")) {
+            Pastebin pastebin = new Pastebin();
+            pastebin.setLink(returnedMessage);
+            pastebin.setToken(token);
+            returnEntity = pastebin;
+        } else {
+            ErrorInfo errorInfo = new ErrorInfo();
+            errorInfo.setMessage(returnedMessage);
+            returnEntity = errorInfo;
+        }
 
         return returnEntity;
     }

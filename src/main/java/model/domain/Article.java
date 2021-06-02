@@ -1,12 +1,13 @@
 package model.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Article implements Entity{
 
     private String id;
     private String webTitle;
-    private List<Entity> articleDataList;
+    private List<Entity> articleDataList = new ArrayList<>();
     private String relatedTag;
 
     private String info;

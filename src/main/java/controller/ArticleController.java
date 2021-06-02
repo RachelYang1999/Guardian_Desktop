@@ -22,7 +22,7 @@ public class ArticleController {
     }
 
     public List<Entity> searchByCachedTag(String token, String tag) {
-        return articleService.getAllArticles(token, tag);
+        return articleService.searchByCachedTag(tag);
     }
 
 }

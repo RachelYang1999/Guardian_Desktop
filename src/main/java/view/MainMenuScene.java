@@ -62,38 +62,39 @@ public class MainMenuScene {
         });
         button11.setAlignment(Pos.CENTER);
 
-        Button button12 = buttonFactory.createButton();
-        button12.setText("Search\nBy\n*");
-        button12.setTextAlignment(TextAlignment.CENTER);
-        button12.setOnAction(event -> {
-
-        });
-        button12.setAlignment(Pos.CENTER);
-
-        Button button13 = buttonFactory.createButton();
-        button13.setText("Search\nBy\n*");
-        button13.setTextAlignment(TextAlignment.CENTER);
-
-        button13.setOnAction(event -> {
-
-        });
-        button13.setAlignment(Pos.CENTER);
+//        Button button12 = buttonFactory.createButton();
+//        button12.setText("Search\nBy\n*");
+//        button12.setTextAlignment(TextAlignment.CENTER);
+//        button12.setOnAction(event -> {
+//
+//        });
+//        button12.setAlignment(Pos.CENTER);
+//
+//        Button button13 = buttonFactory.createButton();
+//        button13.setText("Search\nBy\n*");
+//        button13.setTextAlignment(TextAlignment.CENTER);
+//
+//        button13.setOnAction(event -> {
+//
+//        });
+//        button13.setAlignment(Pos.CENTER);
 
 
         VBox buttonCol1 = new VBox(20);
         buttonCol1.getChildren().addAll(button11);
         buttonCol1.setAlignment(Pos.CENTER);
 
-        VBox buttonCol2 = new VBox(20);
-        buttonCol2.getChildren().addAll(button12);
-        buttonCol2.setAlignment(Pos.CENTER);
-
-        VBox buttonCol3 = new VBox(20);
-        buttonCol3.getChildren().addAll(button13);
-        buttonCol3.setAlignment(Pos.CENTER);
+//        VBox buttonCol2 = new VBox(20);
+//        buttonCol2.getChildren().addAll(button12);
+//        buttonCol2.setAlignment(Pos.CENTER);
+//
+//        VBox buttonCol3 = new VBox(20);
+//        buttonCol3.getChildren().addAll(button13);
+//        buttonCol3.setAlignment(Pos.CENTER);
 
         HBox mainHBox = new HBox(20);
-        mainHBox.getChildren().addAll(buttonCol1, buttonCol2, buttonCol3);
+//        mainHBox.getChildren().addAll(buttonCol1, buttonCol2, buttonCol3);
+        mainHBox.getChildren().addAll(buttonCol1);
         mainHBox.setAlignment(Pos.CENTER);
 
         this.buttonFactory = new RedButtonFactory();
