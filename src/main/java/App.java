@@ -1,3 +1,4 @@
+import model.dao.DaoUtil;
 import util.*;
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -10,27 +11,29 @@ public class App extends Application {
     private RequestMapping requestMapping;
     private GuardianAPIStrategy guardianAPIStrategy;
     private PastebinAPIStrategy pastebinAPIStrategy;
+    private DaoUtil daoUtil;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        this.daoUtil = new DaoUtil();
 
         List<String> args = getParameters().getRaw();
         if (args.get(0).equals("online")) {
             this.guardianAPIStrategy = new GuardianOnlineAPIStrategy();
-            requestMapping = new RequestMapping(guardianAPIStrategy, pastebinAPIStrategy);
+            requestMapping = new RequestMapping(guardianAPIStrategy, pastebinAPIStrategy, daoUtil);
         } else if (args.get(0).equals("offline")) {
             this.guardianAPIStrategy = new GuardianOfflineAPIStrategy();
-            requestMapping = new RequestMapping(guardianAPIStrategy, pastebinAPIStrategy);
+            requestMapping = new RequestMapping(guardianAPIStrategy, pastebinAPIStrategy, daoUtil);
         } else {
             throw new Exception("Incorrect command line argument");
         }
 
         if (args.get(1).equals("online")) {
             this.pastebinAPIStrategy = new PastebinOnlineAPIStrategy();
-            requestMapping = new RequestMapping(guardianAPIStrategy, pastebinAPIStrategy);
+            requestMapping = new RequestMapping(guardianAPIStrategy, pastebinAPIStrategy, daoUtil);
         } else if (args.get(1).equals("offline")) {
             this.pastebinAPIStrategy = new PastebinOfflineAPIStrategy();
-            requestMapping = new RequestMapping(guardianAPIStrategy, pastebinAPIStrategy);
+            requestMapping = new RequestMapping(guardianAPIStrategy, pastebinAPIStrategy, daoUtil);
         } else {
             throw new Exception("Incorrect command line argument");
         }

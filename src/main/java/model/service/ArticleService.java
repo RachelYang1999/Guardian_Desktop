@@ -1,6 +1,10 @@
 package model.service;
 
 import factory.entityfactory.*;
+import model.dao.AbstractDao;
+import model.dao.ArticleDao;
+import model.dao.DaoUtil;
+import model.domain.Article;
 import model.domain.Entity;
 import model.domain.User;
 import org.json.JSONObject;
@@ -18,10 +22,14 @@ public class ArticleService {
     private User user;
     private GuardianAPIStrategy guardianAPIStrategy;
 
-    public ArticleService(GuardianAPIStrategy guardianAPIStrategy) {
+    private AbstractDao articleDao;
+
+
+    public ArticleService(GuardianAPIStrategy guardianAPIStrategy, AbstractDao articleDao) {
         this.guardianAPIStrategy = guardianAPIStrategy;
         this.defaultErrorFactory = new DefaultErrorInfoFactory();
         this.entityCollectionFactory = new ArticleFactory();
+        this.articleDao = articleDao;
     }
 
     public List<Entity> getAllArticles(String token, String tag) {
@@ -53,30 +61,6 @@ public class ArticleService {
     public List<Entity> searchByTag(String token, String tag, int pageNUmber) {
         List<Entity> entities = new ArrayList<>();
 
-        JSONObject responseJSON = guardianAPIStrategy.searchByTag(token, tag, pageNUmber);
-        if (responseJSON == null) {
-            System.out.println("[UserService] searchByTag responseJSON is null");
-        }
-        entities.add(defaultErrorFactory.createEntity(responseJSON));   // Create default error object
-
-        if (responseJSON.has("response")) {
-            if (responseJSON.getJSONObject("response").has("status")) {
-                if (responseJSON.getJSONObject("response").getString("status").equals("ok")) {
-                    entityCollectionFactory = new ArticleFactory();
-                    entities.clear();
-                    entities = entityCollectionFactory.createEntities(responseJSON);
-                }
-            }
-        } else if (responseJSON.has("message")) {
-            entities.clear();
-            entityFactory = new ErrorInfoFactory();
-            entities.add(entityFactory.createEntity(responseJSON));
-        } else {
-            entities.clear();
-            entities.add(this.defaultErrorFactory.createEntity(responseJSON));
-        }
-
-        // Default object is ErrorInfo entity list
         return entities;
     }
 
@@ -84,16 +68,16 @@ public class ArticleService {
     public static void main(String[] args) {
         System.out.println("Main---------------------------------------------");
 
-        List<Entity> entities = new ArticleService(new GuardianOnlineAPIStrategy()).getAllArticles("1b0f84fb-9674-4fe2-b596-5836b2772fcb", "gay couple");
+//        List<Entity> entities = new ArticleService(new GuardianOnlineAPIStrategy(), new DaoUtil()).getAllArticles("1b0f84fb-9674-4fe2-b596-5836b2772fcb", "gay couple");
 //        List<Entity> entities = new ArticleService(new GuardianOfflineAPIStrategy()).getAllArticles("1b0f84fb-9674-4fe2-b596-5836b2772fcb", "gay couple");
 //        List<Entity> entities = new ArticleService(new GuardianOnlineAPIStrategy()).getAllArticles("1b0f84fb-9674-4fe2-b596-5836b2772fcb", "football");
 //        List<Entity> entities = new ArticleService(new GuardianOnlineAPIStrategy()).getAllArticles("1b0f84fb-9674-4fe2-b596-5836b2772fcb", "chinese food");
 
-        System.out.println("Main Entity Information---------------------------------------------");
-        for (Entity e : entities) {
-            System.out.println(e.getEntityInformation());
-        }
-        System.out.println("Main Entity Information End---------------------------------------------");
+//        System.out.println("Main Entity Information---------------------------------------------");
+//        for (Entity e : entities) {
+//            System.out.println(e.getEntityInformation());
+//        }
+//        System.out.println("Main Entity Information End---------------------------------------------");
 
     }
 

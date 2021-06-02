@@ -1,46 +1,47 @@
 package model.dao;
 
+import model.domain.Article;
 import model.domain.Entity;
 import model.domain.User;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
 
-public class UserDao extends AbstractDao {
+public class ArticleDao extends AbstractDao {
     Connection connection;
     Statement statement;
 
 
-    public UserDao(DaoUtil daoUtil) {
+    public ArticleDao(DaoUtil daoUtil) {
         super(daoUtil);
         connection = daoUtil.getDatabaseConnection();
     }
 
     @Override
     public boolean addEntity(Entity entity) {
-        User user = null;
+        Article article = null;
         try {
             statement = connection.createStatement();
             String sql =
-                    "CREATE TABLE IF NOT EXISTS USER" +
-                    "(TOKEN CHAR(50) PRIMARY KEY    NOT NULL," +
-                    "INFO CHAR(300))";
+                    "CREATE TABLE IF NOT EXISTS ARTICLE" +
+                    "(ID CHAR(80)   PRIMARY KEY    NOT NULL," +
+                    " TAG CHAR(50)               NOT NULL," +
+                    " INFO CHAR(300));";
             statement.executeUpdate(sql);
 
-            if (entity.getEntityType().equals("User")) {
-                user = (User) entity;
+            if (entity.getEntityType().equals("Article")) {
+                article = (Article) entity;
                 sql =
-                        "INSERT INTO USER (TOKEN, INFO) " +
-                        "VALUES ('" + user.getToken() + "', '" + user.getEntityInformation() + "');";
+                        "INSERT INTO ARTICLE (ID, TAG, INFO) " +
+                        "VALUES ('" + article.getId() + "', '" + article.getRelatedTag() + "', '" + article.getEntityInformation() + "');";
+                System.out.println("sql: " + sql);
                 statement.executeUpdate(sql);
             }
             statement.close();
             return true;
         } catch (Exception e) {
-            System.err.println("Database add user failed!");
+            System.err.println("Database add article failed!");
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
             e.printStackTrace();
             return false;
@@ -48,18 +49,18 @@ public class UserDao extends AbstractDao {
     }
 
     @Override
-    public String getEntity(String filed, String entityName) {
+    public String getEntity(String filed, String searchString) {
         try {
             statement = connection.createStatement();
             String sql =
-                    "SELECT * FROM USER " +
-                    "WHERE " + filed + " = '" + entityName + "';";
+                    "SELECT * FROM ARTICLE " +
+                    "WHERE " + filed + " = '" + searchString + "';";
+//            System.out.println("sql: " + sql);
+            statement.executeUpdate(sql);
             ResultSet resultSet = statement.executeQuery(sql);
             while (resultSet.next()) {
-                String token = resultSet.getString("TOKEN");
                 String info = resultSet.getString("INFO");
-//                System.out.println("Token: " + token);
-//                System.out.println("Info: " + info);
+                System.out.println("Info: " + info);
                 return info;
             }
         } catch (Exception e) {
@@ -105,17 +106,13 @@ public class UserDao extends AbstractDao {
     }
 
     public static void main(String[] args) {
-        AbstractDao userDao = new UserDao(new DaoUtil());
-        User user = new User();
-        user.setToken("fake token1");
-        user.setUserTier("dad");
-//        userDao.addEntity(user);
-        String info = userDao.getEntity("TOKEN", "fake token1");
+        AbstractDao articleDAO = new ArticleDao(new DaoUtil());
+
+        String info = articleDAO.getEntity("TAG", "gay couple");
         System.out.println("info " + info);
         System.out.println(info.equals(""));
 
 //        userDao.updateEntity("fake token1", "new fake token1");
 //        userDao.deleteEntity("fake token1");
-
     }
 }

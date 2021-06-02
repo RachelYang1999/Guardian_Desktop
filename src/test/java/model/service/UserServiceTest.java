@@ -1,5 +1,8 @@
 package model.service;
 
+import model.dao.ArticleDao;
+import model.dao.DaoUtil;
+import model.dao.UserDao;
 import model.domain.Entity;
 import org.json.JSONObject;
 import org.junit.Before;
@@ -10,6 +13,8 @@ import util.GuardianOfflineAPIStrategy;
 import util.GuardianOnlineAPIStrategy;
 import static org.junit.Assert.*;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
 /*
@@ -21,6 +26,8 @@ public class UserServiceTest {
 
     private GuardianAPIStrategy onlineGuardianAPIStrategy;
     private GuardianAPIStrategy offlineGuardianAPIStrategy;
+
+    private UserDao userDao;
 
     @Before
     public void init() {
@@ -36,6 +43,8 @@ public class UserServiceTest {
         onlineGuardianAPIStrategy = Mockito.mock(GuardianOnlineAPIStrategy.class);
         offlineGuardianAPIStrategy = Mockito.mock(GuardianOfflineAPIStrategy.class);
 
+        userDao = Mockito.mock(UserDao.class);
+
         when(onlineGuardianAPIStrategy.login("correct token")).thenReturn(successfulResponse);
         when(offlineGuardianAPIStrategy.login("correct token")).thenReturn(successfulResponse);
 
@@ -44,11 +53,15 @@ public class UserServiceTest {
 
         when(onlineGuardianAPIStrategy.login("irregular")).thenReturn(irregularResponse);
         when(offlineGuardianAPIStrategy.login("irregular")).thenReturn(irregularResponse);
+
+        when(userDao.getEntity(anyString(), anyString())).thenReturn("exist info");
+
+        when(userDao.addEntity(any())).thenReturn(true);
     }
 
     @Test
     public void testLoginSuccessOnline() {
-        UserService userService = new UserService(onlineGuardianAPIStrategy);
+        UserService userService = new UserService(onlineGuardianAPIStrategy, userDao);
         Entity returnedEntity = userService.login("correct token");
         String expected = "User Tier: developer" + "\n" +
                 "Login Status: Logged In" + "\n";
@@ -58,7 +71,7 @@ public class UserServiceTest {
 
     @Test
     public void testLoginSuccessOffline() {
-        UserService userService = new UserService(offlineGuardianAPIStrategy);
+        UserService userService = new UserService(offlineGuardianAPIStrategy, userDao);
         Entity returnedEntity = userService.login("correct token");
         String expected = "User Tier: developer" + "\n" +
                 "Login Status: Logged In" + "\n";
@@ -68,7 +81,7 @@ public class UserServiceTest {
 
     @Test
     public void testLoginUnsuccessfulOnline() {
-        UserService userService = new UserService(onlineGuardianAPIStrategy);
+        UserService userService = new UserService(onlineGuardianAPIStrategy, userDao);
         Entity returnedEntity = userService.login("incorrect token");
         String expected = "Error Message: Invalid authentication credentials" + "\n";
         assertEquals("ErrorInfo", returnedEntity.getEntityType());
@@ -77,7 +90,7 @@ public class UserServiceTest {
 
     @Test
     public void testLoginUnsuccessfulOffline() {
-        UserService userService = new UserService(offlineGuardianAPIStrategy);
+        UserService userService = new UserService(offlineGuardianAPIStrategy, userDao);
         Entity returnedEntity = userService.login("incorrect token");
         String expected = "Error Message: Invalid authentication credentials" + "\n";
         assertEquals("ErrorInfo", returnedEntity.getEntityType());
@@ -86,7 +99,7 @@ public class UserServiceTest {
 
     @Test
     public void testLoginIrregularOnline() {
-        UserService userService = new UserService(onlineGuardianAPIStrategy);
+        UserService userService = new UserService(onlineGuardianAPIStrategy, userDao);
         Entity returnedEntity = userService.login("irregular");
         String expected = "Error Message: Unknown Error!" + "\n";
         assertEquals("ErrorInfo", returnedEntity.getEntityType());
@@ -95,7 +108,7 @@ public class UserServiceTest {
 
     @Test
     public void testLoginIrregularOffline() {
-        UserService userService = new UserService(offlineGuardianAPIStrategy);
+        UserService userService = new UserService(offlineGuardianAPIStrategy, userDao);
         Entity returnedEntity = userService.login("irregular");
         String expected = "Error Message: Unknown Error!" + "\n";
         assertEquals("ErrorInfo", returnedEntity.getEntityType());

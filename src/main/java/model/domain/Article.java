@@ -4,8 +4,18 @@ import java.util.List;
 
 public class Article implements Entity{
 
+    private String id;
     private String webTitle;
     private List<Entity> articleDataList;
+    private String relatedTag;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getWebTitle() {
         return webTitle;
@@ -25,6 +35,14 @@ public class Article implements Entity{
 
     public void addArticleDataList(ArticleData articleData) {
         this.articleDataList.add(articleData);
+    }
+
+    public String getRelatedTag() {
+        return relatedTag;
+    }
+
+    public void setRelatedTag(String relatedTag) {
+        this.relatedTag = relatedTag;
     }
 
     @Override

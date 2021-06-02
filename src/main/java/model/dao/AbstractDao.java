@@ -19,7 +19,7 @@ public abstract class AbstractDao {
     }
     public abstract boolean addEntity(Entity entity);
 
-    public abstract String getEntity(String entityName);
+    public abstract String getEntity(String field, String entityName);
 
     public abstract boolean updateEntity(String entityName, String entityInfo);
 

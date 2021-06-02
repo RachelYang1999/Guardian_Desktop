@@ -3,9 +3,11 @@ package util;
 import controller.ArticleController;
 import controller.LoginController;
 import controller.PastebinController;
+import model.dao.DaoUtil;
 import model.domain.Entity;
 import model.domain.User;
 
+import java.sql.Connection;
 import java.util.List;
 
 public class RequestMapping {
@@ -24,15 +26,18 @@ public class RequestMapping {
     private ArticleController articleController;
     private PastebinController pastebinController;
 
+    private DaoUtil daoUtil;
 
 
-    public RequestMapping(GuardianAPIStrategy guardianAPIStrategy, PastebinAPIStrategy pastebinAPIStrategy) {
+    public RequestMapping(GuardianAPIStrategy guardianAPIStrategy, PastebinAPIStrategy pastebinAPIStrategy, DaoUtil daoUtil) {
         /*
         Both strategies are injected in RequestMapping object, they can be either online or offline
          */
-        this.userController = new LoginController(guardianAPIStrategy);
-        this.articleController = new ArticleController(guardianAPIStrategy);
+        this.userController = new LoginController(guardianAPIStrategy, daoUtil);
+        this.articleController = new ArticleController(guardianAPIStrategy, daoUtil);
         this.pastebinController = new PastebinController(pastebinAPIStrategy);
+
+        this.daoUtil = daoUtil;
 
     }
 

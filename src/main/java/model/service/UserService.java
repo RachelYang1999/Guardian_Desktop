@@ -4,6 +4,9 @@ import factory.entityfactory.DefaultErrorInfoFactory;
 import factory.entityfactory.EntityFactory;
 import factory.entityfactory.ErrorInfoFactory;
 import factory.entityfactory.LoginUserFactory;
+import model.dao.AbstractDao;
+import model.dao.DaoUtil;
+import model.dao.UserDao;
 import model.domain.Entity;
 import model.domain.User;
 import org.json.JSONObject;
@@ -15,9 +18,12 @@ public class UserService {
     private User user;
     private GuardianAPIStrategy guardianAPIStrategy;
 
-    public UserService(GuardianAPIStrategy guardianAPIStrategy) {
+    private AbstractDao userDao;
+
+    public UserService(GuardianAPIStrategy guardianAPIStrategy, UserDao userDao) {
         this.guardianAPIStrategy = guardianAPIStrategy;
         this.defaultErrorFactory = new DefaultErrorInfoFactory();
+        this.userDao = userDao;
     }
 
     public Entity login(String token) {
@@ -36,6 +42,11 @@ public class UserService {
                     returnEntity = entityFactory.createEntity(responseJSON);
                     this.user = (User) returnEntity;
                     this.user.setToken(token);
+                    if (userDao.getEntity("TOKEN", token).equals("")) {
+                        userDao.addEntity(this.user);
+                    } else {
+                        userDao.updateEntity(token, user.getEntityInformation());
+                    }
                 }
             }
         } else if (responseJSON.has("message")) {

@@ -24,6 +24,7 @@ public class ArticleFactory implements EntityCollectionFactory {
         List<Entity> articleDataListEntityType = new ArticleDataFactory().createEntities(response);
         article.setArticleDataList(articleDataListEntityType);
         article.setWebTitle(checkAndGetString(response,"webTitle"));
+        article.setId(checkAndGetString(response,"id"));
         return article;
     }
 

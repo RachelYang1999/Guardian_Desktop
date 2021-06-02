@@ -1,5 +1,7 @@
 package model.service;
 
+import model.dao.ArticleDao;
+import model.dao.DaoUtil;
 import model.domain.Entity;
 import org.json.JSONObject;
 import org.junit.Before;
@@ -12,11 +14,14 @@ import util.GuardianOnlineAPIStrategy;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
 
 public class ArticleServiceTest {
     private GuardianAPIStrategy onlineGuardianAPIStrategy;
     private GuardianAPIStrategy offlineGuardianAPIStrategy;
+
+    private ArticleDao articleDao;
 
     @Before
     public void init() {
@@ -39,6 +44,8 @@ public class ArticleServiceTest {
         onlineGuardianAPIStrategy = Mockito.mock(GuardianOnlineAPIStrategy.class);
         offlineGuardianAPIStrategy = Mockito.mock(GuardianOfflineAPIStrategy.class);
 
+        articleDao = Mockito.mock(ArticleDao.class);
+
         when(onlineGuardianAPIStrategy.searchByTag("correct token", "sausage", 1)).thenReturn(successfulResponse);
         when(offlineGuardianAPIStrategy.searchByTag("correct token", "sausage", 1)).thenReturn(successfulResponse);
 
@@ -50,12 +57,19 @@ public class ArticleServiceTest {
 
         when(onlineGuardianAPIStrategy.searchByTag("correct token", "irregular tag", 1)).thenReturn(irregularResponse);
         when(offlineGuardianAPIStrategy.searchByTag("correct token", "irregular tag", 1)).thenReturn(irregularResponse);
+
+        when(articleDao.getEntity(anyString(), anyString())).thenReturn("exist info");
+//        when(articleDao.getEntity(anyString(), eq("non-exist tag"))).thenReturn("");
+
+        when(articleDao.addEntity(any())).thenReturn(true);
+
     }
+
 
     @Test
     public void testSearchSuccessOnline() {
-        ArticleService userService = new ArticleService(onlineGuardianAPIStrategy);
-        List<Entity> returnedEntities = userService.searchByTag("correct token", "sausage", 1);
+        ArticleService articleService = new ArticleService(onlineGuardianAPIStrategy, articleDao);
+        List<Entity> returnedEntities = articleService.searchByTag("correct token", "sausage", 1);
         String result = "";
         for (Entity e: returnedEntities) {
             result += e.getEntityInformation();
@@ -80,7 +94,7 @@ public class ArticleServiceTest {
 
     @Test
     public void testSearchSuccessOffline() {
-        ArticleService userService = new ArticleService(offlineGuardianAPIStrategy);
+        ArticleService userService = new ArticleService(offlineGuardianAPIStrategy, articleDao);
         List<Entity> returnedEntities = userService.searchByTag("correct token", "sausage", 1);
         String result = "";
         for (Entity e: returnedEntities) {
@@ -106,7 +120,7 @@ public class ArticleServiceTest {
 
     @Test
     public void testSearchInvalidTokenOnline() {
-        ArticleService userService = new ArticleService(onlineGuardianAPIStrategy);
+        ArticleService userService = new ArticleService(onlineGuardianAPIStrategy, articleDao);
         List<Entity> returnedEntities = userService.searchByTag("incorrect token", "sausage", 1);
 
         assertEquals(1, returnedEntities.size());
@@ -123,7 +137,7 @@ public class ArticleServiceTest {
 
     @Test
     public void testSearchInvalidTokenOffline() {
-        ArticleService userService = new ArticleService(offlineGuardianAPIStrategy);
+        ArticleService userService = new ArticleService(offlineGuardianAPIStrategy, articleDao);
         List<Entity> returnedEntities = userService.searchByTag("incorrect token", "sausage", 1);
 
         assertEquals(1, returnedEntities.size());
@@ -140,21 +154,21 @@ public class ArticleServiceTest {
 
     @Test
     public void testSearchNoResultOnline() {
-        ArticleService userService = new ArticleService(onlineGuardianAPIStrategy);
+        ArticleService userService = new ArticleService(onlineGuardianAPIStrategy, articleDao);
         List<Entity> returnedEntities = userService.searchByTag("correct token", "no result tag", 1);
         assertEquals(0, returnedEntities.size());
     }
 
     @Test
     public void testSearchNoResultOffline() {
-        ArticleService userService = new ArticleService(offlineGuardianAPIStrategy);
+        ArticleService userService = new ArticleService(offlineGuardianAPIStrategy, articleDao);
         List<Entity> returnedEntities = userService.searchByTag("correct token", "no result tag", 1);
         assertEquals(0, returnedEntities.size());
     }
 
     @Test
     public void testSearchIrregularOnline() {
-        ArticleService userService = new ArticleService(onlineGuardianAPIStrategy);
+        ArticleService userService = new ArticleService(onlineGuardianAPIStrategy, articleDao);
         List<Entity> returnedEntities = userService.searchByTag("correct token", "irregular tag", 1);
         assertEquals(1, returnedEntities.size());
 
@@ -169,7 +183,7 @@ public class ArticleServiceTest {
 
     @Test
     public void testSearchIrregularOffline() {
-        ArticleService userService = new ArticleService(offlineGuardianAPIStrategy);
+        ArticleService userService = new ArticleService(offlineGuardianAPIStrategy, articleDao);
         List<Entity> returnedEntities = userService.searchByTag("correct token", "irregular tag", 1);
         assertEquals(1, returnedEntities.size());
 

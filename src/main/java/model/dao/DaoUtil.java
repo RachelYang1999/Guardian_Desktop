@@ -7,7 +7,7 @@ public class DaoUtil {
     private final String driver = "jdbc:sqlite:test.db";
     Connection connection = null;
 
-    public Connection getDatabaseConnection() {
+    public DaoUtil() {
         try {
             Class.forName("org.sqlite.JDBC");
             connection = DriverManager.getConnection(driver);
@@ -17,6 +17,9 @@ public class DaoUtil {
             System.exit(0);
         }
         System.out.println("Database connected successfully!");
+    }
+
+    public Connection getDatabaseConnection() {
         return connection;
     }
 
