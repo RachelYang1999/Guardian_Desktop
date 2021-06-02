@@ -7,6 +7,8 @@ import model.domain.User;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ArticleDao extends AbstractDao {
     Connection connection;
@@ -49,7 +51,9 @@ public class ArticleDao extends AbstractDao {
     }
 
     @Override
-    public String getEntity(String filed, String searchString) {
+    public List<String> getEntity(String filed, String searchString) {
+        List<String> result = new ArrayList<>();
+//        String result = "";
         try {
             statement = connection.createStatement();
             String sql =
@@ -60,15 +64,15 @@ public class ArticleDao extends AbstractDao {
             ResultSet resultSet = statement.executeQuery(sql);
             while (resultSet.next()) {
                 String info = resultSet.getString("INFO");
+                result.add(info);
                 System.out.println("Info: " + info);
-                return info;
             }
         } catch (Exception e) {
             System.err.println("Database get user failed!");
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
             e.printStackTrace();
         }
-        return "";
+        return result;
     }
 
     @Override
@@ -108,9 +112,9 @@ public class ArticleDao extends AbstractDao {
     public static void main(String[] args) {
         AbstractDao articleDAO = new ArticleDao(new DaoUtil());
 
-        String info = articleDAO.getEntity("TAG", "gay couple");
-        System.out.println("info " + info);
-        System.out.println(info.equals(""));
+//        String info = articleDAO.getEntity("TAG", "gay couple");
+//        System.out.println("info " + info);
+//        System.out.println(info.equals(""));
 
 //        userDao.updateEntity("fake token1", "new fake token1");
 //        userDao.deleteEntity("fake token1");

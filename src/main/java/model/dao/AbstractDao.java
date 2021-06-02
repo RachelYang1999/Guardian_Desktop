@@ -3,6 +3,7 @@ package model.dao;
 import model.domain.Entity;
 
 import java.sql.Connection;
+import java.util.List;
 
 public abstract class AbstractDao {
 
@@ -19,7 +20,7 @@ public abstract class AbstractDao {
     }
     public abstract boolean addEntity(Entity entity);
 
-    public abstract String getEntity(String field, String entityName);
+    public abstract List<String> getEntity(String field, String entityName);
 
     public abstract boolean updateEntity(String entityName, String entityInfo);
 

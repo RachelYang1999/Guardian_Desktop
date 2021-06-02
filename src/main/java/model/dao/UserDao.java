@@ -8,6 +8,8 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserDao extends AbstractDao {
     Connection connection;
@@ -48,7 +50,8 @@ public class UserDao extends AbstractDao {
     }
 
     @Override
-    public String getEntity(String filed, String entityName) {
+    public List<String> getEntity(String filed, String entityName) {
+        List<String> result = new ArrayList<>();
         try {
             statement = connection.createStatement();
             String sql =
@@ -60,14 +63,14 @@ public class UserDao extends AbstractDao {
                 String info = resultSet.getString("INFO");
 //                System.out.println("Token: " + token);
 //                System.out.println("Info: " + info);
-                return info;
+                result.add(info);
             }
         } catch (Exception e) {
             System.err.println("Database get user failed!");
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
             e.printStackTrace();
         }
-        return "";
+        return result;
     }
 
     @Override
@@ -110,9 +113,7 @@ public class UserDao extends AbstractDao {
         user.setToken("fake token1");
         user.setUserTier("dad");
 //        userDao.addEntity(user);
-        String info = userDao.getEntity("TOKEN", "fake token1");
-        System.out.println("info " + info);
-        System.out.println(info.equals(""));
+        List<String> info = userDao.getEntity("TOKEN", "fake token1");
 
 //        userDao.updateEntity("fake token1", "new fake token1");
 //        userDao.deleteEntity("fake token1");

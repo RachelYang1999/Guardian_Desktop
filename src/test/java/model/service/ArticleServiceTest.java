@@ -11,6 +11,7 @@ import util.GuardianAPIStrategy;
 import util.GuardianOfflineAPIStrategy;
 import util.GuardianOnlineAPIStrategy;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -58,7 +59,9 @@ public class ArticleServiceTest {
         when(onlineGuardianAPIStrategy.searchByTag("correct token", "irregular tag", 1)).thenReturn(irregularResponse);
         when(offlineGuardianAPIStrategy.searchByTag("correct token", "irregular tag", 1)).thenReturn(irregularResponse);
 
-        when(articleDao.getEntity(anyString(), anyString())).thenReturn("exist info");
+        List<String> resultList =  new ArrayList<>();
+        resultList.add(("exist info"));
+        when(articleDao.getEntity(anyString(), anyString())).thenReturn(resultList);
 //        when(articleDao.getEntity(anyString(), eq("non-exist tag"))).thenReturn("");
 
         when(articleDao.addEntity(any())).thenReturn(true);

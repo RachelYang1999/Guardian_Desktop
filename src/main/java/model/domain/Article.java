@@ -9,6 +9,8 @@ public class Article implements Entity{
     private List<Entity> articleDataList;
     private String relatedTag;
 
+    private String info;
+
     public String getId() {
         return id;
     }
@@ -45,13 +47,25 @@ public class Article implements Entity{
         this.relatedTag = relatedTag;
     }
 
+    public String getInfo() {
+        return info;
+    }
+
+    public void setInfo(String info) {
+        this.info = info;
+    }
+
     @Override
     public String getEntityInformation() {
         String result = "";
-        for (Entity articleData : articleDataList) {
-            result += articleData.getEntityInformation();
+        if (articleDataList.size() != 0) {
+            for (Entity articleData : articleDataList) {
+                result += articleData.getEntityInformation();
+            }
+            return result;
+        } else {
+            return info;
         }
-        return result;
     }
 
     @Override

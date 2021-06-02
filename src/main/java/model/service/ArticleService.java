@@ -35,26 +35,6 @@ public class ArticleService {
     public List<Entity> getAllArticles(String token, String tag) {
         List<Entity> entities = new ArrayList<>();
 
-        JSONObject responseJSON = guardianAPIStrategy.searchByTag(token, tag, 1);
-        if (responseJSON == null) {
-            System.out.println("[UserService] searchByTag responseJSON is null");
-        }
-        System.out.println("[UserService] searchByTag response: " + responseJSON.toString());
-        if (responseJSON.has("response")) {
-            int totalPageCount = responseJSON.getJSONObject("response").getInt("pages");
-            for (int i = 1; i <= totalPageCount; i ++) {
-                List<Entity> singlePageEntities = searchByTag(token, tag, i);
-
-                entities.addAll(singlePageEntities);
-//            entities.Collections.addAll(singlePageEntities);
-                System.out.println("----------------------------------------");
-                System.out.println("[UserService] finished add result page " + i);
-                System.out.println("----------------------------------------");
-            }
-        } else {
-            entities.addAll(searchByTag(token, tag, 1));
-        }
-
         return entities;
     }
 
@@ -64,9 +44,18 @@ public class ArticleService {
         return entities;
     }
 
+    public List<Entity> searchByCachedTag(String tag) {
+        List<Entity> entities = new ArrayList<>();
+//        Article article
+        System.out.println(articleDao.getEntity("TAG", tag));
+        return entities;
+    }
+
 
     public static void main(String[] args) {
         System.out.println("Main---------------------------------------------");
+        List<Entity> entities = new ArticleService(new GuardianOnlineAPIStrategy(), new ArticleDao(new DaoUtil())).searchByCachedTag("gay couple");
+
 
 //        List<Entity> entities = new ArticleService(new GuardianOnlineAPIStrategy(), new DaoUtil()).getAllArticles("1b0f84fb-9674-4fe2-b596-5836b2772fcb", "gay couple");
 //        List<Entity> entities = new ArticleService(new GuardianOfflineAPIStrategy()).getAllArticles("1b0f84fb-9674-4fe2-b596-5836b2772fcb", "gay couple");

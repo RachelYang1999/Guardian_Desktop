@@ -21,5 +21,8 @@ public class ArticleController {
         return articleService.getAllArticles(token, tag);
     }
 
+    public List<Entity> searchByCachedTag(String token, String tag) {
+        return articleService.getAllArticles(token, tag);
+    }
 
 }

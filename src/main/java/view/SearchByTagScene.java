@@ -72,6 +72,8 @@ public class SearchByTagScene {
                     this.alertBox = new ErrorBox();
                     alertBox.createAlertBox(errorInfo);
                 } else {
+
+
                     window.setScene(new SearchResultScene(window, requestMapping, inputTag).getScene());
                     window.setTitle("Search Result");
                 }

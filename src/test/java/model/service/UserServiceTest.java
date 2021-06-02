@@ -11,6 +11,10 @@ import org.mockito.Mockito;
 import util.GuardianAPIStrategy;
 import util.GuardianOfflineAPIStrategy;
 import util.GuardianOnlineAPIStrategy;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.Assert.*;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -54,7 +58,9 @@ public class UserServiceTest {
         when(onlineGuardianAPIStrategy.login("irregular")).thenReturn(irregularResponse);
         when(offlineGuardianAPIStrategy.login("irregular")).thenReturn(irregularResponse);
 
-        when(userDao.getEntity(anyString(), anyString())).thenReturn("exist info");
+        List<String> resultList =  new ArrayList<>();
+        resultList.add(("exist info"));
+        when(userDao.getEntity(anyString(), anyString())).thenReturn(resultList);
 
         when(userDao.addEntity(any())).thenReturn(true);
     }

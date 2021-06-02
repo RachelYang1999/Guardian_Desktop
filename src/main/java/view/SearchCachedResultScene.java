@@ -1,10 +1,5 @@
 package view;
 
-import javafx.scene.control.*;
-import javafx.scene.layout.*;
-import model.domain.Article;
-import model.domain.Entity;
-import util.RequestMapping;
 import factory.backgroundfactory.BackgroundFactory;
 import factory.backgroundfactory.LightBackgroundFactory;
 import factory.buttonfactory.BrownButtonFactory;
@@ -12,19 +7,23 @@ import factory.buttonfactory.ButtonFactory;
 import factory.buttonfactory.GrayButtonFactory;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.effect.Reflection;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import model.domain.Article;
+import model.domain.Entity;
+import util.RequestMapping;
 import view.alertbox.AlertBox;
-import view.alertbox.PastebinLoginBox;
 import view.alertbox.ResponseBoxWithPastebin;
 
 import java.util.List;
 
-public class SearchResultScene {
+public class SearchCachedResultScene {
     private Stage window;
     private Scene scene;
     private BackgroundFactory backgroundFactory;
@@ -38,7 +37,7 @@ public class SearchResultScene {
         return 8;
     }
 
-    public SearchResultScene(Stage window, RequestMapping requestMapping, String tag) throws Exception {
+    public SearchCachedResultScene(Stage window, RequestMapping requestMapping, String tag) throws Exception {
         this.window = window;
         this.backgroundFactory = new LightBackgroundFactory();
         this.buttonFactory = new BrownButtonFactory();

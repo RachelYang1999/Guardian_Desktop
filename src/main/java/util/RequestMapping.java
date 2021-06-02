@@ -54,6 +54,10 @@ public class RequestMapping {
         return articleController.searchByTag(token, tag);
     }
 
+    public List<Entity> searchByCachedTag(String token, String tag) {
+        return articleController.searchByCachedTag(token, tag);
+    }
+
     public Entity getPastebinLink(String token, String copiedText) {
         return pastebinController.getPastebinLink(token, copiedText);
     }
