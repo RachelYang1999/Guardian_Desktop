@@ -50,20 +50,17 @@ public class UserDao extends AbstractDao {
     }
 
     @Override
-    public List<String> getEntity(String filed, String entityName) {
+    public List<String> getEntity(String matchField, String matchValue, String retrieveFiled) {
         List<String> result = new ArrayList<>();
         try {
             statement = connection.createStatement();
             String sql =
                     "SELECT * FROM USER " +
-                    "WHERE " + filed + " = '" + entityName + "';";
+                            "WHERE " + matchField + " = '" + matchValue + "';";
             ResultSet resultSet = statement.executeQuery(sql);
             while (resultSet.next()) {
-                String token = resultSet.getString("TOKEN");
-                String info = resultSet.getString("INFO");
-//                System.out.println("Token: " + token);
-//                System.out.println("Info: " + info);
-                result.add(info);
+                String retrieveResult = resultSet.getString(retrieveFiled);
+                result.add(retrieveResult);
             }
         } catch (Exception e) {
             System.err.println("Database get user failed!");
@@ -72,6 +69,7 @@ public class UserDao extends AbstractDao {
         }
         return result;
     }
+
 
     @Override
     public boolean updateEntity(String token, String entityInfo) {
@@ -113,7 +111,10 @@ public class UserDao extends AbstractDao {
         user.setToken("fake token1");
         user.setUserTier("dad");
 //        userDao.addEntity(user);
-        List<String> info = userDao.getEntity("TOKEN", "fake token1");
+        List<String> info = userDao.getEntity("TOKEN", "audog-9674-4fe2-b596-ufgisdfyvwdouwgeouf", "INFO");
+        for (String s : info) {
+            System.out.println(s);
+        }
 
 //        userDao.updateEntity("fake token1", "new fake token1");
 //        userDao.deleteEntity("fake token1");

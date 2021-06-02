@@ -60,7 +60,7 @@ public class UserServiceTest {
 
         List<String> resultList =  new ArrayList<>();
         resultList.add(("exist info"));
-        when(userDao.getEntity(anyString(), anyString())).thenReturn(resultList);
+        when(userDao.getEntity(anyString(), anyString(), anyString())).thenReturn(resultList);
 
         when(userDao.addEntity(any())).thenReturn(true);
     }

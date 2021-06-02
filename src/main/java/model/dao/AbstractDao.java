@@ -20,7 +20,7 @@ public abstract class AbstractDao {
     }
     public abstract boolean addEntity(Entity entity);
 
-    public abstract List<String> getEntity(String field, String entityName);
+    public abstract List<String> getEntity(String matchField, String matchValue, String retrieveFiled);
 
     public abstract boolean updateEntity(String entityName, String entityInfo);
 

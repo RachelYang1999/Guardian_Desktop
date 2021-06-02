@@ -26,7 +26,9 @@ public class PastebinService {
     }
 
     public Entity getPastebinLink(String token, String copiedText) {
-        return null;
+        Entity returnEntity = defaultErrorFactory.createEntity(null);
+
+        return returnEntity;
     }
 
     public static void main(String[] args) {

@@ -34,7 +34,6 @@ public class ArticleService {
 
     public List<Entity> getAllArticles(String token, String tag) {
         List<Entity> entities = new ArrayList<>();
-
         return entities;
     }
 
@@ -47,7 +46,7 @@ public class ArticleService {
     public List<Entity> searchByCachedTag(String tag) {
         List<Entity> entities = new ArrayList<>();
 //        Article article
-        System.out.println(articleDao.getEntity("TAG", tag));
+        System.out.println(articleDao.getEntity("TAG", tag, "INFO"));
         return entities;
     }
 

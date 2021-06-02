@@ -16,6 +16,7 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
 public class ArticleServiceTest {
@@ -61,7 +62,7 @@ public class ArticleServiceTest {
 
         List<String> resultList =  new ArrayList<>();
         resultList.add(("exist info"));
-        when(articleDao.getEntity(anyString(), anyString())).thenReturn(resultList);
+        when(articleDao.getEntity(anyString(), anyString(), anyString())).thenReturn(resultList);
 //        when(articleDao.getEntity(anyString(), eq("non-exist tag"))).thenReturn("");
 
         when(articleDao.addEntity(any())).thenReturn(true);

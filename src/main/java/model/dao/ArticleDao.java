@@ -51,21 +51,21 @@ public class ArticleDao extends AbstractDao {
     }
 
     @Override
-    public List<String> getEntity(String filed, String searchString) {
+    public List<String> getEntity(String matchField, String matchValue, String retrieveFiled) {
         List<String> result = new ArrayList<>();
 //        String result = "";
         try {
             statement = connection.createStatement();
             String sql =
                     "SELECT * FROM ARTICLE " +
-                    "WHERE " + filed + " = '" + searchString + "';";
+                            "WHERE " + matchField + " = '" + matchValue + "';";
 //            System.out.println("sql: " + sql);
             statement.executeUpdate(sql);
             ResultSet resultSet = statement.executeQuery(sql);
             while (resultSet.next()) {
-                String info = resultSet.getString("INFO");
-                result.add(info);
-                System.out.println("Info: " + info);
+                String retrievedResult = resultSet.getString(retrieveFiled);
+                result.add(retrievedResult);
+                System.out.println(retrieveFiled + ": " + retrievedResult);
             }
         } catch (Exception e) {
             System.err.println("Database get user failed!");
@@ -74,6 +74,7 @@ public class ArticleDao extends AbstractDao {
         }
         return result;
     }
+
 
     @Override
     public boolean updateEntity(String token, String entityInfo) {
