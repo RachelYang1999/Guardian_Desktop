@@ -11,15 +11,14 @@ import java.util.List;
 
 public class PastebinController {
 
-    private PastebinService pastebinService;
+  private PastebinService pastebinService;
 
-    public PastebinController(PastebinAPIStrategy pastebinAPIStrategy) {
-        this.pastebinService = new PastebinService(pastebinAPIStrategy);
-    }
+  public PastebinController(PastebinAPIStrategy pastebinAPIStrategy) {
+    this.pastebinService = new PastebinService(pastebinAPIStrategy);
+  }
 
+  public Entity getPastebinLink(String token, String copiedText) {
 
-    public Entity getPastebinLink(String token, String copiedText) {
-
-        return pastebinService.getPastebinLink(token, copiedText);
-    }
+    return pastebinService.getPastebinLink(token, copiedText);
+  }
 }

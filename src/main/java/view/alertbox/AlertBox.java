@@ -8,27 +8,24 @@ import model.domain.Entity;
 import java.util.List;
 
 public abstract class AlertBox {
-    Stage window;
+  Stage window;
 
-    public AlertBox() {
-        this.window = new Stage();
-        window.initModality(Modality.APPLICATION_MODAL);
-        window.setMinWidth(650);
-        window.setMinHeight(450);
-    }
+  public AlertBox() {
+    this.window = new Stage();
+    window.initModality(Modality.APPLICATION_MODAL);
+    window.setMinWidth(650);
+    window.setMinHeight(450);
+  }
 
-    public abstract void createAlertBox(Entity entity);
+  public abstract void createAlertBox(Entity entity);
 
-    public abstract void createAlertBox(String title, String headerText, String contentText);
+  public abstract void createAlertBox(String title, String headerText, String contentText);
 
-    public abstract Stage getWindow(String title, String headerText, String contentText);
+  public abstract Stage getWindow(String title, String headerText, String contentText);
 
-    public abstract Stage getWindow(Entity entity);
+  public abstract Stage getWindow(Entity entity);
 
-    public abstract Alert getAlertBox(Entity entity);
+  public abstract Alert getAlertBox(Entity entity);
 
-
-    public abstract void createAlertBox(List<Entity> entity);
-
-
+  public abstract void createAlertBox(List<Entity> entity);
 }

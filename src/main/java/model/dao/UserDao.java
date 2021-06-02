@@ -12,112 +12,111 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserDao extends AbstractDao {
-    Connection connection;
-    Statement statement;
+  Connection connection;
+  Statement statement;
 
+  public UserDao(DaoUtil daoUtil) {
+    super(daoUtil);
+    connection = daoUtil.getDatabaseConnection();
+  }
 
-    public UserDao(DaoUtil daoUtil) {
-        super(daoUtil);
-        connection = daoUtil.getDatabaseConnection();
+  @Override
+  public boolean addEntity(Entity entity) {
+    User user = null;
+    try {
+      statement = connection.createStatement();
+      String sql =
+          "CREATE TABLE IF NOT EXISTS USER"
+              + "(TOKEN CHAR(50) PRIMARY KEY    NOT NULL,"
+              + "INFO CHAR(300))";
+      statement.executeUpdate(sql);
+
+      if (entity.getEntityType().equals("User")) {
+        user = (User) entity;
+        sql =
+            "INSERT INTO USER (TOKEN, INFO) "
+                + "VALUES ('"
+                + user.getToken()
+                + "', '"
+                + user.getEntityInformation()
+                + "');";
+        statement.executeUpdate(sql);
+      }
+      statement.close();
+      return true;
+    } catch (Exception e) {
+      System.err.println("Database add user failed!");
+      System.err.println(e.getClass().getName() + ": " + e.getMessage());
+      e.printStackTrace();
+      return false;
+    }
+  }
+
+  @Override
+  public List<String> getEntity(String matchField, String matchValue, String retrieveFiled) {
+    List<String> result = new ArrayList<>();
+    try {
+      statement = connection.createStatement();
+      String sql = "SELECT * FROM USER " + "WHERE " + matchField + " = '" + matchValue + "';";
+      ResultSet resultSet = statement.executeQuery(sql);
+      while (resultSet.next()) {
+        String retrieveResult = resultSet.getString(retrieveFiled);
+        result.add(retrieveResult);
+      }
+    } catch (Exception e) {
+      System.err.println("Database get user failed!");
+      System.err.println(e.getClass().getName() + ": " + e.getMessage());
+      e.printStackTrace();
+    }
+    return result;
+  }
+
+  @Override
+  public boolean updateEntity(String token, String entityInfo) {
+    try {
+      statement = connection.createStatement();
+      String sql = "UPDATE USER SET INFO = '" + entityInfo + "' WHERE TOKEN = '" + token + "';";
+      statement.executeUpdate(sql);
+      return true;
+    } catch (Exception e) {
+      System.err.println("Database update user failed!");
+      System.err.println(e.getClass().getName() + ": " + e.getMessage());
+      e.printStackTrace();
+      System.exit(0);
+    }
+    return false;
+  }
+
+  @Override
+  public boolean deleteEntity(String entityName) {
+    try {
+      statement = connection.createStatement();
+      String sql = "DELETE from USER where TOKEN = '" + entityName + "'; ";
+      statement.executeUpdate(sql);
+      System.out.println("Deleted");
+      return true;
+    } catch (Exception e) {
+      System.err.println("Database delete user failed!");
+      System.err.println(e.getClass().getName() + ": " + e.getMessage());
+      e.printStackTrace();
+      return false;
+    }
+  }
+
+  public static void main(String[] args) {
+    AbstractDao userDao = new UserDao(new DaoUtil());
+    User user = new User();
+    user.setToken("fake token1");
+    user.setUserTier("dad");
+    //        userDao.addEntity(user);
+    List<String> info =
+        userDao.getEntity("TOKEN", "audog-9674-4fe2-b596-ufgisdfyvwdouwgeouf", "INFO");
+    for (String s : info) {
+      System.out.println(s);
     }
 
-    @Override
-    public boolean addEntity(Entity entity) {
-        User user = null;
-        try {
-            statement = connection.createStatement();
-            String sql =
-                    "CREATE TABLE IF NOT EXISTS USER" +
-                    "(TOKEN CHAR(50) PRIMARY KEY    NOT NULL," +
-                    "INFO CHAR(300))";
-            statement.executeUpdate(sql);
+    //        userDao.updateEntity("fake token1", "new fake token1");
+    //        userDao.deleteEntity("fake token1");
 
-            if (entity.getEntityType().equals("User")) {
-                user = (User) entity;
-                sql =
-                        "INSERT INTO USER (TOKEN, INFO) " +
-                        "VALUES ('" + user.getToken() + "', '" + user.getEntityInformation() + "');";
-                statement.executeUpdate(sql);
-            }
-            statement.close();
-            return true;
-        } catch (Exception e) {
-            System.err.println("Database add user failed!");
-            System.err.println(e.getClass().getName() + ": " + e.getMessage());
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-    @Override
-    public List<String> getEntity(String matchField, String matchValue, String retrieveFiled) {
-        List<String> result = new ArrayList<>();
-        try {
-            statement = connection.createStatement();
-            String sql =
-                    "SELECT * FROM USER " +
-                            "WHERE " + matchField + " = '" + matchValue + "';";
-            ResultSet resultSet = statement.executeQuery(sql);
-            while (resultSet.next()) {
-                String retrieveResult = resultSet.getString(retrieveFiled);
-                result.add(retrieveResult);
-            }
-        } catch (Exception e) {
-            System.err.println("Database get user failed!");
-            System.err.println(e.getClass().getName() + ": " + e.getMessage());
-            e.printStackTrace();
-        }
-        return result;
-    }
-
-
-    @Override
-    public boolean updateEntity(String token, String entityInfo) {
-        try {
-            statement = connection.createStatement();
-            String sql =
-                    "UPDATE USER SET INFO = '" + entityInfo + "' WHERE TOKEN = '" + token + "';";
-            statement.executeUpdate(sql);
-            return true;
-        } catch (Exception e) {
-            System.err.println("Database update user failed!");
-            System.err.println(e.getClass().getName() + ": " + e.getMessage());
-            e.printStackTrace();
-            System.exit(0);
-        }
-        return false;
-    }
-
-    @Override
-    public boolean deleteEntity(String entityName) {
-        try {
-            statement = connection.createStatement();
-            String sql =
-                    "DELETE from USER where TOKEN = '" + entityName + "'; ";
-            statement.executeUpdate(sql);
-            System.out.println("Deleted");
-            return true;
-        } catch (Exception e) {
-            System.err.println("Database delete user failed!");
-            System.err.println(e.getClass().getName() + ": " + e.getMessage());
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-    public static void main(String[] args) {
-        AbstractDao userDao = new UserDao(new DaoUtil());
-        User user = new User();
-        user.setToken("fake token1");
-        user.setUserTier("dad");
-//        userDao.addEntity(user);
-        List<String> info = userDao.getEntity("TOKEN", "audog-9674-4fe2-b596-ufgisdfyvwdouwgeouf", "INFO");
-        for (String s : info) {
-            System.out.println(s);
-        }
-
-//        userDao.updateEntity("fake token1", "new fake token1");
-//        userDao.deleteEntity("fake token1");
-
-    }
+  }
 }

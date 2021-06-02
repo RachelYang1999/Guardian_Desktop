@@ -1,22 +1,24 @@
-//import javafx.application.Application;
-//import javafx.scene.Scene;
-//import javafx.scene.control.Label;
-//import javafx.scene.control.Pagination;
-//import javafx.scene.layout.AnchorPane;
-//import javafx.scene.layout.VBox;
-//import javafx.scene.text.Font;
-//import javafx.scene.text.FontWeight;
-//import javafx.stage.Stage;
-//import model.domain.Entity;
-//import model.service.ArticleService;
-//import util.GuardianOnlineAPIStrategy;
+// import javafx.application.Application;
+// import javafx.scene.Scene;
+// import javafx.scene.control.Label;
+// import javafx.scene.control.Pagination;
+// import javafx.scene.layout.AnchorPane;
+// import javafx.scene.layout.VBox;
+// import javafx.scene.text.Font;
+// import javafx.scene.text.FontWeight;
+// import javafx.stage.Stage;
+// import model.domain.Entity;
+// import model.service.ArticleService;
+// import util.GuardianOnlineAPIStrategy;
 //
-//import java.util.List;
+// import java.util.List;
 //
-//public class SplitArticle extends Application{
+// public class SplitArticle extends Application{
 //    private Pagination pagination;
 //    String[] fonts = new String[]{};
-//    List<Entity> entities = new ArticleService(new GuardianOnlineAPIStrategy()).getAllArticles("1b0f84fb-9674-4fe2-b596-5836b2772fcb", "gay couple");
+//    List<Entity> entities = new ArticleService(new
+// GuardianOnlineAPIStrategy()).getAllArticles("1b0f84fb-9674-4fe2-b596-5836b2772fcb", "gay
+// couple");
 //
 //    public static void main(String[] args) throws Exception {
 //        launch(args);
@@ -39,7 +41,8 @@
 //
 //    @Override
 //    public void start(final Stage stage) throws Exception {
-//        System.out.println("Page count: " + (int)Math.ceil((double)entities.size()/itemsPerPage()));
+//        System.out.println("Page count: " +
+// (int)Math.ceil((double)entities.size()/itemsPerPage()));
 //        pagination = new Pagination((int)Math.ceil((double)entities.size()/itemsPerPage()), 0);
 //        pagination.setPageFactory((Integer p) -> createPage(p));
 //        pagination.setStyle("-fx-font-family: Arial");
@@ -54,4 +57,4 @@
 //        stage.setScene(scene);
 //        stage.show();
 //    }
-//}
+// }

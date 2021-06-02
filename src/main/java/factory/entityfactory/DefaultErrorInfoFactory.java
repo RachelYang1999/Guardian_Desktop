@@ -6,13 +6,12 @@ import org.json.JSONObject;
 
 public class DefaultErrorInfoFactory implements EntityFactory {
 
-    @Override
-    public Entity createEntity(JSONObject response) {
+  @Override
+  public Entity createEntity(JSONObject response) {
 
-        ErrorInfo errorInfo = new ErrorInfo();
-        errorInfo.setMessage("Unknown Error!");
+    ErrorInfo errorInfo = new ErrorInfo();
+    errorInfo.setMessage("Unknown Error!");
 
-        return errorInfo;
-    }
-
+    return errorInfo;
+  }
 }

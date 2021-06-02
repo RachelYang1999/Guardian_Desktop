@@ -5,7 +5,5 @@ import org.json.JSONObject;
 
 public interface EntityFactory {
 
-    Entity createEntity(JSONObject response);
-
-
+  Entity createEntity(JSONObject response);
 }

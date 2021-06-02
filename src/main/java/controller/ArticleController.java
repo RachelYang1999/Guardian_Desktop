@@ -11,18 +11,17 @@ import java.util.List;
 
 public class ArticleController {
 
-    private ArticleService articleService;
+  private ArticleService articleService;
 
-    public ArticleController(GuardianAPIStrategy guardianAPIStrategy, DaoUtil daoUtil) {
-        this.articleService = new ArticleService(guardianAPIStrategy, new ArticleDao(daoUtil));
-    }
+  public ArticleController(GuardianAPIStrategy guardianAPIStrategy, DaoUtil daoUtil) {
+    this.articleService = new ArticleService(guardianAPIStrategy, new ArticleDao(daoUtil));
+  }
 
-    public List<Entity> searchByTag(String token, String tag) {
-        return articleService.getAllArticles(token, tag);
-    }
+  public List<Entity> searchByTag(String token, String tag) {
+    return articleService.getAllArticles(token, tag);
+  }
 
-    public List<Entity> searchByCachedTag(String token, String tag) {
-        return articleService.searchByCachedTag(tag);
-    }
-
+  public List<Entity> searchByCachedTag(String token, String tag) {
+    return articleService.searchByCachedTag(tag);
+  }
 }

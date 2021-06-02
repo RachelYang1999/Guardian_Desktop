@@ -7,7 +7,5 @@ import java.util.List;
 
 public interface EntityCollectionFactory {
 
-    List<Entity> createEntities(JSONObject response);
-
-
+  List<Entity> createEntities(JSONObject response);
 }

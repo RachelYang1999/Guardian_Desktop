@@ -2,7 +2,7 @@ package model.domain;
 
 public interface Entity {
 
-    String getEntityInformation();
+  String getEntityInformation();
 
-    String getEntityType();
+  String getEntityType();
 }
