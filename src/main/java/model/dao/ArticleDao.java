@@ -27,22 +27,25 @@ public class ArticleDao extends AbstractDao {
       statement = connection.createStatement();
       String sql =
           "CREATE TABLE IF NOT EXISTS ARTICLE"
-              + "(ID CHAR(80)   PRIMARY KEY    NOT NULL,"
-              + " TAG CHAR(50)               NOT NULL,"
-              + " TITLE CHAR(100)               NOT NULL,"
+              + "(TAGGEDID CHAR(120)   PRIMARY KEY    NOT NULL,"
+              + " ID CHAR(80)                          NOT NULL,"
+              + " TAG CHAR(50)                        NOT NULL,"
+              + " TITLE CHAR(100)                     NOT NULL,"
               + " INFO CHAR(1200));";
       statement.executeUpdate(sql);
 
       if (entity.getEntityType().equals("Article")) {
         article = (Article) entity;
         sql =
-            "INSERT INTO ARTICLE (ID, TAG, TITLE, INFO) "
+            "INSERT INTO ARTICLE (TAGGEDID, ID, TAG, TITLE, INFO) "
                 + "VALUES ('"
-                + article.getId()
+                + article.getRelatedTag() + "/" + article.getId().replace("'", "")
                 + "', '"
-                + article.getRelatedTag()
+                + article.getId().replace("'", "")
                 + "', '"
-                + article.getWebTitle()
+                + article.getRelatedTag().replace("'", "")
+                + "', '"
+                + article.getWebTitle().replace("'", "")
                 + "', '"
                 + article.getEntityInformation().replace("'", "")
                 + "');";
@@ -70,11 +73,12 @@ public class ArticleDao extends AbstractDao {
     try {
       statement = connection.createStatement();
       String sql =
-          "CREATE TABLE IF NOT EXISTS ARTICLE"
-              + "(ID CHAR(80)   PRIMARY KEY    NOT NULL,"
-              + " TAG CHAR(50)               NOT NULL,"
-              + " TITLE CHAR(100)               NOT NULL,"
-              + " INFO CHAR(300));";
+              "CREATE TABLE IF NOT EXISTS ARTICLE"
+                      + "(TAGGEDID CHAR(120)   PRIMARY KEY    NOT NULL,"
+                      + " ID CHAR(80)                          NOT NULL,"
+                      + " TAG CHAR(50)                        NOT NULL,"
+                      + " TITLE CHAR(100)                     NOT NULL,"
+                      + " INFO CHAR(1200));";
       statement.executeUpdate(sql);
 
       statement = connection.createStatement();

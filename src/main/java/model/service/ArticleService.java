@@ -76,7 +76,7 @@ public class ArticleService {
             if (e.getEntityType().equals("Article")) {
               Article article = (Article) e;
               article.setRelatedTag(tag);
-              if (articleDao.getEntity("ID", article.getId(), "INFO").size() == 0) {
+              if (articleDao.getEntity("TAGGEDID", tag + "/" + article.getId(), "INFO").size() == 0) {
                 articleDao.addEntity(article);
               }
             }
@@ -123,26 +123,5 @@ public class ArticleService {
     List<Entity> entities =
         new ArticleService(new GuardianOnlineAPIStrategy(), new ArticleDao(new DaoUtil()))
             .searchByCachedTag("gay couple");
-
-    //        List<Entity> entities = new ArticleService(new GuardianOnlineAPIStrategy(), new
-    // DaoUtil()).getAllArticles("1b0f84fb-9674-4fe2-b596-5836b2772fcb", "gay couple");
-    //        List<Entity> entities = new ArticleService(new
-    // GuardianOfflineAPIStrategy()).getAllArticles("1b0f84fb-9674-4fe2-b596-5836b2772fcb", "gay
-    // couple");
-    //        List<Entity> entities = new ArticleService(new
-    // GuardianOnlineAPIStrategy()).getAllArticles("1b0f84fb-9674-4fe2-b596-5836b2772fcb",
-    // "football");
-    //        List<Entity> entities = new ArticleService(new
-    // GuardianOnlineAPIStrategy()).getAllArticles("1b0f84fb-9674-4fe2-b596-5836b2772fcb", "chinese
-    // food");
-
-    //        System.out.println("Main Entity
-    // Information---------------------------------------------");
-    //        for (Entity e : entities) {
-    //            System.out.println(e.getEntityInformation());
-    //        }
-    //        System.out.println("Main Entity Information
-    // End---------------------------------------------");
-
   }
 }
