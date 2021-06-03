@@ -38,18 +38,89 @@ public class TagService {
   public List<Entity> searchAllTagsByKeyword(String token, String keyword) {
     List<Entity> entities = new ArrayList<>();
 
+    JSONObject responseJSON = guardianAPIStrategy.searchTagsByKeyword(token, keyword, 1);
+    if (responseJSON == null) {
+      System.out.println("[UserService] searchByTag responseJSON is null");
+    }
+    System.out.println("[UserService] searchByTag response: " + responseJSON.toString());
+    if (responseJSON.has("response")) {
+      int totalPageCount = responseJSON.getJSONObject("response").getInt("pages");
+      for (int i = 1; i <= totalPageCount; i++) {
+        List<Entity> singlePageEntities = searchTagsByKeyword(token, keyword, i);
+
+        entities.addAll(singlePageEntities);
+        //            entities.Collections.addAll(singlePageEntities);
+        System.out.println("----------------------------------------");
+        System.out.println("[UserService] finished add result page " + i);
+        System.out.println("----------------------------------------");
+      }
+    } else {
+      entities.addAll(searchTagsByKeyword(token, keyword, 1));
+    }
+
     return entities;
   }
 
   public List<Entity> searchTagsByKeyword(String token, String keyword, int pageNumber) {
     List<Entity> entities = new ArrayList<>();
 
+    JSONObject responseJSON = guardianAPIStrategy.searchTagsByKeyword(token, keyword, pageNumber);
+    if (responseJSON == null) {
+      System.out.println("[UserService] searchByTag responseJSON is null");
+    }
+    entities.add(defaultErrorFactory.createEntity(responseJSON)); // Create default error object
+
+    if (responseJSON.has("response")) {
+      if (responseJSON.getJSONObject("response").has("status")) {
+        if (responseJSON.getJSONObject("response").getString("status").equals("ok")) {
+          entityCollectionFactory = new TagFactory();
+          entities.clear();
+          entities = entityCollectionFactory.createEntities(responseJSON);
+          for (Entity e : entities) {
+            if (e.getEntityType().equals("Tag")) {
+              Tag tag = (Tag) e;
+              tag.setRelatedKeyword(keyword);
+              // Database operation
+
+              if (tagDao.getEntity("KEYWORDTAG", keyword + "/" + tag.getTagName(), "INFO").size() == 0) {
+                tagDao.addEntity(tag);
+              }
+            }
+          }
+        }
+      }
+    } else if (responseJSON.has("message")) {
+      entities.clear();
+      entityFactory = new ErrorInfoFactory();
+      entities.add(entityFactory.createEntity(responseJSON));
+    } else {
+      entities.clear();
+      entities.add(this.defaultErrorFactory.createEntity(responseJSON));
+    }
+    // Default object is ErrorInfo entity list
     return entities;
   }
 
   public List<Entity> searchCachedTagsByKeyword(String keyword) {
     List<Entity> entities = new ArrayList<>();
+    //        Article article
+    List<String> tagNameList = tagDao.getEntity("KEYWORD", keyword, "TAGNAME");
+    List<String> infoList = tagDao.getEntity("KEYWORD", keyword, "INFO");
 
+    for (int i = 0; i < tagNameList.size(); i++) {
+      if (articleDao.getEntity("TAG", tagNameList.get(i), "INFO").size() != 0) {
+        Tag tag = new Tag();
+        tag.setRelatedKeyword(keyword);
+        tag.setTagName(tagNameList.get(i));
+        tag.setInfo(infoList.get(i));
+        entities.add(tag);
+      }
+    }
+    System.out.println("[TagService searchCachedTagByKeyword]");
+    for (Entity e : entities) {
+
+      System.out.println(e.getEntityInformation());
+    }
     return entities;
   }
 
