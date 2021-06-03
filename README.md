@@ -55,7 +55,9 @@ classes at the discretion of the developer.
     https://github.sydney.edu.au/qyan6939/SCD2_2021_Exam/commit/0f6844cb9501aa372e9a421555b358ca98073aba
     * [TDD RED PHASE - Search Tags Function (MISSED BEFORE)] finish TagService testing & Some GUI modification
     https://github.sydney.edu.au/qyan6939/SCD2_2021_Exam/commit/70e8d9b1e60ff922cfd76a5934edd8a26779121d
-
+    * [TDD GREEN PHASE] finish TagService implementation and passed testings
+    https://github.sydney.edu.au/qyan6939/SCD2_2021_Exam/commit/8ca369d5a713f1c792412f748c62f25a0e8a4b9e
+    
 ## Reference
 * Software Background Diagram   
 https://www.wallpaperflare.com/library-cartoon-books-candles-ladder-ladders-biblioteca-wallpaper-rbsw
