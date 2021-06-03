@@ -3,11 +3,11 @@ package util;
 import controller.ArticleController;
 import controller.LoginController;
 import controller.PastebinController;
+import controller.TagController;
 import model.dao.DaoUtil;
 import model.domain.Entity;
 import model.domain.User;
 
-import java.sql.Connection;
 import java.util.List;
 
 public class RequestMapping {
@@ -21,6 +21,7 @@ public class RequestMapping {
   Controllers need to be mapped
    */
   private LoginController userController;
+  private TagController tagController;
   private ArticleController articleController;
   private PastebinController pastebinController;
 
@@ -34,6 +35,7 @@ public class RequestMapping {
     Both strategies are injected in RequestMapping object, they can be either online or offline
      */
     this.userController = new LoginController(guardianAPIStrategy, daoUtil);
+    this.tagController = new TagController(guardianAPIStrategy, daoUtil);
     this.articleController = new ArticleController(guardianAPIStrategy, daoUtil);
     this.pastebinController = new PastebinController(pastebinAPIStrategy);
 
@@ -49,12 +51,20 @@ public class RequestMapping {
     return returnedEntity;
   }
 
-  public List<Entity> searchByTag(String token, String tag) {
-    return articleController.searchByTag(token, tag);
+  public List<Entity> searchAllTagsByKeyword(String token, String keyword) {
+    return tagController.searchAllTagsByKeyword(token, keyword);
   }
 
-  public List<Entity> searchByCachedTag(String token, String tag) {
-    return articleController.searchByCachedTag(token, tag);
+  public List<Entity> searchAllArticlesByTag(String token, String tag) {
+    return articleController.searchAllArticlesByTag(token, tag);
+  }
+//
+  public List<Entity> searchCachedTagsByKeyword(String token, String keyword) {
+    return tagController.searchCachedTagsByKeyword(token, keyword);
+  }
+
+  public List<Entity> searchCachedArticleByTag(String token, String tag) {
+    return articleController.searchCachedArticleByTag(token, tag);
   }
 
   public Entity getPastebinLink(String token, String copiedText) {
@@ -69,5 +79,13 @@ public class RequestMapping {
 
   public User getUser() {
     return this.user;
+  }
+
+  public static void main(String[] args) {
+    System.out.println(new RequestMapping(
+            new GuardianOnlineAPIStrategy(),
+            new PastebinOfflineAPIStrategy(),
+            new DaoUtil()
+    ).searchAllArticlesByTag("1b0f84fb-9674-4fe2-b596-5836b2772fcb", "books/roxane-gay").size());
   }
 }

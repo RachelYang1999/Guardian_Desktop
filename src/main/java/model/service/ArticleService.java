@@ -31,10 +31,10 @@ public class ArticleService {
     this.articleDao = articleDao;
   }
 
-  public List<Entity> getAllArticles(String token, String tag) {
+  public List<Entity> searchAllArticlesByTag(String token, String tag) {
     List<Entity> entities = new ArrayList<>();
 
-    JSONObject responseJSON = guardianAPIStrategy.searchByTag(token, tag, 1);
+    JSONObject responseJSON = guardianAPIStrategy.searchArticlesByTag(token, tag, 1);
     if (responseJSON == null) {
       System.out.println("[UserService] searchByTag responseJSON is null");
     }
@@ -60,7 +60,7 @@ public class ArticleService {
   public List<Entity> searchByTag(String token, String tag, int pageNUmber) {
     List<Entity> entities = new ArrayList<>();
 
-    JSONObject responseJSON = guardianAPIStrategy.searchByTag(token, tag, pageNUmber);
+    JSONObject responseJSON = guardianAPIStrategy.searchArticlesByTag(token, tag, pageNUmber);
     if (responseJSON == null) {
       System.out.println("[UserService] searchByTag responseJSON is null");
     }
@@ -95,7 +95,7 @@ public class ArticleService {
     return entities;
   }
 
-  public List<Entity> searchByCachedTag(String tag) {
+  public List<Entity> searchCachedArticleByTag(String tag) {
     List<Entity> entities = new ArrayList<>();
     //        Article article
     List<String> idList = articleDao.getEntity("TAG", tag, "ID");
@@ -122,6 +122,6 @@ public class ArticleService {
     System.out.println("Main---------------------------------------------");
     List<Entity> entities =
         new ArticleService(new GuardianOnlineAPIStrategy(), new ArticleDao(new DaoUtil()))
-            .searchByCachedTag("gay couple");
+            .searchCachedArticleByTag("gay couple");
   }
 }

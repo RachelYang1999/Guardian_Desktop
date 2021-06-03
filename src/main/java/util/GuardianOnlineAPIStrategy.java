@@ -46,7 +46,7 @@ public class GuardianOnlineAPIStrategy implements GuardianAPIStrategy {
   }
 
   @Override
-  public JSONObject searchByTag(String token, String tag, int pageNumber) {
+  public JSONObject searchTagsByKeyword(String token, String tag, int pageNumber) {
     JSONObject responseDataJson = null;
     String responseData = "";
     try {
@@ -88,13 +88,54 @@ public class GuardianOnlineAPIStrategy implements GuardianAPIStrategy {
     return responseDataJson;
   }
 
+  @Override
+  public JSONObject searchArticlesByTag(String token, String tag, int pageNumber) {
+    JSONObject responseDataJson = null;
+    String responseData = "";
+    try {
+      client = new OkHttpClient().newBuilder().build();
+      Request request = new Request.Builder()
+              .url("https://content.guardianapis.com/" + tag + "?page=" + pageNumber + "&api-key=" + token)
+              .method("GET", null)
+              .build();
+
+      response = client.newCall(request).execute();
+      responseData = response.body().string();
+      responseDataJson = new JSONObject(responseData);
+
+      System.out.println("[GuardianOnlineUtil] getArticles" + " responseData " + responseData);
+      System.out.println(
+              "[GuardianOnlineUtil] getArticles" + " response.code() " + response.code());
+      System.out.println(
+              "[GuardianOnlineUtil] getArticles"
+                      + " ----------------------------------------------------------------");
+
+      response.body().close();
+      client.connectionPool().evictAll();
+
+    } catch (Exception e) {
+      System.err.println("Something got wrong");
+      e.printStackTrace();
+    }
+    if (response.body() != null && client != null) {
+      response.body().close();
+      client.connectionPool().evictAll();
+    }
+    return responseDataJson;
+  }
+
   public static void main(String[] args) throws Exception {
     //        System.out.println(new
     // GuardianOnlineAPIStrategy().login("1b0f84fb-9674-4fe2-b596-5836b2772fcb").toString());
 
     System.out.println(
         new GuardianOnlineAPIStrategy()
-            .searchByTag("1b0f84fb-9674-4fe2-b596-5836b2772fcb", "sausage", 1)
+            .searchTagsByKeyword("1b0f84fb-9674-4fe2-b596-5836b2772fcb", "gay", 1)
             .toString());
+
+//    System.out.println(
+//            new GuardianOnlineAPIStrategy()
+//                    .getArticles("1b0f84fb-9674-4fe2-b596-5836b2772fcb", "food/food", 1)
+//                    .toString());
   }
 }

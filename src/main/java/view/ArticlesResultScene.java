@@ -1,10 +1,5 @@
 package view;
 
-import javafx.scene.control.*;
-import javafx.scene.layout.*;
-import model.domain.Article;
-import model.domain.Entity;
-import util.RequestMapping;
 import factory.backgroundfactory.BackgroundFactory;
 import factory.backgroundfactory.LightBackgroundFactory;
 import factory.buttonfactory.BrownButtonFactory;
@@ -12,19 +7,23 @@ import factory.buttonfactory.ButtonFactory;
 import factory.buttonfactory.GrayButtonFactory;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.effect.Reflection;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import model.domain.Article;
+import model.domain.Entity;
+import util.RequestMapping;
 import view.alertbox.AlertBox;
-import view.alertbox.PastebinLoginBox;
 import view.alertbox.ResponseBoxWithPastebin;
 
 import java.util.List;
 
-public class SearchResultScene {
+public class ArticlesResultScene {
   private Stage window;
   private Scene scene;
   private BackgroundFactory backgroundFactory;
@@ -37,21 +36,22 @@ public class SearchResultScene {
   private List<Entity> returnedArticles;
 
   public int itemsPerPage() {
-    return 8;
+    return 7;
   }
 
-  public SearchResultScene(Stage window, RequestMapping requestMapping, String tag)
+  public ArticlesResultScene(Stage window, RequestMapping requestMapping, String tag)
       throws Exception {
     this.window = window;
     this.backgroundFactory = new LightBackgroundFactory();
     this.buttonFactory = new BrownButtonFactory();
     //        this.returnedArticles = new ArticleService(new
-    // GuardianOnlineAPIStrategy()).getAllArticles("1b0f84fb-9674-4fe2-b596-5836b2772fcb", tag);
-    this.returnedArticles = requestMapping.searchByTag(requestMapping.getUser().getToken(), tag);
+    // GuardianOnlineAPIStrategy()).getAllArticles("1b0f84fb-9674-4fe2-b596-5836b2772fcb", searchItem);
+//    this.returnedArticles = requestMapping.searchByTag(requestMapping.getUser().getToken(), tag);
+    this.returnedArticles = requestMapping.searchAllArticlesByTag(requestMapping.getUser().getToken(), tag);
 
     Text t = new Text();
     t.setCache(true);
-    t.setText("Search By Tag Result");
+    t.setText("Article Result");
     t.setFill(Color.web("#704728"));
     t.setFont(Font.font("Arial", FontWeight.BOLD, 60));
 
@@ -86,10 +86,11 @@ public class SearchResultScene {
             Entity currentEntity = returnedArticles.get(i);
             FlowPane flow = new FlowPane();
             Text info = new Text(((Article) currentEntity).getWebTitle());
-            info.setFont(Font.font("Arial", FontWeight.NORMAL, 16));
-            Text id = new Text("ID: " + ((Article) currentEntity).getId());
-            id.setFont(Font.font("Arial", FontWeight.NORMAL, 13));
-            id.setStroke(Color.web("#727272"));
+            info.setFont(Font.font("Arial", FontWeight.BOLD, 15));
+
+//            Text id = new Text("ID: " + ((Article) currentEntity).getId());
+//            id.setFont(Font.font("Arial", FontWeight.NORMAL, 13));
+//            id.setStroke(Color.web("#727272"));
 
             Hyperlink showDetailLink = new Hyperlink("Show Detail");
             showDetailLink.setOnAction(
@@ -100,25 +101,16 @@ public class SearchResultScene {
                   responseBoxWithPastebin.createAlertBox(
                       "Result Information", "Here is the detailed article information", boxInfo);
                 });
-            VBox articleRoughInfo = new VBox(2);
-            articleRoughInfo.getChildren().addAll(info, id);
-            articleRoughInfo.setStyle(
-                "-fx-padding: 2;"
-                    + "-fx-border-style: solid inside;"
-                    + "-fx-border-width: 1;"
-                    + "-fx-border-insets: 2;"
-                    +
-                    //                        "-fx-border-radius: 5;" +
-                    "-fx-border-color: #865936;");
 
-            HBox articleRoughInfoWithDetailLink = new HBox(5);
-            articleRoughInfoWithDetailLink.getChildren().addAll(articleRoughInfo, showDetailLink);
+            VBox articleRoughInfoWithDetailLink = new VBox();
+            articleRoughInfoWithDetailLink.getChildren().addAll(info, showDetailLink);
 
             flow.getChildren().addAll(articleRoughInfoWithDetailLink);
             //                flow.getChildren().addAll(info, showDetailLink);
             flow.setStyle("-fx-font-family: Arial");
             ScrollPane scrollPane = new ScrollPane();
             scrollPane.setContent(flow);
+            scrollPane.setMinHeight(65);
             box.getChildren().add(scrollPane);
           }
           box.setAlignment(Pos.TOP_LEFT);
@@ -157,8 +149,8 @@ public class SearchResultScene {
     backButton.setOnAction(
         event -> {
           try {
-            window.setScene(new SearchByTagScene(window, requestMapping).getScene());
-            window.setTitle("Search By Tag");
+            window.setScene(new SearchTagsByKeywordScene(window, requestMapping).getScene());
+            window.setTitle("Search Tag By Keyword");
           } catch (Exception e) {
             e.printStackTrace();
           }

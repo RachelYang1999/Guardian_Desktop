@@ -1,11 +1,5 @@
 package view;
 
-import factory.entityfactory.EntityFactory;
-import factory.entityfactory.ErrorInfoFactory;
-import javafx.scene.text.TextAlignment;
-import model.domain.Entity;
-import model.domain.ErrorInfo;
-import util.RequestMapping;
 import factory.backgroundfactory.BackgroundFactory;
 import factory.backgroundfactory.LightBackgroundFactory;
 import factory.buttonfactory.BrownButtonFactory;
@@ -23,25 +17,28 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
+import model.domain.ErrorInfo;
+import util.RequestMapping;
 import view.alertbox.AlertBox;
 import view.alertbox.ErrorBox;
 
-public class SearchByTagScene {
+public class SearchTagsByKeywordScene {
   private Stage window;
   private Scene scene;
   private BackgroundFactory backgroundFactory;
   private ButtonFactory buttonFactory;
   private AlertBox alertBox;
 
-  public SearchByTagScene(Stage window, RequestMapping requestMapping) throws Exception {
+  public SearchTagsByKeywordScene(Stage window, RequestMapping requestMapping) throws Exception {
     this.window = window;
     this.backgroundFactory = new LightBackgroundFactory();
     this.buttonFactory = new BrownButtonFactory();
 
     Text t = new Text();
     t.setCache(true);
-    t.setText("Search By Tag");
+    t.setText("Search Tags By Keyword");
     t.setFill(Color.web("#704728"));
     t.setFont(Font.font("Arial", FontWeight.BOLD, 70));
     t.setLayoutX(250);
@@ -52,7 +49,7 @@ public class SearchByTagScene {
 
     //        Label tagLabel = new Label();
 
-    TextField tagTextField = new TextField("Input the tag here");
+    TextField tagTextField = new TextField("Input the keyword here");
     //        tagTextField.setStyle("-fx-text-fill:#777777");
     tagTextField.setPrefHeight(40);
     tagTextField.setPrefWidth(600);
@@ -64,18 +61,17 @@ public class SearchByTagScene {
     searchButton.setText("Search\nFrom\nAPI");
     searchButton.setOnAction(
         event -> {
-          String inputTag = tagTextField.getText();
-          System.out.println("inputTag is: " + inputTag);
+          String inputKeyword = tagTextField.getText();
+          System.out.println("inputTag is: " + inputKeyword);
 
           try {
-            if (inputTag.equals("Input the tag here")) {
+            if (inputKeyword.equals("Input the keyword here")) {
               ErrorInfo errorInfo = new ErrorInfo();
               errorInfo.setMessage("Please don't input empty character");
               this.alertBox = new ErrorBox();
               alertBox.createAlertBox(errorInfo);
             } else {
-
-              window.setScene(new SearchResultScene(window, requestMapping, inputTag).getScene());
+              window.setScene(new TagsResultScene(window, requestMapping, inputKeyword).getScene());
               window.setTitle("Search Result");
             }
           } catch (Exception e) {
@@ -92,15 +88,14 @@ public class SearchByTagScene {
           String inputTag = tagTextField.getText();
           System.out.println("inputTag is: " + inputTag);
           try {
-            if (inputTag.equals("Input the tag here")) {
+            if (inputTag.equals("Input the keyword here")) {
               ErrorInfo errorInfo = new ErrorInfo();
               errorInfo.setMessage("Please don't input empty character");
               this.alertBox = new ErrorBox();
               alertBox.createAlertBox(errorInfo);
             } else {
-
               window.setScene(
-                  new SearchCachedResultScene(window, requestMapping, inputTag).getScene());
+                  new CachedTagResultScene(window, requestMapping, inputTag).getScene());
               window.setTitle("Search Result");
             }
           } catch (Exception e) {

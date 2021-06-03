@@ -4,7 +4,6 @@ import model.dao.ArticleDao;
 import model.dao.DaoUtil;
 import model.domain.Entity;
 import model.service.ArticleService;
-import model.service.UserService;
 import util.GuardianAPIStrategy;
 
 import java.util.List;
@@ -17,11 +16,11 @@ public class ArticleController {
     this.articleService = new ArticleService(guardianAPIStrategy, new ArticleDao(daoUtil));
   }
 
-  public List<Entity> searchByTag(String token, String tag) {
-    return articleService.getAllArticles(token, tag);
+  public List<Entity> searchAllArticlesByTag(String token, String tag) {
+    return articleService.searchAllArticlesByTag(token, tag);
   }
 
-  public List<Entity> searchByCachedTag(String token, String tag) {
-    return articleService.searchByCachedTag(tag);
+  public List<Entity> searchCachedArticleByTag(String token, String tag) {
+    return articleService.searchCachedArticleByTag(tag);
   }
 }

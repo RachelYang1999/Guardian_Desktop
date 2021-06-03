@@ -17,13 +17,14 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import model.domain.Article;
 import model.domain.Entity;
+import model.domain.Tag;
 import util.RequestMapping;
 import view.alertbox.AlertBox;
 import view.alertbox.ResponseBoxWithPastebin;
 
 import java.util.List;
 
-public class SearchCachedResultScene {
+public class CachedTagResultScene {
   private Stage window;
   private Scene scene;
   private BackgroundFactory backgroundFactory;
@@ -33,21 +34,18 @@ public class SearchCachedResultScene {
   //    List<Entity> entities = new ArticleService(new
   // GuardianOnlineAPIStrategy()).getAllArticles("1b0f84fb-9674-4fe2-b596-5836b2772fcb", "gay
   // couple");
-  private List<Entity> returnedArticles;
+  private List<Entity> returnedTags;
 
   public int itemsPerPage() {
     return 8;
   }
 
-  public SearchCachedResultScene(Stage window, RequestMapping requestMapping, String tag)
+  public CachedTagResultScene(Stage window, RequestMapping requestMapping, String keyword)
       throws Exception {
     this.window = window;
     this.backgroundFactory = new LightBackgroundFactory();
     this.buttonFactory = new BrownButtonFactory();
-    //        this.returnedArticles = new ArticleService(new
-    // GuardianOnlineAPIStrategy()).getAllArticles("1b0f84fb-9674-4fe2-b596-5836b2772fcb", tag);
-    this.returnedArticles =
-        requestMapping.searchByCachedTag(requestMapping.getUser().getToken(), tag);
+    this.returnedTags = requestMapping.searchCachedTagsByKeyword(requestMapping.getUser().getToken(), keyword);
 
     Text t = new Text();
     t.setCache(true);
@@ -61,69 +59,63 @@ public class SearchCachedResultScene {
 
     Label searchResultInfo = new Label();
     searchResultInfo.setText(
-        "There are "
-            + returnedArticles.size()
-            + " articles found "
-            + "\n"
-            + "with the tag \""
-            + tag
-            + "\":");
+            "There are "
+                    + returnedTags.size()
+                    + " tags found "
+                    + "\n"
+                    + "with the keyword \""
+                    + keyword
+                    + "\" in the local database:");
     searchResultInfo.setFont(Font.font("Arial", FontWeight.BOLD, 20));
 
     Pagination pagination =
-        new Pagination((int) Math.ceil((double) returnedArticles.size() / itemsPerPage()), 0);
+            new Pagination((int) Math.ceil((double) returnedTags.size() / itemsPerPage()), 0);
     pagination.setStyle("-fx-font-family: Arial");
-    if (returnedArticles.size() == 0) {
+    if (returnedTags.size() == 0) {
       pagination = new Pagination(0, 0);
     }
 
     pagination.setPageFactory(
-        (Integer p) -> {
-          VBox box = new VBox(5);
-          box.getChildren().add(searchResultInfo);
-          int page = p * itemsPerPage();
-          for (int i = page; i < page + itemsPerPage() && i < returnedArticles.size(); i++) {
-            Entity currentEntity = returnedArticles.get(i);
-            FlowPane flow = new FlowPane();
-            Text info = new Text(((Article) currentEntity).getWebTitle());
-            info.setFont(Font.font("Arial", FontWeight.NORMAL, 16));
-            Text id = new Text("ID: " + ((Article) currentEntity).getId());
-            id.setFont(Font.font("Arial", FontWeight.NORMAL, 13));
-            id.setStroke(Color.web("#727272"));
+            (Integer p) -> {
+              VBox box = new VBox(5);
+              box.getChildren().add(searchResultInfo);
+              int page = p * itemsPerPage();
+              for (int i = page; i < page + itemsPerPage() && i < returnedTags.size(); i++) {
+                Entity currentEntity = returnedTags.get(i);
+                FlowPane flow = new FlowPane();
+                Text tag = new Text(((Tag) currentEntity).getTagName());
+                tag.setFont(Font.font("Arial", FontWeight.NORMAL, 20));
+//            Text id = new Text("ID: " + ((Tag) currentEntity).getTagName());
+//            id.setFont(Font.font("Arial", FontWeight.NORMAL, 13));
+//            id.setStroke(Color.web("#727272"));
 
-            Hyperlink showDetailLink = new Hyperlink("Show Detail");
-            showDetailLink.setOnAction(
-                actionEvent -> {
-                  String boxInfo = currentEntity.getEntityInformation();
-                  ResponseBoxWithPastebin responseBoxWithPastebin =
-                      new ResponseBoxWithPastebin(requestMapping);
-                  responseBoxWithPastebin.createAlertBox(
-                      "Result Information", "Here is the detailed article information", boxInfo);
-                });
-            VBox articleRoughInfo = new VBox(2);
-            articleRoughInfo.getChildren().addAll(info, id);
-            articleRoughInfo.setStyle(
-                "-fx-padding: 2;"
-                    + "-fx-border-style: solid inside;"
-                    + "-fx-border-width: 1;"
-                    + "-fx-border-insets: 2;"
-                    +
-                    //                        "-fx-border-radius: 5;" +
-                    "-fx-border-color: #865936;");
+                Hyperlink showDetailLink = new Hyperlink("See All Tag-Related Articles");
+                showDetailLink.setOnAction(
+                        actionEvent -> {
+                          try {
+                            window.setScene(new CachedArticleResultScene(window, requestMapping, ((Tag) currentEntity).getTagName()).getScene());
+                            window.setTitle("Search Article Results");
+                          } catch (Exception e) {
+                            e.printStackTrace();
+                          }
+                        });
 
-            HBox articleRoughInfoWithDetailLink = new HBox(5);
-            articleRoughInfoWithDetailLink.getChildren().addAll(articleRoughInfo, showDetailLink);
+                VBox articleRoughInfoWithDetailLink = new VBox(5);
+                articleRoughInfoWithDetailLink.getChildren().addAll(tag, showDetailLink);
+                articleRoughInfoWithDetailLink.setAlignment(Pos.CENTER_LEFT);
 
-            flow.getChildren().addAll(articleRoughInfoWithDetailLink);
-            //                flow.getChildren().addAll(info, showDetailLink);
-            flow.setStyle("-fx-font-family: Arial");
-            ScrollPane scrollPane = new ScrollPane();
-            scrollPane.setContent(flow);
-            box.getChildren().add(scrollPane);
-          }
-          box.setAlignment(Pos.TOP_LEFT);
-          return box;
-        });
+                flow.getChildren().addAll(articleRoughInfoWithDetailLink);
+                //                flow.getChildren().addAll(info, showDetailLink);
+                flow.setStyle("-fx-font-family: Arial");
+
+                ScrollPane scrollPane = new ScrollPane();
+                scrollPane.setContent(flow);
+                scrollPane.setMinHeight(50);
+                box.getChildren().add(scrollPane);
+              }
+              box.setAlignment(Pos.TOP_LEFT);
+              return box;
+            });
 
     pagination.setPrefWidth(480);
     pagination.setMaxWidth(480);
@@ -155,14 +147,14 @@ public class SearchCachedResultScene {
     backButton.setFont(Font.font("Arial", FontWeight.BOLD, 20));
     backButton.setText("Back");
     backButton.setOnAction(
-        event -> {
-          try {
-            window.setScene(new SearchByTagScene(window, requestMapping).getScene());
-            window.setTitle("Search By Tag");
-          } catch (Exception e) {
-            e.printStackTrace();
-          }
-        });
+            event -> {
+              try {
+                window.setScene(new SearchTagsByKeywordScene(window, requestMapping).getScene());
+                window.setTitle("Search By Tag");
+              } catch (Exception e) {
+                e.printStackTrace();
+              }
+            });
 
     BorderPane pane = new BorderPane();
     pane.getChildren().add(this.backgroundFactory.getBackground());

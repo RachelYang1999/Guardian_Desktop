@@ -1,7 +1,9 @@
 package model.service;
 
 import model.dao.ArticleDao;
+import model.dao.TagDao;
 import model.domain.Entity;
+import model.domain.TagData;
 import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
@@ -14,14 +16,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
-public class ArticleServiceTest {
+public class TagServiceTest {
   private GuardianAPIStrategy onlineGuardianAPIStrategy;
   private GuardianAPIStrategy offlineGuardianAPIStrategy;
 
+  private TagDao tagDao;
   private ArticleDao articleDao;
 
   @Before
@@ -45,44 +48,46 @@ public class ArticleServiceTest {
     onlineGuardianAPIStrategy = Mockito.mock(GuardianOnlineAPIStrategy.class);
     offlineGuardianAPIStrategy = Mockito.mock(GuardianOfflineAPIStrategy.class);
 
+    tagDao = Mockito.mock(TagDao.class);
     articleDao = Mockito.mock(ArticleDao.class);
 
-    when(onlineGuardianAPIStrategy.searchArticlesByTag("correct token", "sausage", 1))
+    when(onlineGuardianAPIStrategy.searchTagsByKeyword("correct token", "sausage", 1))
         .thenReturn(successfulResponse);
-    when(offlineGuardianAPIStrategy.searchArticlesByTag("correct token", "sausage", 1))
+    when(offlineGuardianAPIStrategy.searchTagsByKeyword("correct token", "sausage", 1))
         .thenReturn(successfulResponse);
 
-    when(onlineGuardianAPIStrategy.searchArticlesByTag("incorrect token", "sausage", 1))
+    when(onlineGuardianAPIStrategy.searchTagsByKeyword("incorrect token", "sausage", 1))
         .thenReturn(invalidTokenResponse);
-    when(offlineGuardianAPIStrategy.searchArticlesByTag("incorrect token", "sausage", 1))
+    when(offlineGuardianAPIStrategy.searchTagsByKeyword("incorrect token", "sausage", 1))
         .thenReturn(invalidTokenResponse);
 
-    when(onlineGuardianAPIStrategy.searchArticlesByTag("correct token", "no result tag", 1))
+    when(onlineGuardianAPIStrategy.searchTagsByKeyword("correct token", "no result tag", 1))
         .thenReturn(noResultResponse);
-    when(offlineGuardianAPIStrategy.searchArticlesByTag("correct token", "no result tag", 1))
+    when(offlineGuardianAPIStrategy.searchTagsByKeyword("correct token", "no result tag", 1))
         .thenReturn(noResultResponse);
 
-    when(onlineGuardianAPIStrategy.searchArticlesByTag("correct token", "irregular tag", 1))
+    when(onlineGuardianAPIStrategy.searchTagsByKeyword("correct token", "irregular tag", 1))
         .thenReturn(irregularResponse);
-    when(offlineGuardianAPIStrategy.searchArticlesByTag("correct token", "irregular tag", 1))
+    when(offlineGuardianAPIStrategy.searchTagsByKeyword("correct token", "irregular tag", 1))
         .thenReturn(irregularResponse);
 
     List<String> resultList = new ArrayList<>();
     resultList.add(("exist info"));
-    when(articleDao.getEntity(anyString(), anyString(), anyString())).thenReturn(resultList);
-    //        when(articleDao.getEntity(anyString(), eq("non-exist tag"))).thenReturn("");
+    when(tagDao.getEntity(anyString(), anyString(), anyString())).thenReturn(resultList);
+    when(tagDao.addEntity(any())).thenReturn(true);
 
+    when(articleDao.getEntity(anyString(), anyString(), anyString())).thenReturn(resultList);
     when(articleDao.addEntity(any())).thenReturn(true);
   }
 
   @Test
   public void testSearchSuccessOnline() {
-    ArticleService articleService = new ArticleService(onlineGuardianAPIStrategy, articleDao);
-    List<Entity> returnedEntities = articleService.searchByTag("correct token", "sausage", 1);
+    TagService tagService = new TagService(onlineGuardianAPIStrategy, tagDao, articleDao);
+    List<Entity> returnedEntities = tagService.searchTagsByKeyword("correct token", "sausage", 1);
     String result = "";
     for (Entity e : returnedEntities) {
       result += e.getEntityInformation();
-      assertEquals("Article", e.getEntityType());
+      assertEquals("Tag", e.getEntityType());
     }
     String expected =
         "sectionName: Food\n"
@@ -104,12 +109,12 @@ public class ArticleServiceTest {
 
   @Test
   public void testSearchSuccessOffline() {
-    ArticleService userService = new ArticleService(offlineGuardianAPIStrategy, articleDao);
-    List<Entity> returnedEntities = userService.searchByTag("correct token", "sausage", 1);
+    TagService tagService = new TagService(offlineGuardianAPIStrategy, tagDao, articleDao);
+    List<Entity> returnedEntities = tagService.searchTagsByKeyword("correct token", "sausage", 1);
     String result = "";
     for (Entity e : returnedEntities) {
       result += e.getEntityInformation();
-      assertEquals("Article", e.getEntityType());
+      assertEquals("Tag", e.getEntityType());
     }
     String expected =
         "sectionName: Food\n"
@@ -131,8 +136,8 @@ public class ArticleServiceTest {
 
   @Test
   public void testSearchInvalidTokenOnline() {
-    ArticleService articleService = new ArticleService(onlineGuardianAPIStrategy, articleDao);
-    List<Entity> returnedEntities = articleService.searchByTag("incorrect token", "sausage", 1);
+    TagService tagService = new TagService(onlineGuardianAPIStrategy, tagDao, articleDao);
+    List<Entity> returnedEntities = tagService.searchTagsByKeyword("incorrect token", "sausage", 1);
 
     assertEquals(1, returnedEntities.size());
 
@@ -148,8 +153,8 @@ public class ArticleServiceTest {
 
   @Test
   public void testSearchInvalidTokenOffline() {
-    ArticleService articleService = new ArticleService(offlineGuardianAPIStrategy, articleDao);
-    List<Entity> returnedEntities = articleService.searchByTag("incorrect token", "sausage", 1);
+    TagService tagService = new TagService(offlineGuardianAPIStrategy, tagDao, articleDao);
+    List<Entity> returnedEntities = tagService.searchTagsByKeyword("incorrect token", "sausage", 1);
 
     assertEquals(1, returnedEntities.size());
 
@@ -165,22 +170,22 @@ public class ArticleServiceTest {
 
   @Test
   public void testSearchNoResultOnline() {
-    ArticleService userService = new ArticleService(onlineGuardianAPIStrategy, articleDao);
-    List<Entity> returnedEntities = userService.searchByTag("correct token", "no result tag", 1);
+    TagService tagService = new TagService(onlineGuardianAPIStrategy, tagDao, articleDao);
+    List<Entity> returnedEntities = tagService.searchTagsByKeyword("correct token", "no result tag", 1);
     assertEquals(0, returnedEntities.size());
   }
 
   @Test
   public void testSearchNoResultOffline() {
-    ArticleService userService = new ArticleService(offlineGuardianAPIStrategy, articleDao);
-    List<Entity> returnedEntities = userService.searchByTag("correct token", "no result tag", 1);
+    TagService tagService = new TagService(offlineGuardianAPIStrategy, tagDao, articleDao);
+    List<Entity> returnedEntities = tagService.searchTagsByKeyword("correct token", "no result tag", 1);
     assertEquals(0, returnedEntities.size());
   }
 
   @Test
   public void testSearchIrregularOnline() {
-    ArticleService userService = new ArticleService(onlineGuardianAPIStrategy, articleDao);
-    List<Entity> returnedEntities = userService.searchByTag("correct token", "irregular tag", 1);
+    TagService tagService = new TagService(onlineGuardianAPIStrategy, tagDao, articleDao);
+    List<Entity> returnedEntities = tagService.searchTagsByKeyword("correct token", "irregular tag", 1);
     assertEquals(1, returnedEntities.size());
 
     String result = "";
@@ -194,8 +199,8 @@ public class ArticleServiceTest {
 
   @Test
   public void testSearchIrregularOffline() {
-    ArticleService userService = new ArticleService(offlineGuardianAPIStrategy, articleDao);
-    List<Entity> returnedEntities = userService.searchByTag("correct token", "irregular tag", 1);
+    TagService tagService = new TagService(onlineGuardianAPIStrategy, tagDao, articleDao);
+    List<Entity> returnedEntities = tagService.searchTagsByKeyword("correct token", "irregular tag", 1);
     assertEquals(1, returnedEntities.size());
 
     String result = "";
