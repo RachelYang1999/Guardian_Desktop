@@ -1,4 +1,8 @@
 # SCD2_2021_Exam
+
+## Implemented Feature Level
+**DISTINCTION** (SQLite database + Concurrency)
+
 ## Style Guide
 Code style: Google Java Style Guide https://google.github.io/styleguide/javaguide.html
 
@@ -25,9 +29,6 @@ classes at the discretion of the developer.
         * `gradle run --args="online offline"`
         * `gradle run --args="offline online"`
         * `gradle run --args="offline offline"`
-
-## Implemented Feature Level
-**DISTINCTION** (SQLite database + Concurrency)
 
 ## TDD Process Record
 * Login Function
