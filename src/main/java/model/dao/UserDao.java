@@ -11,15 +11,28 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This is a Database Access Objects class which includes CRUD operations of article data from USER table in the database
+ * @author Rachel Yang
+ */
 public class UserDao extends AbstractDao {
   Connection connection;
   Statement statement;
 
+  /**
+   * The constructor of User Database Access Object
+   * @param daoUtil The Database Access Object Util to be injected into the construction of DAO objects for database connection
+   */
   public UserDao(DaoUtil daoUtil) {
     super(daoUtil);
     connection = daoUtil.getDatabaseConnection();
   }
 
+  /**
+   * Add USER information to the USER table of the database
+   * @param entity The User Entity to be added to the database
+   * @return The status of the adding operation
+   */
   @Override
   public boolean addEntity(Entity entity) {
     User user = null;
@@ -52,6 +65,13 @@ public class UserDao extends AbstractDao {
     }
   }
 
+  /**
+   * Get user information from USER table in the database
+   * @param matchField The field to be matched
+   * @param matchValue The field value to be matched
+   * @param retrieveFiled The field to be retrieved
+   * @return The list of matched filed values
+   */
   @Override
   public List<String> getEntity(String matchField, String matchValue, String retrieveFiled) {
     List<String> result = new ArrayList<>();
@@ -71,6 +91,12 @@ public class UserDao extends AbstractDao {
     return result;
   }
 
+  /**
+   * Update article information to the database
+   * @param token The field to be updated
+   * @param entityInfo The field value to be updated in the related field
+   * @return
+   */
   @Override
   public boolean updateEntity(String token, String entityInfo) {
     try {
@@ -87,6 +113,11 @@ public class UserDao extends AbstractDao {
     return false;
   }
 
+  /**
+   * Delete tag information from the database
+   * @param entityName
+   * @return
+   */
   @Override
   public boolean deleteEntity(String entityName) {
     try {
@@ -103,20 +134,4 @@ public class UserDao extends AbstractDao {
     }
   }
 
-  public static void main(String[] args) {
-    AbstractDao userDao = new UserDao(new DaoUtil());
-    User user = new User();
-    user.setToken("fake token1");
-    user.setUserTier("dad");
-    //        userDao.addEntity(user);
-    List<String> info =
-        userDao.getEntity("TOKEN", "audog-9674-4fe2-b596-ufgisdfyvwdouwgeouf", "INFO");
-    for (String s : info) {
-      System.out.println(s);
-    }
-
-    //        userDao.updateEntity("fake token1", "new fake token1");
-    //        userDao.deleteEntity("fake token1");
-
-  }
 }

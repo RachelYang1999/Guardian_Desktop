@@ -25,7 +25,6 @@ import model.domain.ErrorInfo;
 import util.RequestMapping;
 import view.alertbox.AlertBox;
 import view.alertbox.ErrorBox;
-import view.alertbox.ResponseBoxAutoClose;
 import view.alertbox.SimpleResponseBox;
 
 import java.util.List;

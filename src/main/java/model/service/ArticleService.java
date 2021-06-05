@@ -14,6 +14,10 @@ import util.GuardianOnlineAPIStrategy;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The Model Service of the Entity Article which encapsulated the business logic for searching articles by input tag from the API
+ * @author Rachel Yang
+ */
 public class ArticleService {
 
   private EntityCollectionFactory entityCollectionFactory;
@@ -78,6 +82,9 @@ public class ArticleService {
               article.setRelatedTag(tag);
               if (articleDao.getEntity("TAGGEDID", tag + "/" + article.getId(), "INFO").size() == 0) {
                 articleDao.addEntity(article);
+              } else {
+                articleDao.updateEntity(article.getRelatedTag() + "/" + article.getId().replace("'", ""),
+                        article.getEntityInformation().replace("'", ""));
               }
             }
           }

@@ -85,7 +85,7 @@ public class ArticlesResultScene {
             Entity currentEntity = returnedArticles.get(i);
             FlowPane flow = new FlowPane();
             Text info = new Text(((Article) currentEntity).getWebTitle());
-            info.setFont(Font.font("Arial", FontWeight.BOLD, 15));
+            info.setFont(Font.font("Arial", FontWeight.BOLD, 14));
 
             Hyperlink showDetailLink = new Hyperlink("Show Detail");
             showDetailLink.setOnAction(

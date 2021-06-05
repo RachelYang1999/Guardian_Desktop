@@ -10,15 +10,28 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This is a Database Access Objects class which includes CRUD operations of article data from ARTICLE table in the database
+ * @author Rachel Yang
+ */
 public class ArticleDao extends AbstractDao {
   Connection connection;
   Statement statement;
 
+  /**
+   * The constructor of Article Database Access Object
+   * @param daoUtil The Database Access Object Util to be injected into the construction of DAO objects for database connection
+   */
   public ArticleDao(DaoUtil daoUtil) {
     super(daoUtil);
     connection = daoUtil.getDatabaseConnection();
   }
 
+  /**
+   * Add ARTICLE information to the ARTICLE table of the database
+   * @param entity The Article Entity to be added to the database
+   * @return The status of the adding operation
+   */
   @Override
   public boolean addEntity(Entity entity) {
     String finalSQL = "";
@@ -66,6 +79,13 @@ public class ArticleDao extends AbstractDao {
     }
   }
 
+  /**
+   * Get article information from ARTICLE table in the database
+   * @param matchField The field to be matched
+   * @param matchValue The field value to be matched
+   * @param retrieveFiled The field to be retrieved
+   * @return The list of matched filed values
+   */
   @Override
   public List<String> getEntity(String matchField, String matchValue, String retrieveFiled) {
     List<String> result = new ArrayList<>();
@@ -99,11 +119,18 @@ public class ArticleDao extends AbstractDao {
     return result;
   }
 
+  /**
+   * Update article information to the database
+   * @param pk The field to be updated
+   * @param entityInfo The field value to be updated in the related field
+   * @return
+   */
   @Override
-  public boolean updateEntity(String token, String entityInfo) {
+  public boolean updateEntity(String pk, String entityInfo) {
     try {
       statement = connection.createStatement();
-      String sql = "UPDATE USER SET INFO = '" + entityInfo + "' WHERE TOKEN = '" + token + "';";
+      String sql = "UPDATE ARTICLE SET INFO = '" + entityInfo + "' WHERE TAGGEDID = '" + pk + "';";
+//      String sql = "UPDATE USER SET INFO = '" + entityInfo + "' WHERE TOKEN = '" + token + "';";
       statement.executeUpdate(sql);
       return true;
     } catch (Exception e) {
@@ -115,6 +142,11 @@ public class ArticleDao extends AbstractDao {
     return false;
   }
 
+  /**
+   * Delete article information from the database
+   * @param entityName
+   * @return
+   */
   @Override
   public boolean deleteEntity(String entityName) {
     try {

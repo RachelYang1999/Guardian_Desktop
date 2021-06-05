@@ -26,7 +26,7 @@ public class ArticleDataFactory implements EntityCollectionFactory {
       try {
         return response.getString(field);
       } catch (Exception e) {
-        System.out.println("ArticleDataFactory Get string wrong");
+//        System.out.println("ArticleDataFactory Get string wrong");
         //                e.printStackTrace();
       }
       try {
@@ -67,7 +67,7 @@ public class ArticleDataFactory implements EntityCollectionFactory {
         }
       } catch (Exception e) {
         e.printStackTrace();
-        System.out.println("[ArticleDataFactory] getContentFromJsonArray exception?");
+//        System.out.println("[ArticleDataFactory] getContentFromJsonArray exception?");
       }
     }
     return result;

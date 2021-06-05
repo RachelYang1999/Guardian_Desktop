@@ -10,15 +10,28 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This is a Database Access Objects class which includes CRUD operations of article data from TAG table in the database
+ * @author Rachel Yang
+ */
 public class TagDao extends AbstractDao {
   Connection connection;
   Statement statement;
 
+  /**
+   * The constructor of Tag Database Access Object
+   * @param daoUtil The Database Access Object Util to be injected into the construction of DAO objects for database connection
+   */
   public TagDao(DaoUtil daoUtil) {
     super(daoUtil);
     connection = daoUtil.getDatabaseConnection();
   }
 
+  /**
+   * Add TAG information to the TAG table of the database
+   * @param entity The Tag Entity to be added to the database
+   * @return The status of the adding operation
+   */
   @Override
   public boolean addEntity(Entity entity) {
     String finalSQL = "";
@@ -63,6 +76,13 @@ public class TagDao extends AbstractDao {
     }
   }
 
+  /**
+   * Get tag information from TAG table in the database
+   * @param matchField The field to be matched
+   * @param matchValue The field value to be matched
+   * @param retrieveFiled The field to be retrieved
+   * @return The list of matched filed values
+   */
   @Override
   public List<String> getEntity(String matchField, String matchValue, String retrieveFiled) {
     List<String> result = new ArrayList<>();
@@ -95,6 +115,12 @@ public class TagDao extends AbstractDao {
     return result;
   }
 
+  /**
+   * Update article information to the database
+   * @param pk The pk of a row to be updated
+   * @param entityInfo The field value to be updated in the related field
+   * @return
+   */
   @Override
   public boolean updateEntity(String pk, String entityInfo) {
     try {
@@ -103,7 +129,7 @@ public class TagDao extends AbstractDao {
       statement.executeUpdate(sql);
       return true;
     } catch (Exception e) {
-      System.err.println("Database update user failed!");
+      System.err.println("Database update TAG failed!");
       System.err.println(e.getClass().getName() + ": " + e.getMessage());
       e.printStackTrace();
       System.exit(0);
@@ -111,6 +137,11 @@ public class TagDao extends AbstractDao {
     return false;
   }
 
+  /**
+   * Delete tag information from the database
+   * @param pk
+   * @return
+   */
   @Override
   public boolean deleteEntity(String pk) {
     try {

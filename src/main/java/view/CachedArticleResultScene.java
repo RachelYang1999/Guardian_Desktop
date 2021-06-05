@@ -86,7 +86,7 @@ public class CachedArticleResultScene {
           Entity currentEntity = returnedArticles.get(i);
           FlowPane flow = new FlowPane();
           Text info = new Text(((Article) currentEntity).getWebTitle());
-          info.setFont(Font.font("Arial", FontWeight.BOLD, 15));
+          info.setFont(Font.font("Arial", FontWeight.BOLD, 14));
 
 //            Text id = new Text("ID: " + ((Article) currentEntity).getId());
 //            id.setFont(Font.font("Arial", FontWeight.NORMAL, 13));

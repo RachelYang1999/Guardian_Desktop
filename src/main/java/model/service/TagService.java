@@ -84,6 +84,9 @@ public class TagService {
 
               if (tagDao.getEntity("KEYWORDTAG", keyword + "/" + tag.getTagName(), "INFO").size() == 0) {
                 tagDao.addEntity(tag);
+              } else {
+                tagDao.updateEntity(tag.getRelatedKeyword() + "/" + tag.getTagName().replace("'", ""),
+                        tag.getEntityInformation().replace("'", ""));
               }
             }
           }
