@@ -1,7 +1,7 @@
 package util;
 
 import controller.ArticleController;
-import controller.LoginController;
+import controller.UserController;
 import controller.PastebinController;
 import controller.TagController;
 import model.dao.DaoUtil;
@@ -20,7 +20,7 @@ public class RequestMapping {
   /*
   Controllers need to be mapped
    */
-  private LoginController userController;
+  private UserController userController;
   private TagController tagController;
   private ArticleController articleController;
   private PastebinController pastebinController;
@@ -34,7 +34,7 @@ public class RequestMapping {
     /*
     Both strategies are injected in RequestMapping object, they can be either online or offline
      */
-    this.userController = new LoginController(guardianAPIStrategy, daoUtil);
+    this.userController = new UserController(guardianAPIStrategy, daoUtil);
     this.tagController = new TagController(guardianAPIStrategy, daoUtil);
     this.articleController = new ArticleController(guardianAPIStrategy, daoUtil);
     this.pastebinController = new PastebinController(pastebinAPIStrategy);
@@ -79,14 +79,6 @@ public class RequestMapping {
 
   public User getUser() {
     return this.user;
-  }
-
-  public static void main(String[] args) {
-    System.out.println(new RequestMapping(
-            new GuardianOnlineAPIStrategy(),
-            new PastebinOfflineAPIStrategy(),
-            new DaoUtil()
-    ).searchAllArticlesByTag("1b0f84fb-9674-4fe2-b596-5836b2772fcb", "books/roxane-gay").size());
   }
 
   public DaoUtil getDaoUtil() {

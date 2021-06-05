@@ -5,7 +5,17 @@ import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
 import view.ImageUtil;
 
+/**
+ * The background factory for producing lighter color background
+ * @author Rachel Yang
+ */
 public class LightBackgroundFactory implements BackgroundFactory {
+
+  /**
+   *
+   * @return The ImageView with light color background image
+   * @throws Exception
+   */
   @Override
   public ImageView getBackground() throws Exception {
     ImageView imageView = new ImageView();

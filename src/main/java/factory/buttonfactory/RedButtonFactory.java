@@ -4,7 +4,15 @@ import javafx.scene.control.Button;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
+/**
+ * The button factory for producing buttons with the red style
+ * @author Rachel Yang
+ */
 public class RedButtonFactory implements ButtonFactory {
+  /**
+   *
+   * @return Button in the red style will be returned
+   */
   @Override
   public Button createButton() {
     Button button = new Button();

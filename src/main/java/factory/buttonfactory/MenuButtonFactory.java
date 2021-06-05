@@ -4,7 +4,15 @@ import javafx.scene.control.Button;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
+/**
+ * The button factory for producing buttons with the style suite for the main menu
+ * @author Rachel Yang
+ */
 public class MenuButtonFactory implements ButtonFactory {
+  /**
+   *
+   * @return Button in the main menu style will be returned
+   */
   @Override
   public Button createButton() {
     Button button = new Button();

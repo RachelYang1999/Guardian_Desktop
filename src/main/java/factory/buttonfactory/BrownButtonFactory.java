@@ -4,7 +4,15 @@ import javafx.scene.control.Button;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
+/**
+ * The button factory for producing brown buttons
+ * @author Rachel Yang
+ */
 public class BrownButtonFactory implements ButtonFactory {
+  /**
+   *
+   * @return Button in the brown style will be returned
+   */
   @Override
   public Button createButton() {
     Button button = new Button();
