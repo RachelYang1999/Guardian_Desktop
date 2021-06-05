@@ -25,6 +25,9 @@ classes at the discretion of the developer.
         * `gradle run --args="offline online"`
         * `gradle run --args="offline offline"`
 
+## Implemented Feature Level
+**DISTINCTION** (SQLite database + Concurrency)
+
 ## TDD Process Record
 * Login Function
     * [TDD RED PHASE] finish model domain testing      

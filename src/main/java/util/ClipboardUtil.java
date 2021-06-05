@@ -44,13 +44,4 @@ public class ClipboardUtil {
     }
     return null;
   }
-
-  //    public static void main(String[] args) throws InterruptedException {
-  //        // 把文本设置到剪贴板（复制）
-  //        setClipboardString("Hello System Clipboard!");
-  //
-  //        // 从剪贴板中获取文本（粘贴）
-  //        String text = getClipboardString();
-  //        System.out.println("text: " + text);
-  //    }
 }
