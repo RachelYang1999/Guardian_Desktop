@@ -11,6 +11,7 @@ classes at the discretion of the developer.
 * Java (8 or above)
 * Javafx 13
 * gradle 6.8.3
+* SQLite 3.34.0
 
 ## Installation & Execution Instructions
 1. Clone this repository: https://github.sydney.edu.au/qyan6939/SCD2_2021_Exam.git
