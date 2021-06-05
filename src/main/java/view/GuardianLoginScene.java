@@ -1,5 +1,7 @@
 package view;
 
+import javafx.concurrent.Task;
+import model.domain.Tag;
 import util.RequestMapping;
 import factory.backgroundfactory.BackgroundFactory;
 import factory.backgroundfactory.LightBackgroundFactory;
@@ -26,6 +28,8 @@ import view.alertbox.AlertBox;
 import view.alertbox.ErrorBox;
 import view.alertbox.ResponseBox;
 import view.alertbox.UnknownErrorBox;
+
+import java.util.List;
 
 public class GuardianLoginScene {
   private Stage window;
@@ -72,32 +76,42 @@ public class GuardianLoginScene {
     loginButton.setText("Login");
     loginButton.setOnAction(
         event -> {
-          //            String inputUserName = userNameTextField.getText();
           String inputToken = tokenTextField.getText();
-          Entity returnedEntity = requestMapping.login(inputToken);
+//          Entity returnedEntity = requestMapping.login(inputToken);
 
-          if (returnedEntity.getEntityType().equals("User")) {
-            User returnedUser = (User) returnedEntity;
-            this.alertBox = new ResponseBox();
-            alertBox.createAlertBox(
-                "Log In Successfully",
-                "Here is your account information",
-                returnedEntity.getEntityInformation());
-            try {
-              window.setScene(new MainMenuScene(window, requestMapping).getScene());
-            } catch (Exception e) {
-              e.printStackTrace();
+          Task<Entity> task = new Task<Entity>() {
+            @Override
+            protected Entity call() throws Exception {
+              return requestMapping.login(inputToken);
             }
-            System.out.println("Login successfully in LoginScene!");
-            System.out.println("[LoginScene] Token: " + inputToken);
-          } else if (returnedEntity.getEntityType().equals("ErrorInfo")) {
-            this.alertBox = new ErrorBox();
-            alertBox.createAlertBox(returnedEntity);
-            System.out.println("[LoginScene] The token is incorrect");
-          } else {
-            this.alertBox = new UnknownErrorBox();
-            alertBox.createAlertBox(returnedEntity);
-          }
+
+            @Override
+            protected void succeeded() {
+              if (getValue().getEntityType().equals("User")) {
+                User returnedUser = (User) getValue();
+                AlertBox alertBox = new ResponseBox();
+                alertBox.createAlertBox(
+                        "Log In Successfully",
+                        "Here is your account information",
+                        getValue().getEntityInformation());
+                try {
+                  window.setScene(new MainMenuScene(window, requestMapping).getScene());
+                } catch (Exception e) {
+                  e.printStackTrace();
+                }
+                System.out.println("Login successfully in LoginScene!");
+                System.out.println("[LoginScene] Token: " + inputToken);
+              } else if (getValue().getEntityType().equals("ErrorInfo")) {
+                AlertBox alertBox  = new ErrorBox();
+                alertBox.createAlertBox(getValue());
+                System.out.println("[LoginScene] The token is incorrect");
+              } else {
+                AlertBox alertBox  = new UnknownErrorBox();
+                alertBox.createAlertBox(getValue());
+              }
+            }
+          };
+          new Thread(task).start();
         });
 
     this.buttonFactory = new GrayButtonFactory();

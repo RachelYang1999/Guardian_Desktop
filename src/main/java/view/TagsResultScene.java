@@ -1,5 +1,6 @@
 package view;
 
+import javafx.concurrent.Task;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import model.domain.Entity;
@@ -19,6 +20,7 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import view.alertbox.AlertBox;
+import view.alertbox.SimpleResponseBox;
 
 import java.util.List;
 
@@ -38,13 +40,13 @@ public class TagsResultScene {
     return 8;
   }
 
-  public TagsResultScene(Stage window, RequestMapping requestMapping, String keyword)
+  public TagsResultScene(Stage window, RequestMapping requestMapping, String keyword, List<Entity> returnedTags)
       throws Exception {
     this.window = window;
     this.backgroundFactory = new LightBackgroundFactory();
     this.buttonFactory = new BrownButtonFactory();
-    this.returnedTags = requestMapping.searchAllTagsByKeyword(requestMapping.getUser().getToken(), keyword);
-
+    this.returnedTags = returnedTags;
+//    this.returnedTags = requestMapping.searchAllTagsByKeyword(requestMapping.getUser().getToken(), keyword);
     Text t = new Text();
     t.setCache(true);
     t.setText("Search By Tag Result");
@@ -83,19 +85,33 @@ public class TagsResultScene {
             FlowPane flow = new FlowPane();
             Text tag = new Text(((Tag) currentEntity).getTagName());
             tag.setFont(Font.font("Arial", FontWeight.NORMAL, 20));
-//            Text id = new Text("ID: " + ((Tag) currentEntity).getTagName());
-//            id.setFont(Font.font("Arial", FontWeight.NORMAL, 13));
-//            id.setStroke(Color.web("#727272"));
 
             Hyperlink showDetailLink = new Hyperlink("See All Tag-Related Articles");
             showDetailLink.setOnAction(
                 actionEvent -> {
-                  try {
-                    window.setScene(new ArticlesResultScene(window, requestMapping, ((Tag) currentEntity).getTagName()).getScene());
-                    window.setTitle("Search Article Results");
-                  } catch (Exception e) {
-                    e.printStackTrace();
-                  }
+                  Task<List<Entity>> task = new Task<List<Entity>>() {
+                    @Override
+                    protected List<Entity> call() throws Exception {
+                      return requestMapping.searchAllArticlesByTag(requestMapping.getUser().getToken(), ((Tag) currentEntity).getTagName());
+                    }
+
+                    @Override
+                    protected void running() {
+                      AlertBox alertBox = new SimpleResponseBox();
+                      alertBox.createAlertBox("Processing", "Please wait", "The data volume is too large.\n" +
+                              "You will be directed to the result page once the system finish processing");
+                    }
+
+                    @Override
+                    protected void succeeded() {
+                      try {
+                        window.setScene(new ArticlesResultScene(window, requestMapping, ((Tag) currentEntity).getTagName(), getValue()).getScene());
+                      } catch (Exception e) {
+                        e.printStackTrace();
+                      }
+                    }
+                  };
+                  new Thread(task).start();
                 });
 
             VBox articleRoughInfoWithDetailLink = new VBox(5);

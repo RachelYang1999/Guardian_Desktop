@@ -142,4 +142,9 @@ public class ResponseBoxWithCopyButton extends AlertBox {
 
   @Override
   public void createAlertBox(List<Entity> entity) {}
+
+  @Override
+  public void close() {
+    window.close();
+  }
 }

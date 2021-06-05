@@ -39,15 +39,14 @@ public class ArticlesResultScene {
     return 7;
   }
 
-  public ArticlesResultScene(Stage window, RequestMapping requestMapping, String tag)
+  public ArticlesResultScene(Stage window, RequestMapping requestMapping, String tag, List<Entity> returnedArticles)
       throws Exception {
     this.window = window;
     this.backgroundFactory = new LightBackgroundFactory();
     this.buttonFactory = new BrownButtonFactory();
-    //        this.returnedArticles = new ArticleService(new
-    // GuardianOnlineAPIStrategy()).getAllArticles("1b0f84fb-9674-4fe2-b596-5836b2772fcb", searchItem);
-//    this.returnedArticles = requestMapping.searchByTag(requestMapping.getUser().getToken(), tag);
-    this.returnedArticles = requestMapping.searchAllArticlesByTag(requestMapping.getUser().getToken(), tag);
+
+    this.returnedArticles = returnedArticles;
+//            requestMapping.searchAllArticlesByTag(requestMapping.getUser().getToken(), tag);
 
     Text t = new Text();
     t.setCache(true);
@@ -87,10 +86,6 @@ public class ArticlesResultScene {
             FlowPane flow = new FlowPane();
             Text info = new Text(((Article) currentEntity).getWebTitle());
             info.setFont(Font.font("Arial", FontWeight.BOLD, 15));
-
-//            Text id = new Text("ID: " + ((Article) currentEntity).getId());
-//            id.setFont(Font.font("Arial", FontWeight.NORMAL, 13));
-//            id.setStroke(Color.web("#727272"));
 
             Hyperlink showDetailLink = new Hyperlink("Show Detail");
             showDetailLink.setOnAction(

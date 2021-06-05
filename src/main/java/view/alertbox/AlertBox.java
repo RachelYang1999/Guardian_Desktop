@@ -28,4 +28,7 @@ public abstract class AlertBox {
   public abstract Alert getAlertBox(Entity entity);
 
   public abstract void createAlertBox(List<Entity> entity);
+
+  public abstract void close();
+
 }

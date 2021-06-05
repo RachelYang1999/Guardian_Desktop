@@ -8,9 +8,11 @@ import java.util.List;
 
 public class ErrorBox extends AlertBox {
 
+  private Alert alert;
+
   @Override
   public void createAlertBox(Entity entity) {
-    Alert alert = new Alert(Alert.AlertType.ERROR);
+    alert = new Alert(Alert.AlertType.ERROR);
     alert.setTitle("Error");
     alert.setHeaderText("Error");
     alert.setContentText(entity.getEntityInformation());
@@ -20,7 +22,7 @@ public class ErrorBox extends AlertBox {
 
   @Override
   public void createAlertBox(String title, String headerText, String contentText) {
-    Alert alert = new Alert(Alert.AlertType.ERROR);
+    alert = new Alert(Alert.AlertType.ERROR);
     alert.setTitle(title);
     alert.setHeaderText(headerText);
     alert.setContentText(contentText);
@@ -40,7 +42,7 @@ public class ErrorBox extends AlertBox {
 
   @Override
   public Alert getAlertBox(Entity entity) {
-    Alert alert = new Alert(Alert.AlertType.ERROR);
+    alert = new Alert(Alert.AlertType.ERROR);
     alert.setTitle("Error");
     alert.setHeaderText("Error");
     alert.setContentText(entity.getEntityInformation());
@@ -49,4 +51,9 @@ public class ErrorBox extends AlertBox {
 
   @Override
   public void createAlertBox(List<Entity> entity) {}
+
+  @Override
+  public void close() {
+    alert.close();
+  }
 }

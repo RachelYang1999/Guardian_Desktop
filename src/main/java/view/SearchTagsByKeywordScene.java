@@ -5,6 +5,7 @@ import factory.backgroundfactory.LightBackgroundFactory;
 import factory.buttonfactory.BrownButtonFactory;
 import factory.buttonfactory.ButtonFactory;
 import factory.buttonfactory.GrayButtonFactory;
+import javafx.concurrent.Task;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -19,10 +20,15 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
+import model.domain.Entity;
 import model.domain.ErrorInfo;
 import util.RequestMapping;
 import view.alertbox.AlertBox;
 import view.alertbox.ErrorBox;
+import view.alertbox.ResponseBoxAutoClose;
+import view.alertbox.SimpleResponseBox;
+
+import java.util.List;
 
 public class SearchTagsByKeywordScene {
   private Stage window;
@@ -62,7 +68,7 @@ public class SearchTagsByKeywordScene {
     searchButton.setOnAction(
         event -> {
           String inputKeyword = tagTextField.getText();
-          System.out.println("inputTag is: " + inputKeyword);
+//          System.out.println("inputTag is: " + inputKeyword);
 
           try {
             if (inputKeyword.equals("Input the keyword here")) {
@@ -71,8 +77,37 @@ public class SearchTagsByKeywordScene {
               this.alertBox = new ErrorBox();
               alertBox.createAlertBox(errorInfo);
             } else {
-              window.setScene(new TagsResultScene(window, requestMapping, inputKeyword).getScene());
-              window.setTitle("Search Result");
+//              List<Entity> returnedTags = requestMapping.searchAllTagsByKeyword(requestMapping.getUser().getToken(), inputKeyword);
+
+              Task<List<Entity>> task = new Task<List<Entity>>() {
+                @Override
+                protected List<Entity> call() throws Exception {
+                    return requestMapping.searchAllTagsByKeyword(requestMapping.getUser().getToken(), inputKeyword);
+                }
+
+                @Override
+                protected void running() {
+                  AlertBox alertBox = new SimpleResponseBox();
+                  alertBox.createAlertBox("Processing", "Please wait", "The data volume is too large.\n" +
+                          "You will be directed to the result page once the system finish processing");
+                }
+
+                @Override
+                protected void succeeded() {
+                  try {
+                    window.setScene(new TagsResultScene(window,
+                            requestMapping,
+                            inputKeyword,
+                            getValue()).getScene());
+                  } catch (Exception e) {
+                    e.printStackTrace();
+                  }
+
+                }
+
+              };
+              new Thread(task).start();
+
             }
           } catch (Exception e) {
             e.printStackTrace();
@@ -88,7 +123,7 @@ public class SearchTagsByKeywordScene {
           String inputTag = tagTextField.getText();
           System.out.println("inputTag is: " + inputTag);
           try {
-            if (inputTag.equals("Input the keyword here")) {
+            if (inputTag.equals("Input the tag here")) {
               ErrorInfo errorInfo = new ErrorInfo();
               errorInfo.setMessage("Please don't input empty character");
               this.alertBox = new ErrorBox();

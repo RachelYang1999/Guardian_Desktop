@@ -5,6 +5,7 @@ import factory.backgroundfactory.LightBackgroundFactory;
 import factory.buttonfactory.BrownButtonFactory;
 import factory.buttonfactory.ButtonFactory;
 import factory.buttonfactory.GrayButtonFactory;
+import javafx.concurrent.Task;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -30,7 +31,6 @@ public class PastebinLoginScene {
   private Scene scene;
   private BackgroundFactory backgroundFactory;
   private ButtonFactory buttonFactory;
-  private AlertBox alertBox;
 
   public PastebinLoginScene(Stage window, RequestMapping requestMapping, String copiedText)
       throws Exception {
@@ -65,26 +65,38 @@ public class PastebinLoginScene {
     loginButton.setText("Login");
     loginButton.setOnAction(
         event -> {
-          //            String inputUserName = userNameTextField.getText();
           String inputToken = tokenTextField.getText();
-          Entity returnedEntity = requestMapping.getPastebinLink(inputToken, copiedText);
 
-          if (returnedEntity.getEntityType().equals("Pastebin")) {
+          /*
+          Create a new thread for processing backend logic
+           */
+          Task<Entity> task = new Task<Entity>() {
+            @Override
+            protected Entity call() throws Exception {
+              return requestMapping.getPastebinLink(inputToken, copiedText);
+            }
 
-            Pastebin pastebin = (Pastebin) returnedEntity;
-            this.alertBox = new ResponseBoxWithCopyButton();
-            alertBox.createAlertBox(
-                "Log In Successfully", "Here is your Pastebinlink", pastebin.getLink());
-            System.out.println("Login successfully in LoginScene!");
-            System.out.println("[LoginScene] Token: " + inputToken);
-          } else if (returnedEntity.getEntityType().equals("ErrorInfo")) {
-            this.alertBox = new ErrorBox();
-            alertBox.createAlertBox(returnedEntity);
-            System.out.println("[LoginScene] The token is incorrect");
-          } else {
-            this.alertBox = new UnknownErrorBox();
-            alertBox.createAlertBox(returnedEntity);
-          }
+            @Override
+            protected void succeeded() {
+              if (getValue().getEntityType().equals("Pastebin")) {
+
+                Pastebin pastebin = (Pastebin) getValue();
+                AlertBox alertBox = new ResponseBoxWithCopyButton();
+                alertBox.createAlertBox(
+                        "Log In Successfully", "Here is your Pastebinlink", pastebin.getLink());
+//                System.out.println("Login successfully in LoginScene!");
+//                System.out.println("[LoginScene] Token: " + inputToken);
+              } else if (getValue().getEntityType().equals("ErrorInfo")) {
+                AlertBox alertBox  = new ErrorBox();
+                alertBox.createAlertBox(getValue());
+//                System.out.println("[LoginScene] The token is incorrect");
+              } else {
+                AlertBox alertBox  = new UnknownErrorBox();
+                alertBox.createAlertBox(getValue());
+              }
+            }
+          };
+          new Thread(task).start();
         });
 
     this.buttonFactory = new GrayButtonFactory();

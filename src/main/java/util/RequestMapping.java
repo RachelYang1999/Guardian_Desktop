@@ -88,4 +88,8 @@ public class RequestMapping {
             new DaoUtil()
     ).searchAllArticlesByTag("1b0f84fb-9674-4fe2-b596-5836b2772fcb", "books/roxane-gay").size());
   }
+
+  public DaoUtil getDaoUtil() {
+    return daoUtil;
+  }
 }

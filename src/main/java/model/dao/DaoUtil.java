@@ -4,7 +4,7 @@ import java.sql.*;
 
 public class DaoUtil {
 
-  private final String driver = "jdbc:sqlite:test.db";
+  private final String driver = "jdbc:sqlite:SOFT3202_EXAM.db";
   Connection connection = null;
 
   public DaoUtil() {
@@ -23,7 +23,7 @@ public class DaoUtil {
     return connection;
   }
 
-  public void closeDatabaseConnection(Connection connection) throws SQLException {
+  public void closeDatabaseConnection() throws SQLException {
     if (connection != null) {
       connection.close();
     } else {

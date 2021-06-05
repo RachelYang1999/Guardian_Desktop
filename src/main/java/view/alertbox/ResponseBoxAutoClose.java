@@ -1,57 +1,43 @@
 package view.alertbox;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.PauseTransition;
+import javafx.animation.Timeline;
 import javafx.scene.control.Alert;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import model.domain.Entity;
 
 import java.util.List;
 
-public class SimpleResponseBox extends AlertBox {
+public class ResponseBoxAutoClose{
 
-  @Override
   public void createAlertBox(Entity entity) {
     Alert alert = new Alert(Alert.AlertType.ERROR);
     alert.setTitle("Response");
     alert.setHeaderText("Error");
     alert.setContentText(entity.getEntityInformation());
-
     alert.showAndWait();
+    final Timeline timeline = new Timeline(new KeyFrame(Duration.millis(3000), x -> {
+      alert.close();
+    }));
+    timeline.play();
   }
 
-  @Override
   public void createAlertBox(String title, String headerText, String contentText) {
     Alert alert = new Alert(Alert.AlertType.INFORMATION);
     alert.setTitle(title);
     alert.setHeaderText(headerText);
     alert.setContentText(contentText);
-
     alert.showAndWait();
+
+    final Timeline timeline = new Timeline(new KeyFrame(Duration.millis(10000), x -> {
+      alert.close();
+    }));
+    timeline.play();
+
   }
 
-  @Override
-  public Stage getWindow(String title, String headerText, String contentText) {
-    return null;
-  }
 
-  @Override
-  public Stage getWindow(Entity entity) {
-    return null;
-  }
 
-  @Override
-  public Alert getAlertBox(Entity entity) {
-    Alert alert = new Alert(Alert.AlertType.ERROR);
-    alert.setTitle("Error");
-    alert.setHeaderText("Error");
-    alert.setContentText(entity.getEntityInformation());
-    return alert;
-  }
-
-  @Override
-  public void createAlertBox(List<Entity> entity) {}
-
-  @Override
-  public void close() {
-    window.close();
-  }
 }

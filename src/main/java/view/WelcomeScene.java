@@ -1,5 +1,8 @@
 package view;
 
+import javafx.concurrent.Task;
+import model.domain.Entity;
+import model.domain.Tag;
 import util.RequestMapping;
 import factory.backgroundfactory.BackgroundFactory;
 import factory.backgroundfactory.DeepBackgroundFactory;
@@ -17,6 +20,8 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import view.alertbox.AlertBox;
 
+import java.util.List;
+
 public class WelcomeScene {
   private Stage window;
   private Scene scene;
@@ -25,6 +30,7 @@ public class WelcomeScene {
   private AlertBox alertBox;
 
   public WelcomeScene(Stage window, RequestMapping requestMapping) throws Exception {
+
     this.window = window;
     this.backgroundFactory = new DeepBackgroundFactory();
     this.buttonFactory = new BrownButtonFactory();
