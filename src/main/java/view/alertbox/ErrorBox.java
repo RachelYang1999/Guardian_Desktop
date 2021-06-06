@@ -1,6 +1,8 @@
 package view.alertbox;
 
 import javafx.scene.control.Alert;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 import model.domain.Entity;
 
@@ -46,6 +48,7 @@ public class ErrorBox extends AlertBox {
     alert.setTitle("Error");
     alert.setHeaderText("Error");
     alert.setContentText(entity.getEntityInformation());
+
     return alert;
   }
 
