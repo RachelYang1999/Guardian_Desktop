@@ -50,7 +50,7 @@ public class ArticlesResultScene {
 
     Text t = new Text();
     t.setCache(true);
-    t.setText("Article Result");
+    t.setText("Article Results");
     t.setFill(Color.web("#704728"));
     t.setFont(Font.font("Arial", FontWeight.BOLD, 60));
 

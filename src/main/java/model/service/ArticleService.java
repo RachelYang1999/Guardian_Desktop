@@ -28,6 +28,12 @@ public class ArticleService {
 
   private AbstractDao articleDao;
 
+  /**
+   * The constructor of ArticleController
+   * @param guardianAPIStrategy The API fetching strategy to be injected into the construction of ArticleService
+   * @param articleDao The Article Database Access Object to be injected into the construction of ArticleService,
+   *                   which will be used for CURD operation between API response and the database
+   */
   public ArticleService(GuardianAPIStrategy guardianAPIStrategy, AbstractDao articleDao) {
     this.guardianAPIStrategy = guardianAPIStrategy;
     this.defaultErrorFactory = new DefaultErrorInfoFactory();
@@ -35,6 +41,12 @@ public class ArticleService {
     this.articleDao = articleDao;
   }
 
+  /**
+   * Thie method is for search allA aticles by the input tag
+   * @param token The token for authorization to search articles from the API
+   * @param tag The tag which will be matched for searching articles
+   * @return The list of entity which store the response information
+   */
   public List<Entity> searchAllArticlesByTag(String token, String tag) {
     List<Entity> entities = new ArrayList<>();
 
@@ -49,10 +61,10 @@ public class ArticleService {
         List<Entity> singlePageEntities = searchByTag(token, tag, i);
 
         entities.addAll(singlePageEntities);
-        //            entities.Collections.addAll(singlePageEntities);
-        System.out.println("----------------------------------------");
-        System.out.println("[UserService] finished add result page " + i);
-        System.out.println("----------------------------------------");
+//        //            entities.Collections.addAll(singlePageEntities);
+//        System.out.println("----------------------------------------");
+//        System.out.println("[UserService] finished add result page " + i);
+//        System.out.println("----------------------------------------");
       }
     } else {
       entities.addAll(searchByTag(token, tag, 1));
@@ -61,6 +73,13 @@ public class ArticleService {
     return entities;
   }
 
+  /**
+   * The method is for search allA aticles by the input tag
+   * @param token The token for authorization to search articles from the API
+   * @param tag The tag which will be matched for searching articles
+   * @param pageNUmber The page number which will be fetched for api response
+   * @return List of entities which store the response information
+   */
   public List<Entity> searchByTag(String token, String tag, int pageNUmber) {
     List<Entity> entities = new ArrayList<>();
 
@@ -102,6 +121,11 @@ public class ArticleService {
     return entities;
   }
 
+  /**
+   * The method is for search allA aticles by the input tag
+   * @param tag The tag which will be matched for searching articles in the database
+   * @return List of entities which store the response information
+   */
   public List<Entity> searchCachedArticleByTag(String tag) {
     List<Entity> entities = new ArrayList<>();
     //        Article article
@@ -123,12 +147,5 @@ public class ArticleService {
       System.out.println(e.getEntityInformation());
     }
     return entities;
-  }
-
-  public static void main(String[] args) {
-    System.out.println("Main---------------------------------------------");
-    List<Entity> entities =
-        new ArticleService(new GuardianOnlineAPIStrategy(), new ArticleDao(new DaoUtil()))
-            .searchCachedArticleByTag("gay couple");
   }
 }

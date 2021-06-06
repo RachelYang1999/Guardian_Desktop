@@ -49,7 +49,7 @@ public class TagsResultScene {
 //    this.returnedTags = requestMapping.searchAllTagsByKeyword(requestMapping.getUser().getToken(), keyword);
     Text t = new Text();
     t.setCache(true);
-    t.setText("Search By Tag Result");
+    t.setText("Tag Results");
     t.setFill(Color.web("#704728"));
     t.setFont(Font.font("Arial", FontWeight.BOLD, 60));
 

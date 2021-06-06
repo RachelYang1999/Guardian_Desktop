@@ -51,7 +51,7 @@ public class CachedArticleResultScene {
 
     Text t = new Text();
     t.setCache(true);
-    t.setText("Search By Tag Result");
+    t.setText("Cached Article Results");
     t.setFill(Color.web("#704728"));
     t.setFont(Font.font("Arial", FontWeight.BOLD, 60));
 

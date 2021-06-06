@@ -4,11 +4,20 @@ import okhttp3.OkHttpClient;
 import okhttp3.Response;
 import org.json.JSONObject;
 
+/**
+ * The util class for providing offline dummy GuardianAPI fetching strategy
+ * @author Rachel Yang
+ */
 public class GuardianOfflineAPIStrategy implements GuardianAPIStrategy {
   private OkHttpClient client;
   private Response response;
   private String token;
 
+  /**
+   * This method is for log in
+   * @param token The token for authorization to login from the API
+   * @return The JSONObject with response info
+   */
   public JSONObject login(String token) {
     JSONObject responseDataJson = null;
     String responseData =
@@ -17,6 +26,13 @@ public class GuardianOfflineAPIStrategy implements GuardianAPIStrategy {
     return responseDataJson;
   }
 
+  /**
+   * This method is for search all Tags by the input keyword
+   * @param token The token for authorization to search tags from the API
+   * @param tag The keyword which will be matched for searching tags
+   * @param pageNumber The page number which will be fetched for api response
+   * @return The list of entity which store the response information
+   */
   public JSONObject searchTagsByKeyword(String token, String tag, int pageNumber) {
     JSONObject responseDataJson = null;
     String responseData =
@@ -27,11 +43,17 @@ public class GuardianOfflineAPIStrategy implements GuardianAPIStrategy {
 
      "{\"id\":\"film/sausage-party\",\"type\":\"keyword\",\"sectionId\":\"film\",\"sectionName\":\"Film\",\"webTitle\":\"Sausage Party\",\"webUrl\":\"https://www.theguardian.com/film/sausage-party\",\"apiUrl\":\"https://content.guardianapis.com/film/sausage-party\"}" +
                     "]}}";
-//    String responseData = "{\"idk\":\"irregular response\"}";
     responseDataJson = new JSONObject(responseData);
     return responseDataJson;
   }
 
+  /**
+   * Thie method is for search all Tags by the input keyword
+   * @param token The token for authorization to search articles from the API
+   * @param articlesAPI The tag which will be matched for searching tags
+   * @param pageNumber The page number which will be fetched for api response
+   * @return The list of entity which store the response information
+   */
   @Override
   public JSONObject searchArticlesByTag(String token, String articlesAPI, int pageNumber) {
     JSONObject responseDataJson = null;
@@ -43,13 +65,13 @@ public class GuardianOfflineAPIStrategy implements GuardianAPIStrategy {
     return responseDataJson;
   }
 
-  public static void main(String[] args) throws Exception {
-    //        System.out.println(new
-    // GuardianOfflineAPIStrategy().login("1b0f84fb-9674-4fe2-b596-5836b2772fcb").toString());
-
-    System.out.println(
-        new GuardianOfflineAPIStrategy()
-            .searchTagsByKeyword("1b0f84fb-9674-4fe2-b596-5836b2772fcb", "sausage", 1)
-            .toString());
-  }
+//  public static void main(String[] args) throws Exception {
+//    //        System.out.println(new
+//    // GuardianOfflineAPIStrategy().login("1b0f84fb-9674-4fe2-b596-5836b2772fcb").toString());
+//
+//    System.out.println(
+//        new GuardianOfflineAPIStrategy()
+//            .searchTagsByKeyword("1b0f84fb-9674-4fe2-b596-5836b2772fcb", "sausage", 1)
+//            .toString());
+//  }
 }

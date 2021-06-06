@@ -40,16 +40,17 @@ public class CachedTagResultScene {
     return 8;
   }
 
-  public CachedTagResultScene(Stage window, RequestMapping requestMapping, String keyword)
+  public CachedTagResultScene(Stage window, RequestMapping requestMapping, String keyword, List<Entity> returnedTags)
       throws Exception {
     this.window = window;
     this.backgroundFactory = new LightBackgroundFactory();
     this.buttonFactory = new BrownButtonFactory();
-    this.returnedTags = requestMapping.searchCachedTagsByKeyword(requestMapping.getUser().getToken(), keyword);
+    this.returnedTags = returnedTags;
+//    this.returnedTags = requestMapping.searchCachedTagsByKeyword(requestMapping.getUser().getToken(), keyword);
 
     Text t = new Text();
     t.setCache(true);
-    t.setText("Search By Tag Result");
+    t.setText("Cached Tag Results");
     t.setFill(Color.web("#704728"));
     t.setFont(Font.font("Arial", FontWeight.BOLD, 60));
 

@@ -12,6 +12,10 @@ import model.domain.User;
 import org.json.JSONObject;
 import util.GuardianAPIStrategy;
 
+/**
+ * The Model Service of the Entity User which encapsulated the business logic for searching articles by input tag from the API
+ * @author Rachel Yang
+ */
 public class UserService {
   private EntityFactory entityFactory;
   private EntityFactory defaultErrorFactory;
@@ -20,12 +24,23 @@ public class UserService {
 
   private AbstractDao userDao;
 
+  /**
+   * The constructor of TagService
+   * @param guardianAPIStrategy The API fetching strategy to be injected into the construction of UserService
+   * @param userDao The User Database Access Object to be injected into the construction of ArticleService,
+   *                   which will be used for CURD operation between API response and the database
+   */
   public UserService(GuardianAPIStrategy guardianAPIStrategy, UserDao userDao) {
     this.guardianAPIStrategy = guardianAPIStrategy;
     this.defaultErrorFactory = new DefaultErrorInfoFactory();
     this.userDao = userDao;
   }
 
+  /**
+   * This method is for log in
+   * @param token The token for authorization to login from the API
+   * @return The entity which store the response information
+   */
   public Entity login(String token) {
     JSONObject responseJSON = guardianAPIStrategy.login(token);
     if (responseJSON == null) {

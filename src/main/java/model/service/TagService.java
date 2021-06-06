@@ -15,6 +15,10 @@ import util.GuardianOnlineAPIStrategy;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The Model Service of the Entity Tag which encapsulated the business logic for searching articles by input tag from the API
+ * @author Rachel Yang
+ */
 public class TagService {
 
   private EntityCollectionFactory entityCollectionFactory;
@@ -26,7 +30,12 @@ public class TagService {
   private AbstractDao tagDao;
   private AbstractDao articleDao;
 
-
+  /**
+   * The constructor of TagService
+   * @param guardianAPIStrategy The API fetching strategy to be injected into the construction of ArticleService
+   * @param articleDao The Tag Database Access Object to be injected into the construction of ArticleService,
+   *                   which will be used for CURD operation between API response and the database
+   */
   public TagService(GuardianAPIStrategy guardianAPIStrategy, AbstractDao tagDao, AbstractDao articleDao) {
     this.guardianAPIStrategy = guardianAPIStrategy;
     this.defaultErrorFactory = new DefaultErrorInfoFactory();
@@ -35,6 +44,12 @@ public class TagService {
     this.articleDao = articleDao;
   }
 
+  /**
+   * This method is for search all Tags by the input keyword
+   * @param token The token for authorization to search articles from the API
+   * @param keyword The keyword which will be matched for searching tags
+   * @return The list of entity which store the response information
+   */
   public List<Entity> searchAllTagsByKeyword(String token, String keyword) {
     List<Entity> entities = new ArrayList<>();
 
@@ -61,6 +76,13 @@ public class TagService {
     return entities;
   }
 
+  /**
+   * The method is for search allA aticles by the input tag
+   * @param token The token for authorization to search articles from the API
+   * @param keyword The keyword which will be matched for searching articles
+   * @param pageNumber The page number which will be fetched for api response
+   * @return List of entities which store the response information
+   */
   public List<Entity> searchTagsByKeyword(String token, String keyword, int pageNumber) {
     List<Entity> entities = new ArrayList<>();
 

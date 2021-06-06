@@ -67,8 +67,6 @@ public class SearchTagsByKeywordScene {
     searchButton.setOnAction(
         event -> {
           String inputKeyword = tagTextField.getText();
-//          System.out.println("inputTag is: " + inputKeyword);
-
           try {
             if (inputKeyword.equals("Input the keyword here")) {
               ErrorInfo errorInfo = new ErrorInfo();
@@ -94,7 +92,8 @@ public class SearchTagsByKeywordScene {
                 @Override
                 protected void succeeded() {
                   try {
-                    window.setScene(new TagsResultScene(window,
+                    window.setScene(new TagsResultScene(
+                            window,
                             requestMapping,
                             inputKeyword,
                             getValue()).getScene());
@@ -117,26 +116,47 @@ public class SearchTagsByKeywordScene {
     Button searchCachedButton = buttonFactory.createButton();
     searchCachedButton.setFont(Font.font("Arial", FontWeight.BOLD, 20));
     searchCachedButton.setText("Search\nIn Local\nDatabase");
+    searchCachedButton.setTextAlignment(TextAlignment.CENTER);
     searchCachedButton.setOnAction(
         event -> {
-          String inputTag = tagTextField.getText();
-          System.out.println("inputTag is: " + inputTag);
+          String inputKeyword = tagTextField.getText();
+          System.out.println("inputTag is: " + inputKeyword);
           try {
-            if (inputTag.equals("Input the tag here")) {
+            if (inputKeyword.equals("Input the keyword here")) {
               ErrorInfo errorInfo = new ErrorInfo();
               errorInfo.setMessage("Please don't input empty character");
               this.alertBox = new ErrorBox();
               alertBox.createAlertBox(errorInfo);
             } else {
-              window.setScene(
-                  new CachedTagResultScene(window, requestMapping, inputTag).getScene());
-              window.setTitle("Search Result");
+              Task<List<Entity>> task = new Task<List<Entity>>() {
+                @Override
+                protected List<Entity> call() throws Exception {
+                  return requestMapping.searchCachedTagsByKeyword(requestMapping.getUser().getToken(), inputKeyword);
+                }
+
+                @Override
+                protected void succeeded() {
+                  try {
+                    window.setScene(
+                            new CachedTagResultScene(
+                                    window,
+                                    requestMapping,
+                                    inputKeyword, getValue()).getScene());
+                    window.setTitle("Search Result");
+                  } catch (Exception e) {
+                    e.printStackTrace();
+                  }
+
+                }
+
+              };
+              new Thread(task).start();
             }
           } catch (Exception e) {
             e.printStackTrace();
           }
         });
-    searchCachedButton.setTextAlignment(TextAlignment.CENTER);
+
 
     this.buttonFactory = new GrayButtonFactory();
     Button backButton = buttonFactory.createButton();

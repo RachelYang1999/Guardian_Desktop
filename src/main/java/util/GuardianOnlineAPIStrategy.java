@@ -10,6 +10,11 @@ public class GuardianOnlineAPIStrategy implements GuardianAPIStrategy {
   private Response response;
   private String token;
 
+  /**
+   *
+   * @param token The token for authorization to login from the API
+   * @return The JSONObject with response info
+   */
   @Override
   public JSONObject login(String token) {
     JSONObject responseDataJson = null;
@@ -45,6 +50,13 @@ public class GuardianOnlineAPIStrategy implements GuardianAPIStrategy {
     return responseDataJson;
   }
 
+  /**
+   * This method is for search all Tags by the input keyword
+   * @param token The token for authorization to search tags from the API
+   * @param tag The keyword which will be matched for searching tags
+   * @param pageNumber The page number which will be fetched for api response
+   * @return The list of entity which store the response information
+   */
   @Override
   public JSONObject searchTagsByKeyword(String token, String tag, int pageNumber) {
     JSONObject responseDataJson = null;
@@ -88,6 +100,13 @@ public class GuardianOnlineAPIStrategy implements GuardianAPIStrategy {
     return responseDataJson;
   }
 
+  /**
+   * Thie method is for search all Tags by the input keyword
+   * @param token The token for authorization to search articles from the API
+   * @param tag The tag which will be matched for searching tags
+   * @param pageNumber The page number which will be fetched for api response
+   * @return The list of entity which store the response information
+   */
   @Override
   public JSONObject searchArticlesByTag(String token, String tag, int pageNumber) {
     JSONObject responseDataJson = null;
@@ -124,18 +143,18 @@ public class GuardianOnlineAPIStrategy implements GuardianAPIStrategy {
     return responseDataJson;
   }
 
-  public static void main(String[] args) throws Exception {
-    //        System.out.println(new
-    // GuardianOnlineAPIStrategy().login("1b0f84fb-9674-4fe2-b596-5836b2772fcb").toString());
-
-    System.out.println(
-        new GuardianOnlineAPIStrategy()
-            .searchTagsByKeyword("1b0f84fb-9674-4fe2-b596-5836b2772fcb", "gay", 1)
-            .toString());
-
+//  public static void main(String[] args) throws Exception {
+//    //        System.out.println(new
+//    // GuardianOnlineAPIStrategy().login("1b0f84fb-9674-4fe2-b596-5836b2772fcb").toString());
+//
 //    System.out.println(
-//            new GuardianOnlineAPIStrategy()
-//                    .getArticles("1b0f84fb-9674-4fe2-b596-5836b2772fcb", "food/food", 1)
-//                    .toString());
-  }
+//        new GuardianOnlineAPIStrategy()
+//            .searchTagsByKeyword("1b0f84fb-9674-4fe2-b596-5836b2772fcb", "gay", 1)
+//            .toString());
+//
+////    System.out.println(
+////            new GuardianOnlineAPIStrategy()
+////                    .getArticles("1b0f84fb-9674-4fe2-b596-5836b2772fcb", "food/food", 1)
+////                    .toString());
+//  }
 }

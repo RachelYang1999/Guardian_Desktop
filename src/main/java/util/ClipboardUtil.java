@@ -6,10 +6,15 @@ import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.StringSelection;
 import java.awt.datatransfer.Transferable;
 
+/**
+ * The util class for providing button copy service
+ * @author Rachel Yang
+ */
 public class ClipboardUtil {
 
-  /*
-  Set the text to the clipboard
+  /**
+   * Set the text to the clipboard
+   * @param text text to be copied
    */
   public void setClipboardString(String text) {
     // Get system clipboard
@@ -20,8 +25,9 @@ public class ClipboardUtil {
     clipboard.setContents(trans, null);
   }
 
-  /*
-  Get text from the clipboard (paste)
+  /**
+   * Get text from the clipboard (paste)
+   * @return pasted text
    */
   public String getClipboardString() {
     // Get system clipboard
