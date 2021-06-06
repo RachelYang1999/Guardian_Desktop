@@ -11,6 +11,8 @@ import java.beans.EventHandler;
 import java.sql.SQLException;
 import java.util.List;
 
+import static java.lang.System.exit;
+
 /**
  * The main class for running the application
  * @author Rachel Yang
@@ -34,7 +36,8 @@ public class App extends Application {
       this.guardianAPIStrategy = new GuardianOfflineAPIStrategy();
       requestMapping = new RequestMapping(guardianAPIStrategy, pastebinAPIStrategy, daoUtil);
     } else {
-      throw new Exception("Incorrect command line argument");
+      System.err.println("Incorrect command line argument");
+      exit(0);
     }
 
     if (args.get(1).equals("online")) {
@@ -44,7 +47,8 @@ public class App extends Application {
       this.pastebinAPIStrategy = new PastebinOfflineAPIStrategy();
       requestMapping = new RequestMapping(guardianAPIStrategy, pastebinAPIStrategy, daoUtil);
     } else {
-      throw new Exception("Incorrect command line argument");
+      System.err.println("Incorrect command line argument");
+      exit(0);
     }
 
     window = primaryStage;
@@ -70,14 +74,17 @@ public class App extends Application {
 
   public static void main(String[] args) throws Exception {
     if (args.length != 2) {
-      throw new Exception("Incorrect number of command line arguments");
+      System.err.println("Incorrect number of command line arguments");
+      exit(0);
     }
     if (!args[0].equals("online")
         && !args[0].equals("offline")
         && !args[1].equals("online")
         && !args[1].equals("offline")) {
-      throw new Exception("Incorrect command line argument");
+      System.err.println("Incorrect command line argument");
+      exit(0);
+    } else {
+      launch(args);
     }
-    launch(args);
   }
 }
