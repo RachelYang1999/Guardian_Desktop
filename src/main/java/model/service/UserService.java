@@ -56,11 +56,6 @@ public class UserService {
           returnEntity = entityFactory.createEntity(responseJSON);
           this.user = (User) returnEntity;
           this.user.setToken(token);
-          if (userDao.getEntity("TOKEN", token, "INFO").size() == 0) {
-            userDao.addEntity(this.user);
-          } else {
-            userDao.updateEntity(token, user.getEntityInformation());
-          }
         }
       }
     } else if (responseJSON.has("message")) {
