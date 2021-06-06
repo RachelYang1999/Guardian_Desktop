@@ -11,6 +11,10 @@ import java.beans.EventHandler;
 import java.sql.SQLException;
 import java.util.List;
 
+/**
+ * The main class for running the application
+ * @author Rachel Yang
+ */
 public class App extends Application {
   private Stage window;
   private RequestMapping requestMapping;
