@@ -3,16 +3,6 @@
 ## Implemented Feature Level
 **DISTINCTION** (SQLite database + Concurrency)
 
-## Font Issue Possibility For MacOS
-There might be a font-related CoreText warning in some version of MacOS.
-* Error Alert Box with font issue  
-![image](https://github.sydney.edu.au/qyan6939/Image/blob/master/Error%20Box%20Font%20Issue.png)
-* Normal Alert Box   
-![image](https://github.sydney.edu.au/qyan6939/Image/blob/master/Normal_Error_Box.png)  
-
-Please set a breakpoint on CTFontLogSystemFontNameRequest to solve this issue.
-https://stackoverflow.com/questions/58706570/how-can-i-find-the-source-of-this-font-related-coretext-warning-in-ios13
-
 ## Style Guide
 Code style: Google Java Style Guide https://google.github.io/styleguide/javaguide.html
 
@@ -69,8 +59,20 @@ Code style tooling: https://github.com/google/google-java-format
     https://github.sydney.edu.au/qyan6939/SCD2_2021_Exam/commit/70e8d9b1e60ff922cfd76a5934edd8a26779121d
     * [TDD GREEN PHASE] finish TagService implementation and passed testings
     https://github.sydney.edu.au/qyan6939/SCD2_2021_Exam/commit/8ca369d5a713f1c792412f748c62f25a0e8a4b9e
+
 ## Simple Extension Explanation
 Approaching the due time, I found there is a font issue with Javafx depends on different operating system settings, to make the front-end display effect to be system-independent, I made some modifications about font setting in my code. 
+
+## Font Issue Possibility For MacOS
+There might be a font-related CoreText warning in some version of MacOS.
+* Error Alert Box with font issue  
+![image](https://github.sydney.edu.au/qyan6939/Image/blob/master/Error%20Box%20Font%20Issue.png)
+* Normal Alert Box   
+![image](https://github.sydney.edu.au/qyan6939/Image/blob/master/Normal_Error_Box.png)  
+
+Please set a breakpoint on CTFontLogSystemFontNameRequest to solve this issue if you met it.
+https://stackoverflow.com/questions/58706570/how-can-i-find-the-source-of-this-font-related-coretext-warning-in-ios13
+
 
 ## Reference
 * Software Background Diagram   
