@@ -5,6 +5,7 @@ import factory.backgroundfactory.LightBackgroundFactory;
 import factory.buttonfactory.BrownButtonFactory;
 import factory.buttonfactory.ButtonFactory;
 import factory.buttonfactory.GrayButtonFactory;
+import javafx.concurrent.Task;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -19,8 +20,9 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import model.domain.Entity;
 import model.domain.Pastebin;
+import model.domain.User;
 import util.RequestMapping;
-import view.alertbox.ErrorBox;
+import view.MainMenuScene;
 import view.alertbox.UnknownErrorBox;
 
 public class PastebinLoginBox {
@@ -74,29 +76,36 @@ public class PastebinLoginBox {
         event -> {
           //            String inputUserName = userNameTextField.getText();
           String inputToken = tokenTextField.getText();
-          Entity returnedEntity = requestMapping.getPastebinLink(inputToken, copiedText);
 
-          if (returnedEntity.getEntityType().equals("Pastebin")) {
-            Pastebin pastebin = (Pastebin) returnedEntity;
-            this.alertBox = new ResponseBoxWithCopyButton();
-            alertBox.createAlertBox(
-                "Log In Successfully", "Here is your Pastebinlink", pastebin.getLink());
-            System.out.println("Login successfully in LoginScene!");
-            System.out.println("[LoginScene] Token: " + inputToken);
-            this.window.close();
-          } else if (returnedEntity.getEntityType().equals("ErrorInfo")) {
-            this.alertBox = new ErrorBox();
-            //                alertBox.createAlertBox(returnedEntity);
-            if (returnedEntity.getEntityInformation().contains("invalid api_dev_key")) {
-              alertBox.createAlertBox(
-                  "Login Failed", "Authorization Error", "This token is invalid, please try again");
-            } else {
-              alertBox.createAlertBox(returnedEntity);
+          Task<Entity> task = new Task<Entity>() {
+            @Override
+            protected Entity call() throws Exception {
+              return requestMapping.getPastebinLink(inputToken, copiedText);
             }
-          } else {
-            this.alertBox = new UnknownErrorBox();
-            alertBox.createAlertBox(returnedEntity);
-          }
+
+            @Override
+            protected void succeeded() {
+              if (getValue().getEntityType().equals("Pastebin")) {
+                Pastebin pastebin = (Pastebin) getValue();
+                AlertBox alertBox = new ResponseBoxWithCopyButton();
+                alertBox.createAlertBox(
+                        "Log In Successfully", "Here is your Pastebinlink", pastebin.getLink());
+              } else if (getValue().getEntityType().equals("ErrorInfo")) {
+                AlertBox alertBox = new ErrorResponseBox();
+                //                alertBox.createAlertBox(returnedEntity);
+                if (getValue().getEntityInformation().contains("invalid api_dev_key")) {
+                  alertBox.createAlertBox(
+                          "Login Failed", "Authorization Error", "This token is invalid, please try again");
+                } else {
+                  alertBox.createAlertBox(getValue());
+                }
+              } else {
+                AlertBox alertBox = new UnknownErrorBox();
+                alertBox.createAlertBox(getValue());
+              }
+            }
+          };
+          new Thread(task).start();
         });
 
     this.buttonFactory = new GrayButtonFactory();

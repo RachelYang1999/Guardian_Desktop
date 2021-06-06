@@ -5,6 +5,7 @@ import factory.backgroundfactory.LightBackgroundFactory;
 import factory.buttonfactory.BrownButtonFactory;
 import factory.buttonfactory.ButtonFactory;
 import factory.buttonfactory.GrayButtonFactory;
+import javafx.concurrent.Task;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -20,6 +21,7 @@ import model.domain.Entity;
 import model.domain.Tag;
 import util.RequestMapping;
 import view.alertbox.AlertBox;
+import view.alertbox.ResponseBox;
 import view.alertbox.ResponseBoxWithPastebin;
 
 import java.util.List;
@@ -93,12 +95,23 @@ public class CachedTagResultScene {
                 Hyperlink showDetailLink = new Hyperlink("See All Tag-Related Articles");
                 showDetailLink.setOnAction(
                         actionEvent -> {
-                          try {
-                            window.setScene(new CachedArticleResultScene(window, requestMapping, ((Tag) currentEntity).getTagName()).getScene());
-                            window.setTitle("Search Article Results");
-                          } catch (Exception e) {
-                            e.printStackTrace();
-                          }
+                          Task<List<Entity>> task = new Task<List<Entity>>() {
+                            @Override
+                            protected List<Entity> call() throws Exception {
+                              return requestMapping.searchCachedArticleByTag(requestMapping.getUser().getToken(), ((Tag) currentEntity).getTagName());
+                            }
+
+                            @Override
+                            protected void succeeded() {
+                              try {
+                                window.setScene(new CachedArticleResultScene(window, requestMapping, ((Tag) currentEntity).getTagName(), getValue()).getScene());
+                                window.setTitle("Search Article Results");
+                              } catch (Exception e) {
+                                e.printStackTrace();
+                              }
+                            }
+                          };
+                          new Thread(task).start();
                         });
 
                 VBox articleRoughInfoWithDetailLink = new VBox(5);
@@ -126,6 +139,7 @@ public class CachedTagResultScene {
     pagination.setMaxHeight(600);
     pagination.setMinHeight(600);
     pagination.setStyle("-fx-background-color: rgba(169,166,166,0.7)");
+    pagination.setStyle("-fx-font-family: Arial");
 
     HBox hBox = new HBox(10);
     Region region1 = new Region();

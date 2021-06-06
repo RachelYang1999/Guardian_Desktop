@@ -38,6 +38,16 @@ public class TagController {
 
   /**
    * The method is for calling searchAllTagsByKeyword method which encapsulated the business logic for searching tags by input keyword
+   * @param token The token for authorization to search tags from the API
+   * @param keyword The keyword for searching matching tags
+   * @return The list of Entity which stores the response info
+   */
+  public List<Entity> searchOnePageTagsByKeyword(String token, String keyword) {
+    return tagService.searchTagsByKeyword(token, keyword, 1);
+  }
+
+  /**
+   * The method is for calling searchAllTagsByKeyword method which encapsulated the business logic for searching tags by input keyword
    * @param keyword The keyword for searching matching tags
    * @return The list of Entity which stores the response info
    */

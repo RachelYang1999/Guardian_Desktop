@@ -36,6 +36,16 @@ public class ArticleController {
   }
 
   /**
+   * The method is for calling searchAllArticlesByTag method which encapsulated the business logic for searching articles by input tag from the API
+   * @param token The token for authorization to search articles from the API
+   * @param tag The tag which will be matched for searching articles
+   * @return The list of Entity which stores the response info
+   */
+  public List<Entity> searchOnePageArticlesByTag(String token, String tag) {
+    return articleService.searchByTag(token, tag, 1);
+  }
+
+  /**
    * The method is for calling searchCachedArticleByTag method which encapsulated the business logic for searching articles by input tag from the database
    * @param token The token for authorization to search articles from the database
    * @param tag The tag which will be matched for searching articles

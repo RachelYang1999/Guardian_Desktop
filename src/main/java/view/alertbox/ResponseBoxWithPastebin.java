@@ -60,6 +60,8 @@ public class ResponseBoxWithPastebin {
     header.setFont(Font.font("Arial", FontWeight.BOLD, 20));
 
     Text info = new Text(finalInfo);
+    info.setFont(Font.font("Arial", FontWeight.BOLD, 15));
+
     ScrollPane scrollPane = new ScrollPane();
     scrollPane.setContent(info);
     scrollPane.setMaxHeight(800);

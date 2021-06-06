@@ -20,7 +20,7 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import view.alertbox.AlertBox;
-import view.alertbox.SimpleResponseBox;
+import view.alertbox.ResponseBox;
 
 import java.util.List;
 
@@ -37,7 +37,7 @@ public class TagsResultScene {
   private List<Entity> returnedTags;
 
   public int itemsPerPage() {
-    return 8;
+    return 6;
   }
 
   public TagsResultScene(Stage window, RequestMapping requestMapping, String keyword, List<Entity> returnedTags)
@@ -70,7 +70,6 @@ public class TagsResultScene {
 
     Pagination pagination =
         new Pagination((int) Math.ceil((double) returnedTags.size() / itemsPerPage()), 0);
-    pagination.setStyle("-fx-font-family: Arial");
     if (returnedTags.size() == 0) {
       pagination = new Pagination(0, 0);
     }
@@ -86,8 +85,29 @@ public class TagsResultScene {
             Text tag = new Text(((Tag) currentEntity).getTagName());
             tag.setFont(Font.font("Arial", FontWeight.NORMAL, 20));
 
-            Hyperlink showDetailLink = new Hyperlink("See All Tag-Related Articles");
-            showDetailLink.setOnAction(
+            Hyperlink showPartArticle = new Hyperlink("See 1 x Default Page Size Tag-Related Articles");
+            showPartArticle.setOnAction(
+                    actionEvent -> {
+                      Task<List<Entity>> task = new Task<List<Entity>>() {
+                        @Override
+                        protected List<Entity> call() throws Exception {
+                          return requestMapping.searchOnePageArticlesByTag(requestMapping.getUser().getToken(), ((Tag) currentEntity).getTagName());
+                        }
+
+                        @Override
+                        protected void succeeded() {
+                          try {
+                            window.setScene(new ArticlesResultScene(window, requestMapping, ((Tag) currentEntity).getTagName(), getValue()).getScene());
+                          } catch (Exception e) {
+                            e.printStackTrace();
+                          }
+                        }
+                      };
+                      new Thread(task).start();
+                    });
+
+            Hyperlink showAllDetailLink = new Hyperlink("See All Tag-Related Articles");
+            showAllDetailLink.setOnAction(
                 actionEvent -> {
                   Task<List<Entity>> task = new Task<List<Entity>>() {
                     @Override
@@ -97,7 +117,7 @@ public class TagsResultScene {
 
                     @Override
                     protected void running() {
-                      AlertBox alertBox = new SimpleResponseBox();
+                      AlertBox alertBox = new ResponseBox();
                       alertBox.createAlertBox("Processing", "Please wait", "The data volume is too large.\n" +
                               "You will be directed to the result page once the system finish processing");
                     }
@@ -114,8 +134,8 @@ public class TagsResultScene {
                   new Thread(task).start();
                 });
 
-            VBox articleRoughInfoWithDetailLink = new VBox(5);
-            articleRoughInfoWithDetailLink.getChildren().addAll(tag, showDetailLink);
+            VBox articleRoughInfoWithDetailLink = new VBox(3);
+            articleRoughInfoWithDetailLink.getChildren().addAll(tag, showPartArticle, showAllDetailLink);
             articleRoughInfoWithDetailLink.setAlignment(Pos.CENTER_LEFT);
 
             flow.getChildren().addAll(articleRoughInfoWithDetailLink);
@@ -139,6 +159,7 @@ public class TagsResultScene {
     pagination.setMaxHeight(600);
     pagination.setMinHeight(600);
     pagination.setStyle("-fx-background-color: rgba(169,166,166,0.7)");
+    pagination.setStyle("-fx-font-family: Arial");
 
     HBox hBox = new HBox(10);
     Region region1 = new Region();

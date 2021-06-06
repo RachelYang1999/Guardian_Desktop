@@ -120,6 +120,7 @@ public class ArticlesResultScene {
     pagination.setMaxHeight(600);
     pagination.setMinHeight(600);
     pagination.setStyle("-fx-background-color: rgba(169,166,166,0.7)");
+    pagination.setStyle("-fx-font-family: Arial");
 
     HBox hBox = new HBox(10);
     Region region1 = new Region();

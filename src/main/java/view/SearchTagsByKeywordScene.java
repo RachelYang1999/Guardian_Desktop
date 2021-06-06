@@ -24,8 +24,8 @@ import model.domain.Entity;
 import model.domain.ErrorInfo;
 import util.RequestMapping;
 import view.alertbox.AlertBox;
-import view.alertbox.ErrorBox;
-import view.alertbox.SimpleResponseBox;
+import view.alertbox.ErrorResponseBox;
+import view.alertbox.ResponseBox;
 
 import java.util.List;
 
@@ -61,9 +61,53 @@ public class SearchTagsByKeywordScene {
     tagTextField.setMaxWidth(600);
     tagTextField.setFont(Font.font("Arial", FontWeight.BOLD, 20));
 
+    Button searchOnePage = buttonFactory.createButton();
+    searchOnePage.setFont(Font.font("Arial", FontWeight.BOLD, 20));
+    searchOnePage.setText("Search 1x\nDefault Page Size\nResults From API");
+    searchOnePage.setOnAction(
+            event -> {
+              String inputKeyword = tagTextField.getText();
+              try {
+                if (inputKeyword.equals("Input the keyword here")) {
+                  ErrorInfo errorInfo = new ErrorInfo();
+                  errorInfo.setMessage("Please don't input empty character");
+                  this.alertBox = new ErrorResponseBox();
+                  alertBox.createAlertBox(errorInfo);
+                } else {
+
+                  Task<List<Entity>> task = new Task<List<Entity>>() {
+                    @Override
+                    protected List<Entity> call() throws Exception {
+                      return requestMapping.searchOnePageTagsByKeyword(requestMapping.getUser().getToken(), inputKeyword);
+                    }
+
+                    @Override
+                    protected void succeeded() {
+                      try {
+                        window.setScene(new TagsResultScene(
+                                window,
+                                requestMapping,
+                                inputKeyword,
+                                getValue()).getScene());
+                      } catch (Exception e) {
+                        e.printStackTrace();
+                      }
+
+                    }
+
+                  };
+                  new Thread(task).start();
+
+                }
+              } catch (Exception e) {
+                e.printStackTrace();
+              }
+            });
+    searchOnePage.setTextAlignment(TextAlignment.CENTER);
+
     Button searchButton = buttonFactory.createButton();
     searchButton.setFont(Font.font("Arial", FontWeight.BOLD, 20));
-    searchButton.setText("Search\nFrom\nAPI");
+    searchButton.setText("Search\nAll Results\nFrom API");
     searchButton.setOnAction(
         event -> {
           String inputKeyword = tagTextField.getText();
@@ -71,7 +115,7 @@ public class SearchTagsByKeywordScene {
             if (inputKeyword.equals("Input the keyword here")) {
               ErrorInfo errorInfo = new ErrorInfo();
               errorInfo.setMessage("Please don't input empty character");
-              this.alertBox = new ErrorBox();
+              this.alertBox = new ErrorResponseBox();
               alertBox.createAlertBox(errorInfo);
             } else {
 //              List<Entity> returnedTags = requestMapping.searchAllTagsByKeyword(requestMapping.getUser().getToken(), inputKeyword);
@@ -84,7 +128,7 @@ public class SearchTagsByKeywordScene {
 
                 @Override
                 protected void running() {
-                  AlertBox alertBox = new SimpleResponseBox();
+                  AlertBox alertBox = new ResponseBox();
                   alertBox.createAlertBox("Processing", "Please wait", "The data volume is too large.\n" +
                           "You will be directed to the result page once the system finish processing");
                 }
@@ -125,7 +169,7 @@ public class SearchTagsByKeywordScene {
             if (inputKeyword.equals("Input the keyword here")) {
               ErrorInfo errorInfo = new ErrorInfo();
               errorInfo.setMessage("Please don't input empty character");
-              this.alertBox = new ErrorBox();
+              this.alertBox = new ErrorResponseBox();
               alertBox.createAlertBox(errorInfo);
             } else {
               Task<List<Entity>> task = new Task<List<Entity>>() {
@@ -178,11 +222,14 @@ public class SearchTagsByKeywordScene {
     textFieldBox.setAlignment(Pos.CENTER);
 
     HBox buttonBox = new HBox(15);
-    buttonBox.getChildren().addAll(searchButton, searchCachedButton, backButton);
+    buttonBox.getChildren().addAll(searchOnePage, searchButton, searchCachedButton);
     buttonBox.setAlignment(Pos.CENTER);
+    HBox backButtonBox = new HBox(15);
+    backButtonBox.getChildren().addAll(backButton);
+    backButtonBox.setAlignment(Pos.CENTER);
 
     VBox totalForm = new VBox(20);
-    totalForm.getChildren().addAll(textFieldBox, buttonBox);
+    totalForm.getChildren().addAll(textFieldBox, buttonBox, backButtonBox);
     totalForm.setAlignment(Pos.CENTER);
 
     BorderPane pane = new BorderPane();

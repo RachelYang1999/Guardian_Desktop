@@ -163,16 +163,4 @@ public class ArticleDao extends AbstractDao {
     }
   }
 
-  public static void main(String[] args) {
-    AbstractDao articleDAO = new ArticleDao(new DaoUtil());
-    Entity entity = new Article();
-    articleDAO.addEntity(entity);
-
-    //        String info = articleDAO.getEntity("TAG", "gay couple");
-    //        System.out.println("info " + info);
-    //        System.out.println(info.equals(""));
-
-    //        userDao.updateEntity("fake token1", "new fake token1");
-    //        userDao.deleteEntity("fake token1");
-  }
 }

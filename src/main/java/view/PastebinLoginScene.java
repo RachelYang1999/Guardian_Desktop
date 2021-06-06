@@ -87,7 +87,7 @@ public class PastebinLoginScene {
 //                System.out.println("Login successfully in LoginScene!");
 //                System.out.println("[LoginScene] Token: " + inputToken);
               } else if (getValue().getEntityType().equals("ErrorInfo")) {
-                AlertBox alertBox  = new ErrorBox();
+                AlertBox alertBox  = new ErrorResponseBox();
                 alertBox.createAlertBox(getValue());
 //                System.out.println("[LoginScene] The token is incorrect");
               } else {

@@ -39,7 +39,7 @@ public class ResponseBoxWithCopyButton extends AlertBox {
           clipboardUtil.setClipboardString(finalInfo);
           String copiedText = clipboardUtil.getClipboardString();
           System.out.println("Copied text to clipboard: " + copiedText);
-          SimpleResponseBox simpleResponseBox = new SimpleResponseBox();
+          ResponseBox simpleResponseBox = new ResponseBox();
           simpleResponseBox.createAlertBox(
               "Pastebin", "Copied Succesfully", "Paste the copied content anywhere you want");
 
@@ -52,6 +52,8 @@ public class ResponseBoxWithCopyButton extends AlertBox {
     header.setFont(Font.font("Arial", FontWeight.BOLD, 20));
 
     Text info = new Text(finalInfo);
+    info.setFont(Font.font("Arial", FontWeight.BOLD, 15));
+
     ScrollPane scrollPane = new ScrollPane();
     scrollPane.setContent(info);
     scrollPane.setMaxHeight(800);

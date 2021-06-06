@@ -24,10 +24,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import model.domain.Entity;
 import model.domain.User;
-import view.alertbox.AlertBox;
-import view.alertbox.ErrorBox;
-import view.alertbox.ResponseBox;
-import view.alertbox.UnknownErrorBox;
+import view.alertbox.*;
 
 import java.util.List;
 
@@ -102,7 +99,7 @@ public class GuardianLoginScene {
                 System.out.println("Login successfully in LoginScene!");
                 System.out.println("[LoginScene] Token: " + inputToken);
               } else if (getValue().getEntityType().equals("ErrorInfo")) {
-                AlertBox alertBox  = new ErrorBox();
+                AlertBox alertBox  = new ErrorResponseBox();
                 alertBox.createAlertBox(getValue());
                 System.out.println("[LoginScene] The token is incorrect");
               } else {

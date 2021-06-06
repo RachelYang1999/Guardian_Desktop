@@ -39,15 +39,15 @@ public class CachedArticleResultScene {
     return 7;
   }
 
-  public CachedArticleResultScene(Stage window, RequestMapping requestMapping, String tag)
+  public CachedArticleResultScene(Stage window, RequestMapping requestMapping, String tag, List<Entity> returnedArticles)
       throws Exception {
     this.window = window;
     this.backgroundFactory = new LightBackgroundFactory();
     this.buttonFactory = new BrownButtonFactory();
     //        this.returnedArticles = new ArticleService(new
     // GuardianOnlineAPIStrategy()).getAllArticles("1b0f84fb-9674-4fe2-b596-5836b2772fcb", tag);
-    this.returnedArticles =
-        requestMapping.searchCachedArticleByTag(requestMapping.getUser().getToken(), tag);
+    this.returnedArticles = returnedArticles;
+//        requestMapping.searchCachedArticleByTag(requestMapping.getUser().getToken(), tag);
 
     Text t = new Text();
     t.setCache(true);
@@ -126,6 +126,7 @@ public class CachedArticleResultScene {
     pagination.setMaxHeight(600);
     pagination.setMinHeight(600);
     pagination.setStyle("-fx-background-color: rgba(169,166,166,0.7)");
+    pagination.setStyle("-fx-font-family: Arial");
 
     HBox hBox = new HBox(10);
     Region region1 = new Region();

@@ -77,6 +77,16 @@ public class RequestMapping {
   }
 
   /**
+   * The method is for routing the search All Tags By Keyword request from the front-end to the TagController
+   * @param token The token for authorization to search tags from the API
+   * @param keyword The keyword for searching matching tags
+   * @return The list of Entity which stores the response info
+   */
+  public List<Entity> searchOnePageTagsByKeyword(String token, String keyword) {
+    return tagController.searchOnePageTagsByKeyword(token, keyword);
+  }
+
+  /**
    * The method is for routing the search All Articles By Tag request from the front-end to the ArticleController
    * @param token The token for authorization to search tags from the API
    * @param tag The keyword for searching matching tags
@@ -84,6 +94,16 @@ public class RequestMapping {
    */
   public List<Entity> searchAllArticlesByTag(String token, String tag) {
     return articleController.searchAllArticlesByTag(token, tag);
+  }
+
+  /**
+   * The method is for routing the search All Articles By Tag request from the front-end to the ArticleController
+   * @param token The token for authorization to search tags from the API
+   * @param tag The keyword for searching matching tags
+   * @return The list of Entity which stores the response info
+   */
+  public List<Entity> searchOnePageArticlesByTag(String token, String tag) {
+    return articleController.searchOnePageArticlesByTag(token, tag);
   }
 
   /**
