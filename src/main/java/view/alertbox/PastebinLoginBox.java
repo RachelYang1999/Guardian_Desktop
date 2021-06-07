@@ -89,7 +89,7 @@ public class PastebinLoginBox {
                 Pastebin pastebin = (Pastebin) getValue();
                 AlertBox alertBox = new ResponseBoxWithCopyButton();
                 alertBox.createAlertBox(
-                        "Log In Successfully", "Here is your Pastebinlink", pastebin.getLink());
+                        "Log In Successfully", "Here is your Pastebin link", pastebin.getLink());
               } else if (getValue().getEntityType().equals("ErrorInfo")) {
                 AlertBox alertBox = new ErrorResponseBox();
                 //                alertBox.createAlertBox(returnedEntity);

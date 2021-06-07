@@ -1,8 +1,22 @@
 # SCD2_2021_Exam
 
+## Introduction
+![image](https://github.sydney.edu.au/qyan6939/Image/blob/master/Welcome_Page.jpg)  
+This is a desktop application for searching articles of Guardian. You can search relative tags by a keyword first and get articles by selecting a specific tag. After getting the article information, users can get the URL of Pastebin for sharing and checking the information via this URL online.
+* Input API  
+  https://open-platform.theguardian.com/
+* Output API  
+  https://pastebin.com/doc_api
+  
 ## Implemented Feature Level
-**DISTINCTION** (SQLite database + Concurrency)
+**DISTINCTION** (SQLite database + Concurrency)  
 
+**Self-Extension**
+* You can choose to get all tag results **or** just 1 default API response page size result by entering a keyword.  
+  ![image](https://github.sydney.edu.au/qyan6939/Image/blob/master/Extension_Function1%20(2).jpg)
+* You can choose to get all article results **or** just 1 default API response page size result by selecting a tag.  
+  ![image](https://github.sydney.edu.au/qyan6939/Image/blob/master/Extension_Function2.jpg)
+  
 ## Style Guide
 Code style: Google Java Style Guide https://google.github.io/styleguide/javaguide.html
 
@@ -65,14 +79,13 @@ Approaching the due time, I found there is a font issue with Javafx depends on d
 
 ## Font Issue Possibility For MacOS
 There might be a font-related CoreText warning in some version of MacOS.
-* Error Alert Box with font issue  
-![image](https://github.sydney.edu.au/qyan6939/Image/blob/master/Error%20Box%20Font%20Issue.png)
 * Normal Alert Box   
-![image](https://github.sydney.edu.au/qyan6939/Image/blob/master/Normal_Error_Box.png)  
-
+  ![image](https://github.sydney.edu.au/qyan6939/Image/blob/master/Normal_Error_Box.png)
+* Error Alert Box with font issue  
+  ![image](https://github.sydney.edu.au/qyan6939/Image/blob/master/Error%20Box%20Font%20Issue.png)
+  
 Please set a breakpoint on CTFontLogSystemFontNameRequest to solve this issue if you met it.
 https://stackoverflow.com/questions/58706570/how-can-i-find-the-source-of-this-font-related-coretext-warning-in-ios13
-
 
 ## Reference
 * Software Background Diagram   
