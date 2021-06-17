@@ -52,18 +52,18 @@ public class User implements Entity {
   }
 
   /**
-   * Getter method for getting User input int
-   * @return User input int
+   * Getter method for getting User userTier
+   * @return User inputInt
    */
   public String getInputInt() {
-    return "";
+    return inputInt;
   }
 
   /**
    * Setter method for setting User input int
    */
   public void setInputInt(String inputInt) {
-
+    this.inputInt = inputInt;
   }
 
   /**

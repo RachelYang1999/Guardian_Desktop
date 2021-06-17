@@ -72,7 +72,13 @@ public class UserService {
   }
 
   public Entity updateUserWithInputInteger(User currentUser, String inputInt) {
-    Entity returnEntity = currentUser;
+    Entity returnEntity = defaultErrorFactory.createEntity(new JSONObject());
+    List<String> validInputs = asList("0", "1", "2", "3", "4");
+
+    if (validInputs.contains(inputInt)) {
+      currentUser.setInputInt(inputInt);
+      returnEntity = currentUser;
+    }
     return returnEntity;
   }
 }
