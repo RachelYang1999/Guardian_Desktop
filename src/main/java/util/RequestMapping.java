@@ -163,9 +163,15 @@ public class RequestMapping {
   /**
    * Update user information with the input integer
    * @param inputInt
+   * @return
    */
-  public void updateUserWithInputInteger(String inputInt) {
-    userController.updateUserWithInputInteger(user, inputInt);
+  public Entity updateUserWithInputInteger(String inputInt) {
+    return userController.updateUserWithInputInteger(user, inputInt);
+  }
+
+  public void updateCurrentUser(User user) {
+    this.user = user;
+    System.out.println("updateCurrentUser: " + user.getInputInt());
   }
 
 }

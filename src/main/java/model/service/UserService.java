@@ -66,7 +66,6 @@ public class UserService {
       entityFactory = new ErrorInfoFactory();
       returnEntity = entityFactory.createEntity(responseJSON);
     }
-
     // Default object is ErrorInfo entity
     return returnEntity;
   }

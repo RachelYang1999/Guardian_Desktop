@@ -92,7 +92,7 @@ public class GuardianLoginScene {
                         "Here is your account information",
                         getValue().getEntityInformation());
                 try {
-                  window.setScene(new MainMenuScene(window, requestMapping).getScene());
+                  window.setScene(new InputIntegerScene(window, requestMapping).getScene());
                 } catch (Exception e) {
                   e.printStackTrace();
                 }
