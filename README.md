@@ -74,6 +74,14 @@ Code style tooling: https://github.com/google/google-java-format
     * [TDD GREEN PHASE] finish TagService implementation and passed testings
     https://github.sydney.edu.au/qyan6939/SCD2_2021_Exam/commit/8ca369d5a713f1c792412f748c62f25a0e8a4b9e
 
+* Exam Extended Function   
+    * [TDD RED PHASE - User Input Integer Function] finish model.domain User and model.service UserService testing   
+    https://github.sydney.edu.au/qyan6939/SCD2_2021_Exam/commit/1013b4680578549d1748f31171df4bf33d2b94ea
+    * [TDD GREEN PHASE - User Input Integer Function] finish model.domain User and model.service UserService implementation and passed testings.  
+    https://github.sydney.edu.au/qyan6939/SCD2_2021_Exam/commit/e7d170184619ac5587f1ac63ce063af32bcb3846
+    * [TDD REFACTOR] Avoid non-logged in user to indicate the integer
+    https://github.sydney.edu.au/qyan6939/SCD2_2021_Exam/commit/44888687474321540773db1b566699490605b147
+
 ## Simple Extension Explanation
 Approaching the due time, I found there is a font issue with Javafx depends on different operating system settings, to make the front-end display effect to be system-independent, I made some modifications about font setting in my code. 
 

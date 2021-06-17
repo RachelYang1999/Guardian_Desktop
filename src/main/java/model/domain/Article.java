@@ -13,7 +13,6 @@ public class Article implements Entity {
   private String webTitle;
   private List<Entity> articleDataList = new ArrayList<>();
   private String relatedTag;
-  private String relatedWebTitle;
 
   private String info;
 
@@ -97,14 +96,6 @@ public class Article implements Entity {
    */
   public void setInfo(String info) {
     this.info = info;
-  }
-
-  public String getRelatedWebTitle() {
-    return relatedWebTitle;
-  }
-
-  public void setRelatedWebTitle(String relatedWebTitle) {
-    this.relatedWebTitle = relatedWebTitle;
   }
 
   /**
