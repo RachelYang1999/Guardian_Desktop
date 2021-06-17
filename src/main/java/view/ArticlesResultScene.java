@@ -58,6 +58,7 @@ public class ArticlesResultScene {
     r.setFraction(0.7f);
     t.setEffect(r);
 
+    // Change
     Label searchResultInfo = new Label();
     searchResultInfo.setText(
         "There are "
@@ -83,6 +84,7 @@ public class ArticlesResultScene {
           int page = p * itemsPerPage();
           for (int i = page; i < page + itemsPerPage() && i < returnedArticles.size(); i++) {
             Entity currentEntity = returnedArticles.get(i);
+            // When i == user input
             FlowPane flow = new FlowPane();
             Text info = new Text(((Article) currentEntity).getWebTitle());
             info.setFont(Font.font("Arial", FontWeight.BOLD, 14));

@@ -30,6 +30,13 @@ public class UserTest {
   }
 
   @Test
+  public void testGetSetInputIntValid() {
+    User user = new User();
+    user.setInputInt("1");
+    assertEquals("1", user.getInputInt());
+  }
+
+  @Test
   public void testGetEntityTypeValid() {
     User user = new User();
     assertEquals("User", user.getEntityType());

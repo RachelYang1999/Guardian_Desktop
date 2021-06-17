@@ -3,6 +3,7 @@ package controller;
 import model.dao.DaoUtil;
 import model.dao.UserDao;
 import model.domain.Entity;
+import model.domain.User;
 import model.service.UserService;
 import util.GuardianAPIStrategy;
 
@@ -30,5 +31,9 @@ public class UserController {
    */
   public Entity login(String token) {
     return userService.login(token);
+  }
+
+  public Entity updateUserWithInputInteger(User currentUser, String inputInt) {
+    return userService.updateUserWithInputInteger(currentUser, inputInt);
   }
 }

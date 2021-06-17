@@ -4,6 +4,7 @@ import model.dao.ArticleDao;
 import model.dao.DaoUtil;
 import model.dao.UserDao;
 import model.domain.Entity;
+import model.domain.User;
 import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
@@ -114,6 +115,30 @@ public class UserServiceTest {
   public void testLoginIrregularOffline() {
     UserService userService = new UserService(offlineGuardianAPIStrategy, userDao);
     Entity returnedEntity = userService.login("irregular");
+    String expected = "Error Message: Unknown Error!" + "\n";
+    assertEquals("ErrorInfo", returnedEntity.getEntityType());
+    assertEquals(expected, returnedEntity.getEntityInformation());
+  }
+
+  @Test
+  public void testUpdateUserWithInputIntegerValid() {
+    User user = new User();
+    user.setUserTier("developer");
+    user.setLoginStatus(true);
+
+    UserService userService = new UserService(onlineGuardianAPIStrategy, userDao);
+    User updatedUser = (User) userService.updateUserWithInputInteger(user, "1");
+    assertEquals(updatedUser.getInputInt(), "1");
+  }
+
+  @Test
+  public void testUpdateUserWithInputIntegerInvalid() {
+    User user = new User();
+    user.setUserTier("developer");
+    user.setLoginStatus(true);
+
+    UserService userService = new UserService(onlineGuardianAPIStrategy, userDao);
+    Entity returnedEntity = userService.updateUserWithInputInteger(user, "-1");
     String expected = "Error Message: Unknown Error!" + "\n";
     assertEquals("ErrorInfo", returnedEntity.getEntityType());
     assertEquals(expected, returnedEntity.getEntityInformation());

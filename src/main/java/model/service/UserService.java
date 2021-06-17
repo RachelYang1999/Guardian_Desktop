@@ -12,6 +12,10 @@ import model.domain.User;
 import org.json.JSONObject;
 import util.GuardianAPIStrategy;
 
+import java.util.List;
+import static java.util.Arrays.asList;
+
+
 /**
  * The Model Service of the Entity User which encapsulated the business logic for searching articles by input tag from the API
  * @author Rachel Yang
@@ -64,6 +68,11 @@ public class UserService {
     }
 
     // Default object is ErrorInfo entity
+    return returnEntity;
+  }
+
+  public Entity updateUserWithInputInteger(User currentUser, String inputInt) {
+    Entity returnEntity = currentUser;
     return returnEntity;
   }
 }

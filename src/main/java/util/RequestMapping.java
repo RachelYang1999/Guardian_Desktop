@@ -159,4 +159,8 @@ public class RequestMapping {
   public DaoUtil getDaoUtil() {
     return daoUtil;
   }
+
+  public void updateUserWithInputInteger(String inputInt) {
+    userController.updateUserWithInputInteger(user, inputInt);
+  }
 }

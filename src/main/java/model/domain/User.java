@@ -4,6 +4,7 @@ public class User implements Entity {
   private String token;
   private boolean loginStatus;
   private String userTier;
+  private String inputInt;
 
   /**
    * Getter method for getting User token
@@ -48,6 +49,21 @@ public class User implements Entity {
    */
   public void setUserTier(String userTier) {
     this.userTier = userTier;
+  }
+
+  /**
+   * Getter method for getting User input int
+   * @return User input int
+   */
+  public String getInputInt() {
+    return "";
+  }
+
+  /**
+   * Setter method for setting User input int
+   */
+  public void setInputInt(String inputInt) {
+
   }
 
   /**
