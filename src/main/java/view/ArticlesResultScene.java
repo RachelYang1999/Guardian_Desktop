@@ -39,6 +39,21 @@ public class ArticlesResultScene {
     return 7;
   }
 
+  public String splitLine(String string) {
+    StringBuilder resultString = new StringBuilder();
+    int count = 0;
+    for (int i = 0; i < string.length(); i ++) {
+      resultString.append(string.charAt(i));
+      if (Character.isWhitespace(string.charAt(i))) {
+        count ++;
+        if (count == 8) {
+          resultString.append("\n    ");
+        }
+      }
+    }
+    return resultString.toString();
+  }
+
   public ArticlesResultScene(Stage window, RequestMapping requestMapping, String tag, List<Entity> returnedArticles)
       throws Exception {
     this.window = window;
@@ -46,7 +61,13 @@ public class ArticlesResultScene {
     this.buttonFactory = new BrownButtonFactory();
 
     this.returnedArticles = returnedArticles;
-//            requestMapping.searchAllArticlesByTag(requestMapping.getUser().getToken(), tag);
+
+    int inputInt = Integer.parseInt(requestMapping.getUserInputInt());
+    System.out.println("inputint: " + inputInt);
+    String indicatedArticleTitle = "";
+    if (inputInt <= returnedArticles.size()) {
+      indicatedArticleTitle += ((Article) returnedArticles.get(inputInt)).getWebTitle();
+    }
 
     Text t = new Text();
     t.setCache(true);
@@ -60,15 +81,23 @@ public class ArticlesResultScene {
 
     // Change
     Label searchResultInfo = new Label();
-    searchResultInfo.setText(
+    if (indicatedArticleTitle.equals("")) {
+      searchResultInfo.setText(
         "There are "
             + returnedArticles.size()
             + " articles found "
             + "\n"
             + "with the tag \""
             + tag
-            + "\":");
-    searchResultInfo.setFont(Font.font("Arial", FontWeight.BOLD, 20));
+            + "\":"
+      );
+    } else {
+      searchResultInfo.setText(
+              "This tag has the following article: \n" + "   \"" + splitLine(indicatedArticleTitle)  + "\""
+      );
+    }
+
+    searchResultInfo.setFont(Font.font("Arial", FontWeight.BOLD, 18));
 
     Pagination pagination =
         new Pagination((int) Math.ceil((double) returnedArticles.size() / itemsPerPage()), 0);
@@ -77,6 +106,7 @@ public class ArticlesResultScene {
       pagination = new Pagination(0, 0);
     }
 
+    String finalIndicatedArticleTitle = indicatedArticleTitle;
     pagination.setPageFactory(
         (Integer p) -> {
           VBox box = new VBox(5);
@@ -88,11 +118,21 @@ public class ArticlesResultScene {
             FlowPane flow = new FlowPane();
             Text info = new Text(((Article) currentEntity).getWebTitle());
             info.setFont(Font.font("Arial", FontWeight.BOLD, 14));
+            if (requestMapping.getUserInputInt().equals(Integer.toString(i))) {
+              info.setFont(Font.font("Arial", FontWeight.EXTRA_BOLD, 18));
+              info.setFill(Color.web("#982525"));
+            }
 
             Hyperlink showDetailLink = new Hyperlink("Show Detail");
+            int finalI = i;
             showDetailLink.setOnAction(
                 actionEvent -> {
-                  String boxInfo = currentEntity.getEntityInformation();
+                  String boxInfo = "Related: " + finalIndicatedArticleTitle + "\n\n"
+                          + currentEntity.getEntityInformation();
+
+                  if (requestMapping.getUserInputInt().equals(Integer.toString(finalI))) {
+                    boxInfo = currentEntity.getEntityInformation();
+                  }
                   ResponseBoxWithPastebin responseBoxWithPastebin =
                       new ResponseBoxWithPastebin(requestMapping);
                   responseBoxWithPastebin.createAlertBox(

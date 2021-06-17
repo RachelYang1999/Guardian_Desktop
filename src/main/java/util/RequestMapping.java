@@ -174,4 +174,12 @@ public class RequestMapping {
     System.out.println("updateCurrentUser: " + user.getInputInt());
   }
 
+  public String getUserInputInt() {
+    if (user != null) {
+      return user.getInputInt();
+    } else {
+      return "";
+    }
+  }
+
 }
