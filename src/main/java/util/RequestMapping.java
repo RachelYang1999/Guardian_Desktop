@@ -160,7 +160,12 @@ public class RequestMapping {
     return daoUtil;
   }
 
+  /**
+   * Update user information with the input integer
+   * @param inputInt
+   */
   public void updateUserWithInputInteger(String inputInt) {
     userController.updateUserWithInputInteger(user, inputInt);
   }
+
 }

@@ -76,8 +76,12 @@ public class UserService {
     List<String> validInputs = asList("0", "1", "2", "3", "4");
 
     if (validInputs.contains(inputInt)) {
-      currentUser.setInputInt(inputInt);
-      returnEntity = currentUser;
+      // To avoid the passed in user is null
+      // [Defensive] This situation happens when the user hasn't logged in
+      if (currentUser != null) {
+        currentUser.setInputInt(inputInt);
+        returnEntity = currentUser;
+      }
     }
     return returnEntity;
   }
