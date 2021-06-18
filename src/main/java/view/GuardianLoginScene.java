@@ -1,7 +1,6 @@
 package view;
 
 import javafx.concurrent.Task;
-import model.domain.Tag;
 import util.RequestMapping;
 import factory.backgroundfactory.BackgroundFactory;
 import factory.backgroundfactory.LightBackgroundFactory;
@@ -25,8 +24,6 @@ import javafx.stage.Stage;
 import model.domain.Entity;
 import model.domain.User;
 import view.alertbox.*;
-
-import java.util.List;
 
 public class GuardianLoginScene {
   private Stage window;
@@ -92,7 +89,7 @@ public class GuardianLoginScene {
                         "Here is your account information",
                         getValue().getEntityInformation());
                 try {
-                  window.setScene(new InputIntegerScene(window, requestMapping).getScene());
+                  window.setScene(new IndicateIntegerScene(window, requestMapping).getScene());
                 } catch (Exception e) {
                   e.printStackTrace();
                 }

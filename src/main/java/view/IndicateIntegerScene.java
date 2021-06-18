@@ -28,14 +28,14 @@ import view.alertbox.AlertBox;
 import view.alertbox.ErrorResponseBox;
 import view.alertbox.ResponseBox;
 
-public class InputIntegerScene {
+public class IndicateIntegerScene {
   private Stage window;
   private Scene scene;
   private BackgroundFactory backgroundFactory;
   private ButtonFactory buttonFactory;
   private AlertBox alertBox;
 
-  public InputIntegerScene(Stage window, RequestMapping requestMapping) throws Exception {
+  public IndicateIntegerScene(Stage window, RequestMapping requestMapping) throws Exception {
     this.window = window;
     this.backgroundFactory = new LightBackgroundFactory();
     this.buttonFactory = new BrownButtonFactory();
