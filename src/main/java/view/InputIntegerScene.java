@@ -58,7 +58,7 @@ public class InputIntegerScene {
             "0", "1", "2", "3", "4")
     );
 
-    choiceBox.setMinWidth(100);
+    choiceBox.setMinWidth(180);
     choiceBox.setStyle("-fx-background-color: #dbb58e;\n" +
             "-fx-mark-color: #000000;");
 

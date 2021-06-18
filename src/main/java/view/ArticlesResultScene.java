@@ -65,7 +65,7 @@ public class ArticlesResultScene {
     int inputInt = Integer.parseInt(requestMapping.getUserInputInt());
     System.out.println("inputint: " + inputInt);
     String indicatedArticleTitle = "";
-    if (inputInt <= returnedArticles.size()) {
+    if (inputInt <= returnedArticles.size() - 1) {
       indicatedArticleTitle += ((Article) returnedArticles.get(inputInt)).getWebTitle();
     }
 
