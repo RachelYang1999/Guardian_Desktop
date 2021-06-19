@@ -130,7 +130,7 @@ public class ArticlesResultScene {
                   String boxInfo = "Related: " + finalIndicatedArticleTitle + "\n\n"
                           + currentEntity.getEntityInformation();
 
-                  if (requestMapping.getUserInputInt().equals(Integer.toString(finalI))) {
+                  if (requestMapping.getUserInputInt().equals(Integer.toString(finalI)) || finalIndicatedArticleTitle.equals("")) {
                     boxInfo = currentEntity.getEntityInformation();
                   }
                   ResponseBoxWithPastebin responseBoxWithPastebin =

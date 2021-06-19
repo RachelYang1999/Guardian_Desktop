@@ -57,9 +57,9 @@ public class IndicateIntegerScene {
     choiceBox.setItems(FXCollections.observableArrayList(
             "0", "1", "2", "3", "4")
     );
-
     choiceBox.setMinWidth(180);
     choiceBox.setStyle("-fx-background-color: #dbb58e;\n" +
+            "-fx-font-family: Arial Unicode MS;\n" +
             "-fx-mark-color: #000000;");
 
     this.buttonFactory = new BrownButtonFactory();
