@@ -30,10 +30,7 @@ Code style tooling: https://github.com/google/google-java-format
 
 ## Installation & Execution Instructions
 1. Clone this repository: https://github.sydney.edu.au/qyan6939/SCD2_2021_Exam.git
-2. Open IntelliJ IDEA. 
-3. Select "Open" button and choose the cloned repository folder.
-4. Run `gradle build` in the terminal
-5. Run `gradle run --args="mode mode"` in the terminal.
+2. Enter the root of the repository, and run `gradle run --args="mode mode"` in the terminal.
     * Note that there are only 2 valid mode options, `online` and `offline`. The first mode option is for controlling the input API, and the second controlling the output API.
     * So there are 4 legal commands can be run successfully:
         * `gradle run --args="online online"`

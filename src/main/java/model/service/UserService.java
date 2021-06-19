@@ -70,6 +70,12 @@ public class UserService {
     return returnEntity;
   }
 
+  /**
+   * Update user information with the input integer
+   * @param currentUser The current logged in user
+   * @param inputInt The inputted indicated integer
+   * @return The updated user or ErrorInfo
+   */
   public Entity updateUserWithInputInteger(User currentUser, String inputInt) {
     Entity returnEntity = defaultErrorFactory.createEntity(new JSONObject());
     List<String> validInputs = asList("0", "1", "2", "3", "4");

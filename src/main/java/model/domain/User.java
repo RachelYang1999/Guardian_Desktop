@@ -52,7 +52,7 @@ public class User implements Entity {
   }
 
   /**
-   * Getter method for getting User userTier
+   * Getter method for getting inputted indicated integer
    * @return User inputInt
    */
   public String getInputInt() {
@@ -60,7 +60,8 @@ public class User implements Entity {
   }
 
   /**
-   * Setter method for setting User input int
+   * Setter method for setting the indicated integer
+   * @param inputInt The inputted indicated integer
    */
   public void setInputInt(String inputInt) {
     this.inputInt = inputInt;

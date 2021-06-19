@@ -33,6 +33,12 @@ public class UserController {
     return userService.login(token);
   }
 
+  /**
+   * Update user information with the input integer
+   * @param currentUser The current logged in user
+   * @param inputInt The inputted indicated integer
+   * @return The updated user or ErrorInfo
+   */
   public Entity updateUserWithInputInteger(User currentUser, String inputInt) {
     return userService.updateUserWithInputInteger(currentUser, inputInt);
   }
