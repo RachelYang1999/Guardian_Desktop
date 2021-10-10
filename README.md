@@ -1,4 +1,4 @@
-# SCD2_2021_Exam
+# Guardian Desktop
 
 ## Introduction
 ![image](https://github.sydney.edu.au/qyan6939/Image/blob/master/Welcome_Page.jpg)  
@@ -11,12 +11,6 @@ This is a desktop application for searching articles of Guardian. You can search
 ## Implemented Feature Level
 **DISTINCTION** (SQLite database + Concurrency)  
 
-**Self-Extension**
-* You can choose to get all tag results **or** just 1 default API response page size result by entering a keyword.  
-  ![image](https://github.sydney.edu.au/qyan6939/Image/blob/master/Extension_Function1%20(2).jpg)
-* You can choose to get all article results **or** just 1 default API response page size result by selecting a tag.  
-  ![image](https://github.sydney.edu.au/qyan6939/Image/blob/master/Extension_Function2.jpg)
-  
 ## Style Guide
 Code style: Google Java Style Guide https://google.github.io/styleguide/javaguide.html
 
@@ -29,8 +23,8 @@ Code style tooling: https://github.com/google/google-java-format
 * SQLite 3.34.0
 
 ## Installation & Execution Instructions
-1. Clone this repository: https://github.sydney.edu.au/qyan6939/SCD2_2021_Exam.git
-2. Enter the root of the repository, and run `gradle run --args="mode mode"` in the terminal.
+1. Clone this repository
+2. Enter the root of the repository, run `gradle build` firsr to get settings ready and run `gradle run --args="mode mode"` in the terminal.
     * Note that there are only 2 valid mode options, `online` and `offline`. The first mode option is for controlling the input API, and the second controlling the output API.
     * So there are 4 legal commands can be run successfully:
         * `gradle run --args="online online"`
@@ -78,9 +72,6 @@ Code style tooling: https://github.com/google/google-java-format
     https://github.sydney.edu.au/qyan6939/SCD2_2021_Exam/commit/e7d170184619ac5587f1ac63ce063af32bcb3846
     * [TDD REFACTOR] Avoid non-logged in user to indicate the integer
     https://github.sydney.edu.au/qyan6939/SCD2_2021_Exam/commit/44888687474321540773db1b566699490605b147
-
-## Simple Extension Explanation
-Approaching the due time, I found there is a font issue with Javafx depends on different operating system settings, to make the front-end display effect to be system-independent, I made some modifications about font setting in my code. 
 
 ## Font Issue Possibility For MacOS
 There might be a font-related CoreText warning in some version of MacOS.
