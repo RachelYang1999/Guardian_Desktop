@@ -1,7 +1,7 @@
 # Guardian Desktop
 
 ## Introduction
-![image](https://github.sydney.edu.au/qyan6939/Image/blob/master/Welcome_Page.jpg)  
+![image](https://github.com/RachelYang1999/Image_Storage/blob/main/Welcome_Page.jpeg)  
 This is a desktop application for searching articles of Guardian. You can search relative tags by a keyword first and get articles by selecting a specific tag. After getting the article information, users can get the URL of Pastebin for sharing and checking the information via this URL online.
 * Input API  
   https://open-platform.theguardian.com/
